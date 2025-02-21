@@ -23,7 +23,7 @@
             :class="{ 'border-blue-500': form.selectedImage === image }"
             @click="form.selectedImage = image"
         >
-          <img :src="image" class="w-20 h-20 rounded-full" />
+          <img :src="image" class="w-20 h-20 rounded-full"  alt=""/>
         </div>
       </div>
 
@@ -50,9 +50,9 @@ const router = useRouter();
 
 // Default profile images
 const defaultImages = [
-  "/images/avatar1.png",
-  "/images/avatar2.png",
-  "/images/avatar3.png",
+  "/sfondo1.png",
+  "/sfondo2.png",
+  "/sfondo3.png"
 ];
 
 // Function to handle form submission
