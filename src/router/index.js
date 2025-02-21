@@ -3,8 +3,20 @@ import LoginPage from "@/views/LoginPage.vue";
 import ProfileSelectionPage from "@/views/ProfileSelectionPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue";
 import StartingPage from "@/views/StartingPage.vue";
+import createProfilePage from "@/views/createProfilePage.vue";
+import HomePage from "@/views/HomePage.vue";
 
 const routes = [
+    {
+        path: "/Home",
+        name: "HomePage",
+        component: HomePage,
+    },
+    {
+        path: "/createProfile",
+        name: "createProfilePage",
+        component: createProfilePage,
+    },
     {
         path: "/",
         name: "StartingPage",
@@ -21,7 +33,7 @@ const routes = [
         component: RegisterPage,
     },
     {
-        path: `/:userId/profiles`,
+        path: `/profiles`,
         name: "ProfileSelection",
         component: ProfileSelectionPage,
     },

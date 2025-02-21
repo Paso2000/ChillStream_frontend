@@ -43,7 +43,7 @@ const handleLogin = async () => {
       isLogged = true;
       // Salviamo l'utente in localStorage (simulazione)
       localStorage.setItem("user",  user._id );
-      router.push(`/${user._id}/profiles`); // Reindirizza alla selezione profili
+      router.push(`/profiles`); // Reindirizza alla selezione profili
     }
   })
   if(isLogged===false)

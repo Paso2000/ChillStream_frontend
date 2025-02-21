@@ -62,17 +62,12 @@ const form = ref({
 
 const registerUser = async () => {
   try {
-    await postUser(form.value);
+    const user = await postUser(form.value);
     alert("Registration successful!");
-    const users = await getUsers();
-      users.forEach(user => {
-        if (form.value.email === user.email) {
-          // Salviamo l'utente in localStorage (simulazione)
-          localStorage.setItem("user",  user._id );
-          router.push(`/${user._id}/profiles`); // Reindirizza alla selezione profili
-        }
-      })
-  } catch (error) {
+    localStorage.setItem("user",  user._id );
+    await router.push(`/profiles`); // Reindirizza alla selezione profili
+      }
+    catch (error) {
     console.error("Error registering user:", error);
     alert("Registration failed.");
   }
