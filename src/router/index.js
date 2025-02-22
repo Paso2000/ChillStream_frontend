@@ -6,6 +6,8 @@ import StartingPage from "@/views/StartingPage.vue";
 import createProfilePage from "@/views/createProfilePage.vue";
 import HomePage from "@/views/HomePage.vue";
 import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
+import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
+
 
 const routes = [
     {
@@ -42,7 +44,11 @@ const routes = [
         path: '/admin',
         name: "AdminLogin",
         component: AdminLoginPage,
-
+    },
+    {
+        path: '/admin/control-panel',
+        name: "ControlPanel",
+        component: ControlPanelPage,
     }
 ];
 
