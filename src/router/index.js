@@ -5,6 +5,7 @@ import RegisterPage from "@/views/RegisterPage.vue";
 import StartingPage from "@/views/StartingPage.vue";
 import createProfilePage from "@/views/createProfilePage.vue";
 import HomePage from "@/views/HomePage.vue";
+import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
 
 const routes = [
     {
@@ -37,6 +38,12 @@ const routes = [
         name: "ProfileSelection",
         component: ProfileSelectionPage,
     },
+    {
+        path: '/admin',
+        name: "AdminLogin",
+        component: AdminLoginPage,
+
+    }
 ];
 
 const router = createRouter({
