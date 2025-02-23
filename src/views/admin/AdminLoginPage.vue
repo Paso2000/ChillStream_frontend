@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <img src="../../../public/chillStream-logo.png" alt="Logo" class="logo" />
+    <img src="/chillStream-logo.png" alt="Logo" class="logo" />
     <div class="login-box">
       <h2>Admin Sign In</h2>
-      <FormInput v-model="email" type="email" placeholder="Email"/>
+      <FormInput v-model="username" type="username" placeholder="User"/>
       <FormInput v-model="password" type="password" placeholder="Password"/>
       <Button @click="handleLogin">Sign In</Button>
     </div>
@@ -13,27 +13,27 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { getUsers } from "@/service/authApi.js";
+import {getAdminList, getUsers} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 
 export default {
   components: { FormInput, Button },
   setup() {
-    const email = ref("");
+    const username = ref("");
     const password = ref("");
     const router = useRouter();
 
     const handleLogin = async () => {
       try {
-        const users = await getUsers();
-        const userFound = users.find(
-            (user) => email.value === user.email && password.value === user.password
+        const admins = await getAdminList();
+        const adminFound = admins.find(
+            (admin) => username.value === admin.username && password.value === admin.password
         );
 
-        if (userFound) {
-          localStorage.setItem("user", userFound._id);
-          await router.push("/admin/control-panel");
+        if (adminFound) {
+          const adminId = adminFound._id;
+          await router.push(`/admin/${adminId}/control-panel`);
         } else {
           alert("Wrong credentials, try it again");
         }
@@ -42,7 +42,7 @@ export default {
       }
     };
 
-    return { email, password, handleLogin };
+    return { username, password, handleLogin };
   },
 };
 </script>
@@ -53,7 +53,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url("public/background.jpg");
+  background: url("/background.jpg");
   position: relative;
 }
 .login-container::before {
