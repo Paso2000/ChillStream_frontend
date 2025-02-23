@@ -25,8 +25,6 @@ export default {
     ActorsManagement,
     AdminNavbar,
     ContentsManagement,
-    //ActorsManagement,
-    //SendNotifications,
   },
   data() {
     return {
@@ -49,7 +47,7 @@ export default {
 
 <style scoped>
 .control-panel {
-  background-color: #3d3c3c;
+  background: linear-gradient(135deg, #000000, #1e0034);
   color: white;
   min-height: 100vh;
 }

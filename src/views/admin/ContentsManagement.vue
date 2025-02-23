@@ -34,3 +34,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form-container {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+justify-content: center;
+background: rgba(255, 255, 255, 0.05);
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+margin-top: 15px;
+}
+
+
+</style>
