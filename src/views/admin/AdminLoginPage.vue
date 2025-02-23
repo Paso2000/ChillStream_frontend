@@ -5,28 +5,44 @@
       <h2>Admin Sign In</h2>
       <FormInput v-model="email" type="email" placeholder="Email"/>
       <FormInput v-model="password" type="password" placeholder="Password"/>
-      <Button @click="login">Sign In</Button>
+      <Button @click="handleLogin">Sign In</Button>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { getUsers } from "@/service/authApi.js";
 import FormInput from "@/views/components/FormInput.vue";
 import Button from "@/views/components/Button.vue";
 
 export default {
   components: { FormInput, Button },
-  data() {
-    return {
-      email: "",
-      password: "",
+  setup() {
+    const email = ref("");
+    const password = ref("");
+    const router = useRouter();
+
+    const handleLogin = async () => {
+      try {
+        const users = await getUsers();
+        const userFound = users.find(
+            (user) => email.value === user.email && password.value === user.password
+        );
+
+        if (userFound) {
+          localStorage.setItem("user", userFound._id);
+          await router.push("/control-panel");
+        } else {
+          alert("Wrong credentials, try it again");
+        }
+      } catch (error) {
+        alert("connection error");
+      }
     };
-  },
-  methods: {
-    login() {
-      console.log("Email:", this.email, "Password:", this.password);
-      // Qui puoi chiamare un'API per l'autenticazione
-    },
+
+    return { email, password, handleLogin };
   },
 };
 </script>
