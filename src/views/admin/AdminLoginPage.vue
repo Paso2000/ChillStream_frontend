@@ -14,8 +14,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getUsers } from "@/service/authApi.js";
-import FormInput from "@/views/components/FormInput.vue";
-import Button from "@/views/components/Button.vue";
+import FormInput from "@/components/FormInput.vue";
+import Button from "@/components/Button.vue";
 
 export default {
   components: { FormInput, Button },
@@ -33,7 +33,7 @@ export default {
 
         if (userFound) {
           localStorage.setItem("user", userFound._id);
-          await router.push("/control-panel");
+          await router.push("/admin/control-panel");
         } else {
           alert("Wrong credentials, try it again");
         }
@@ -53,23 +53,36 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1e1e1e;
+  background: url("public/background.jpg");
+  position: relative;
 }
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
 .logo {
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 100px;
+  height: 120px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .login-box {
-  background: #2b2b2b;
+  background: rgba(43, 43, 43, 0.2);
   padding: 40px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
   width: 300px;
   border: 2px solid #6a0dad;
+  backdrop-filter: blur(10px);
 }
 
 h2 {

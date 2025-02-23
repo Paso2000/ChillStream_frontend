@@ -13,16 +13,23 @@ export default {};
   width: 100%;
   max-width: 300px;
   padding: 10px;
-  background-color: #6a0dad;
-  color: white;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s;
+  background: linear-gradient(90deg, #8a2be2, #6a0dad);
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
 .custom-button:hover {
-  background-color: #5500a1;
+  background: linear-gradient(90deg, #a832eb, #7a0dad);
+  transform: scale(1.05);
 }
+
+.custom-button:active {
+transform: scale(0.98);
+}
+
 </style>

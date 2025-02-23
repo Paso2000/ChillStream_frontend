@@ -46,7 +46,7 @@ const routes = [
         component: AdminLoginPage,
     },
     {
-        path: '/control-panel',
+        path: '/admin/control-panel',
         name: "ControlPanel",
         component: ControlPanelPage,
     }
