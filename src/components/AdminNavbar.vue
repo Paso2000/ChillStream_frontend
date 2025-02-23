@@ -23,7 +23,7 @@ export default {
 <style scoped>
 .tab-nav {
   display: flex;
-  background-color: #111;
+  background: linear-gradient(90deg, #8a2be2, #6a0dad);
   padding: 10px;
 }
 
@@ -38,7 +38,6 @@ button {
 }
 
 button.active {
-  background: #6a0dad;
-  border-bottom: 2px solid white;
+  transform: scale(2);
 }
 </style>
