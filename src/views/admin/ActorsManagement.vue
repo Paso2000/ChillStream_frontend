@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import FormInput from "./FormInput.vue";
-import Button from "./Button.vue";
+import FormInput from "../../components/FormInput.vue";
+import Button from "../../components/Button.vue";
 
 export default {
   components: { FormInput, Button },

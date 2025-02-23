@@ -15,28 +15,37 @@
 
 <script>
 import AdminNavbar from "@/components/AdminNavbar.vue";
-import ContentForm from "@/components/ContentForm.vue";
-
+import ContentsManagement from "@/views/admin/ContentsManagement.vue";
+import ActorsManagement from "@/views/admin/ActorsManagement.vue";
+import SendNotifications from "@/views/admin/SendNotifications.vue";
 
 export default {
-  components: { AdminNavbar, ContentForm },
+  components: {
+    SendNotifications,
+    ActorsManagement,
+    AdminNavbar,
+    ContentsManagement,
+    //ActorsManagement,
+    //SendNotifications,
+  },
   data() {
     return {
-      activeSection: "dashboard",
+      activeSection: "contents", // Sezione predefinita
     };
   },
   computed: {
     getSectionTitle() {
       const titles = {
-        contents: "Contents managements",
-        actors: "Actors managements",
-        notifications: "Send notifications",
+        contents: "Contents Management",
+        actors: "Actors Management",
+        notifications: "Send Notifications",
       };
-      return titles[this.activeSection];
+      return titles[this.activeSection] || "Admin Panel";
     },
   },
 };
 </script>
+
 
 <style scoped>
 .control-panel {
