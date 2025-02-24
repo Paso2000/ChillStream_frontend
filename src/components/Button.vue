@@ -21,6 +21,7 @@ export default {};
   color: white;
   font-weight: bold;
   transition: 0.3s;
+  margin-top: 15px;
 }
 
 .custom-button:hover {
