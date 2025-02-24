@@ -38,7 +38,7 @@ export default {};
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background: rgba(43, 43, 43, 0.8);
+  background: rgba(106, 13, 173, 0.7);
   padding: 15px 10px;
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
@@ -51,7 +51,7 @@ export default {};
 }
 
 .logo img {
-  height: 60px;
+  height: 70px;
   margin-right: 10px;
 }
 
@@ -72,7 +72,7 @@ export default {};
 }
 
 .nav-links li:hover {
-  color: #a259ff;
+  color: #fff;
   transform: scale(1.1);
 }
 </style>

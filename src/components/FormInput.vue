@@ -20,6 +20,7 @@ export default {
 <style scoped>
 .input-field {
   width: 100%;
+  font-family: "Arial", sans-serif;
   max-width: 300px;
   padding: 10px;
   border-radius: 5px;
