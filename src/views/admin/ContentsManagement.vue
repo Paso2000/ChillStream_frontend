@@ -6,13 +6,13 @@
     <div class="section">
       <h4>Add new content</h4>
       <div class="form-group">
-        <FormInput v-model="title" placeholder="Title" />
-        <FormInput v-model="releaseYear" placeholder="Release year" />
-        <FormInput v-model="genre" placeholder="Genre" />
+        <FormInput v-model="title" placeholder="Title"/>
+        <FormInput v-model="releaseYear" placeholder="Release year"/>
+        <FormInput v-model="genre" placeholder="Genre"/>
       </div>
       <div class="form-group">
-        <FormInput v-model="actors" placeholder="Actors" />
-        <FormInput v-model="rating" placeholder="Rating" />
+        <FormInput v-model="actors" placeholder="Actors"/>
+        <FormInput v-model="rating" placeholder="Rating"/>
       </div>
       <textarea v-model="description" placeholder="Description" class="form-textarea"></textarea>
       <button @click="saveContent" class="form-button">Save content</button>
@@ -22,13 +22,13 @@
     <div class="section">
       <h4>Update content</h4>
       <div class="form-group">
-        <FormInput v-model="idFilm" placeholder="Id film" />
-        <FormInput v-model="releaseYear" placeholder="Release year" />
-        <FormInput v-model="genre" placeholder="Genre" />
+        <FormInput v-model="idFilm" placeholder="Id film"/>
+        <FormInput v-model="releaseYear" placeholder="Release year"/>
+        <FormInput v-model="genre" placeholder="Genre"/>
       </div>
       <div class="form-group">
-        <FormInput v-model="actors" placeholder="Actors" />
-        <FormInput v-model="rating" placeholder="Rating" />
+        <FormInput v-model="actors" placeholder="Actors"/>
+        <FormInput v-model="rating" placeholder="Rating"/>
       </div>
       <textarea v-model="description" placeholder="Description" class="form-textarea"></textarea>
       <button @click="updateContent" class="form-button">Update content</button>
@@ -37,7 +37,7 @@
     <!-- Delete content -->
     <div class="section">
       <h4>Delete content</h4>
-      <FormInput v-model="idFilm" placeholder="Id film" />
+      <FormInput v-model="idFilm" placeholder="Id film"/>
       <button @click="deleteContent" class="form-button">Delete</button>
     </div>
   </div>
@@ -46,25 +46,23 @@
 <script>
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
+import {postFilm} from "@/service/contentApi.js";
 
 export default {
   components: {Button, FormInput},
   data() {
     return {
       title: "",
-      releaseYear: "",
+      release_year: "",
       genre: "",
       actors: "",
       rating: "",
       description: "",
-      idFilm: "",
-      idFilmToDelete: "",
+      "image_path": "/images/interstellar.jpg",
     };
   },
   methods: {
-    saveContent() {
-      console.log("Saving content:", this.title);
-    },
+    async saveContent() {},
     updateContent() {
       console.log("Updating content:", this.idFilm);
     },
