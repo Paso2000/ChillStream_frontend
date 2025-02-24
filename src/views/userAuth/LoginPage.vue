@@ -1,26 +1,11 @@
 <template>
-  <div class="flex items-center justify-center h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-      <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-
-      <form @submit.prevent="handleLogin">
-        <div class="mb-4">
-          <label class="block text-gray-700">Email</label>
-          <input v-model="email" type="email" required
-                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div class="mb-4">
-          <label class="block text-gray-700">Password</label>
-          <input v-model="password" type="password" required
-                 class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <button type="submit"
-                class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-          Login
-        </button>
-      </form>
+  <div class="login-container">
+    <img src="/chillStream-logo.png" alt="Logo" class="logo" />
+    <div class="login-box">
+      <h2>Sign In</h2>
+      <FormInput v-model="email" type="email" placeholder="Email" required/>
+      <FormInput v-model="password" type="password" placeholder="Password" required/>
+      <Button @click="handleLogin">Sign In</Button>
     </div>
   </div>
 </template>
@@ -29,9 +14,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import {getUsers} from "@/service/authApi.js";
+import FormInput from "@/components/FormInput.vue";
+import Button from "@/components/Button.vue";
 
-const email = ref('paso@passini');
-const password = ref('marcomangno');
+const email = ref("");
+const password = ref("");
 const router = useRouter();
 
 const handleLogin = async () => {
@@ -50,3 +37,49 @@ const handleLogin = async () => {
     alert("Credenziali errate!");
 };
 </script>
+
+
+<style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("/background.jpg");
+  position: relative;
+}
+.login-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 120px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-box {
+  background: rgba(43, 43, 43, 0.2);
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  width: 300px;
+  border: 2px solid #6a0dad;
+  backdrop-filter: blur(10px);
+}
+
+h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+</style>
+
