@@ -36,6 +36,7 @@ export default {
 <style scoped>
 .control-panel {
   background: linear-gradient(135deg, #000000, #111);
+  //background: url("/background2.jpg");
   color: white;
   min-height: 100vh;
 }

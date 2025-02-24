@@ -7,12 +7,13 @@
       <h4>Add new content</h4>
       <div class="form-group">
         <FormInput v-model="title" placeholder="Title"/>
-        <FormInput v-model="releaseYear" placeholder="Release year"/>
+        <FormInput v-model="release_year" placeholder="Release year"/>
         <FormInput v-model="genre" placeholder="Genre"/>
       </div>
       <div class="form-group">
         <FormInput v-model="actors" placeholder="Actors"/>
         <FormInput v-model="rating" placeholder="Rating"/>
+        <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
       </div>
       <textarea v-model="description" placeholder="Description" class="form-textarea"></textarea>
       <button @click="saveContent" class="form-button">Save content</button>
@@ -23,14 +24,14 @@
       <h4>Update content</h4>
       <div class="form-group">
         <FormInput v-model="idFilm" placeholder="Id film"/>
-        <FormInput v-model="releaseYear" placeholder="Release year"/>
+        <FormInput v-model="release_year" placeholder="Release year"/>
         <FormInput v-model="genre" placeholder="Genre"/>
       </div>
       <div class="form-group">
         <FormInput v-model="actors" placeholder="Actors"/>
         <FormInput v-model="rating" placeholder="Rating"/>
       </div>
-      <textarea v-model="description" placeholder="Description" class="form-textarea"></textarea>
+      <textarea v-model="updateDescription" placeholder="Description" class="form-textarea"></textarea>
       <button @click="updateContent" class="form-button">Update content</button>
     </div>
 
@@ -52,23 +53,32 @@ export default {
   components: {Button, FormInput},
   data() {
     return {
+      idFilm: "",
       title: "",
       release_year: "",
       genre: "",
       actors: "",
       rating: "",
       description: "",
-      "image_path": "/images/interstellar.jpg",
+      image_path: "/images/interstellar.jpg",
     };
   },
   methods: {
-    async saveContent() {},
+    async saveContent() {
+    },
     updateContent() {
       console.log("Updating content:", this.idFilm);
     },
     deleteContent() {
-      console.log("Deleting content:", this.idFilmToDelete);
+      console.log("Deleting content:", this.idFilm);
     },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.image_path = URL.createObjectURL(file); // Ottieni un URL temporaneo
+        console.log("Path immagine:", this.image_path);
+      }
+    }
   },
 };
 </script>
@@ -138,6 +148,22 @@ export default {
 .form-button:hover {
   background: linear-gradient(90deg, #b06aff, #7a1edf);
   transform: scale(1.05);
+}
+
+.image-input{
+  font-family: "Arial", sans-serif;
+  min-height: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: none;
+
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #444;
+  background: #d3d3d3;
+  outline: none;
+  box-sizing: border-box;
 }
 
 </style>
