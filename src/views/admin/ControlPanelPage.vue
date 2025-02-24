@@ -1,13 +1,11 @@
 <template>
   <div class="control-panel">
-    <AdminNavbar @changeSection="activeSection = $event" />
+    <AdminNavbar @changeSection="activeSection = $event"/>
 
     <div class="content">
-      <h2>{{ getSectionTitle }}</h2>
-
-      <ContentsManagement v-if="activeSection === 'contents'" />
-      <ActorsManagement v-if="activeSection === 'actors'" />
-      <SendNotifications v-if="activeSection === 'notifications'" />
+      <ContentsManagement v-if="activeSection === 'contents'"/>
+      <ActorsManagement v-if="activeSection === 'actors'"/>
+      <SendNotifications v-if="activeSection === 'notifications'"/>
 
     </div>
   </div>
@@ -30,24 +28,14 @@ export default {
     return {
       activeSection: "contents", // Sezione predefinita
     };
-  },
-  computed: {
-    getSectionTitle() {
-      const titles = {
-        contents: "Contents Management",
-        actors: "Actors Management",
-        notifications: "Send Notifications",
-      };
-      return titles[this.activeSection] || "Admin Panel";
-    },
-  },
+  }
 };
 </script>
 
 
 <style scoped>
 .control-panel {
-  background: linear-gradient(135deg, #000000, #1e0034);
+  background: linear-gradient(135deg, #000000, #111);
   color: white;
   min-height: 100vh;
 }

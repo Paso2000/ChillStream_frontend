@@ -13,7 +13,7 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import {getAdminList, getUsers} from "@/service/authApi.js";
+import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 
@@ -32,8 +32,7 @@ export default {
         );
 
         if (adminFound) {
-          const adminId = adminFound._id;
-          await router.push(`/admin/${adminId}/control-panel`);
+          await router.push(`/admin/control-panel`);
         } else {
           alert("Wrong credentials, try it again");
         }
