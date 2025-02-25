@@ -10,40 +10,36 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 
-export default {
-  components: { FormInput, Button },
-  setup() {
-    const username = ref("");
-    const password = ref("");
-    const router = useRouter();
+const username = ref("GiammaIlControllore");
+const password = ref("pastaConTonno");
+const router = useRouter();
 
-    const handleLogin = async () => {
-      try {
-        const admins = await getAdminList();
-        const adminFound = admins.find(
-            (admin) => username.value === admin.username && password.value === admin.password
-        );
+const handleLogin = async () => {
+  let isFound = false;
 
+  try {
+    const admins = await getAdminList();
+    const adminFound = admins.find(
+        (admin) => username.value === admin.username && password.value === admin.password);
         if (adminFound) {
+          isFound=true
           await router.push(`/admin/control-panel`);
-        } else {
-          alert("Wrong credentials, try it again");
         }
+
       } catch (error) {
         alert("connection error");
       }
-    };
-
-    return { username, password, handleLogin };
-  },
+  if (!isFound)
+    alert("Wrong credential")
 };
+
 </script>
 
 <style scoped>

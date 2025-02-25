@@ -1,25 +1,33 @@
 <template>
-  <save-content-form></save-content-form>
-    <!-- Update content -->
-  <update-content-form></update-content-form>
-
-    <!-- Delete content -->
-   <delete-component-form></delete-component-form>
+  <div class="section">
+    <h4>Delete content</h4>
+    <FormInput v-model="title" placeholder="Title"/>
+    <button @click="deleteContent" class="form-button">Delete</button>
+  </div>
 </template>
-
 <script setup>
+import FormInput from "@/components/FormInput.vue";
+import {ref} from "vue";
+import {deleteFilm, getFilmList, putFilm} from "@/service/contentApi.js";
+
+const title = ref("")
 
 
-import SaveContentForm from "@/components/SaveContentForm.vue";
-import UpdateContentForm from "@/components/UpdateContentForm.vue";
-import DeleteComponentForm from "@/components/DeleteComponentForm.vue";
+const deleteContent = async () => {
+  try {
+    const allFilms = await getFilmList();
+    const filmFound = allFilms.find(
+        (film) => title.value === film.title);
+    if (filmFound) {
+      await deleteFilm(filmFound._id);
+      alert("Film changed successfully");
+    } else {
+      alert("Film not found")
+    }
+  } catch (error) {
+    alert("Error saving film:");
+  }
 
-const updateContent = () => {
-  console.log("Updating content:", idFilm.value);
-};
-
-const deleteContent = () => {
-  console.log("Deleting content:", idFilm.value);
 };
 </script>
 

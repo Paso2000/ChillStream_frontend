@@ -10,16 +10,23 @@
 
     <h2 class="text-2xl font-semibold mt-8 mb-4">Recommended </h2>
     <MovieRow :movies="recommendedMovies" />
+
+    <MultiSelectCombo
+        v-model="selectedActors"
+        :options="['Leonardo DiCaprio', 'Brad Pitt', 'Johnny Depp', 'Tom Hardy']"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import MovieRow from "@/components/MovieRow.vue";
-import {getFilm, getFilmList} from "@/service/contentApi.js";
-import {getRecommendedList, getViewList} from "@/service/interactionApi.js"; // Importiamo il componente MovieRow
+import {getActorList, getFilm, getFilmList} from "@/service/contentApi.js";
+import {getRecommendedList, getViewList} from "@/service/interactionApi.js";
+import MultiSelectCombo from "@/components/MultiSelectCombo.vue"; // Importiamo il componente MovieRow
 
 // Liste di film (possono essere ottenute da un'API)
+const selectedActors = ref(getActorList())
 const allMovies = ref([]);
 const viewedMovies = ref([]);
 const recommendedMovies = ref([]);
@@ -36,7 +43,8 @@ onMounted(async () => {
 
   const recommendeds = await getRecommendedList(localStorage.getItem("user"),localStorage.getItem("profile"))
   recommendeds.forEach(recommended => {
-    recommendedMovies.value.push(recommended.filmDetails)
+    recommendedMovies.value.push(recommended.filmDetails
+    )
   })
 
 });
