@@ -1,11 +1,10 @@
 <template>
-  <div class="login-container">
-    <!-- Navbar -->
-    <div class="navbar">
-      <Logo/>
-      <Button class="sign-in-btn" @click="goToLogin">Sign In</Button>
-    </div>
+  <div class="navbar">
+    <Logo/>
+    <Button class="sign-in-btn" @click="goToLogin">Sign In</Button>
+  </div>
 
+  <div class="login-container">
     <!-- Contenuto centrale -->
     <div class="content">
       <h1>Unlimited movies, TV shows, and more</h1>
@@ -64,6 +63,7 @@ const goToRegister = () => {
   justify-content: space-between;
   align-items: center;
   padding: 0 50px;
+  z-index: 10;
 }
 
 .sign-in-btn {
