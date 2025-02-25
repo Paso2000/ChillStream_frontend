@@ -17,7 +17,7 @@
 import { ref, onMounted } from "vue";
 import MovieRow from "@/components/MovieRow.vue";
 import {getFilm, getFilmList} from "@/service/contentApi.js";
-import {getRecommended, getRecommendedList, getViewList} from "@/service/interactionApi.js"; // Importiamo il componente MovieRow
+import {getRecommendedList, getViewList} from "@/service/interactionApi.js"; // Importiamo il componente MovieRow
 
 // Liste di film (possono essere ottenute da un'API)
 const allMovies = ref([]);
@@ -31,12 +31,12 @@ onMounted(async () => {
 
   const viewed = await getViewList(localStorage.getItem("user"),localStorage.getItem("profile"))
   viewed.forEach(view => {
-    viewedMovies.value.push(getFilm(view.filmId))
+    viewedMovies.value.push(view.filmDetails)
   })
 
   const recommendeds = await getRecommendedList(localStorage.getItem("user"),localStorage.getItem("profile"))
   recommendeds.forEach(recommended => {
-    recommendedMovies.value.push(getFilm(recommended.filmId))
+    recommendedMovies.value.push(recommended.filmDetails)
   })
 
 });

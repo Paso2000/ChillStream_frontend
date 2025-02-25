@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from "@/views/LoginPage.vue";
-import ProfileSelectionPage from "@/views/ProfileSelectionPage.vue";
-import RegisterPage from "@/views/RegisterPage.vue";
-import StartingPage from "@/views/StartingPage.vue";
-import createProfilePage from "@/views/createProfilePage.vue";
+import LoginPage from "@/views/authentication/LoginPage.vue";
+import ProfileSelectionPage from "@/views/authentication/ProfileSelectionPage.vue";
+import RegisterPage from "@/views/authentication/RegisterPage.vue";
+import StartingPage from "@/views/authentication/StartingPage.vue";
+import createProfilePage from "@/views/authentication/CreateProfilePage.vue";
 import HomePage from "@/views/HomePage.vue";
 import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
 import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
+import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
 
 
 const routes = [
+    {
+        path: "/Film",
+        name: "FilmDetailsPage",
+        component: FilmDetailsPage,
+    },
     {
         path: "/Home",
         name: "HomePage",

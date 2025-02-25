@@ -4,8 +4,8 @@
       <Card
           v-for="movie in movies"
           :key="movie._id"
-          :movieId="movie._id"
-          :coverImage="movie.image_path"
+          :filmId="movie._id"
+          :pathImage="movie.image_path"
       />
     </div>
   </div>
