@@ -1,8 +1,13 @@
 <template>
+  <div class="navbar">
+    <Logo/>
+  </div>
+
   <div class="selection-container">
-    <img src="/chillStream-logo.png" alt="Logo" class="logo"/>
-    <div class="login-box">
-      <h2>Who's watching?</h2>
+    <!-- Selezione profilo -->
+    <div class="content">
+      <h1>Who wants to watch ChillStream?</h1>
+
       <div class="profile-container">
         <div
             v-for="profile in profiles"
@@ -13,7 +18,12 @@
           <img :src="profile.profileImage" class="profile-image"/>
           <p class="profile-name">{{ profile.nickname }}</p>
         </div>
-        <button class="add-profile" @click="addProfile">➕</button>
+
+        <div>
+          <button class="add-profile" @click="addProfile">+</button>
+          <p class="profile-name">New Profile</p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -23,6 +33,7 @@
 import {ref, onMounted} from "vue";
 import {useRouter} from "vue-router";
 import {getProfiles} from "@/service/authApi.js";
+import Logo from "@/components/Logo.vue";
 
 const profiles = ref([]);
 const router = useRouter();
@@ -47,85 +58,102 @@ const addProfile = () => {
 </script>
 
 <style scoped>
-/* Contenitore principale */
+/* 📌 Contenitore principale con sfondo */
 .selection-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: rgba(0, 0, 0);
+  background: #141414; /* Sfondo nero come Netflix */
   position: relative;
 }
 
-/* Logo */
-.logo {
+.navbar {
   position: absolute;
   top: 20px;
-  left: 20px;
-  height: 120px;
-  transition: transform 0.3s ease-in-out;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
 }
 
-/* Titolo */
-h2 {
-  color: white;
-  margin-bottom: 20px;
+/* 📌 Contenuto principale */
+.content {
   text-align: center;
+  color: white;
+  z-index: 2;
 }
 
-/* Contenitore dei profili */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* 📌 Contenitore profili */
 .profile-container {
-  display: flex; /* Imposta i profili in riga */
-  gap: 20px; /* Spazio tra i profili */
+  display: flex;
+  gap: 40px;
   justify-content: center;
   align-items: center;
 }
 
-/* Card del profilo */
+/* 📌 Card profilo */
 .profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
 }
 
 .profile-card:hover {
   transform: scale(1.1);
 }
 
-/* Immagine profilo */
+/* 📌 Immagine profilo */
 .profile-image {
-  width: 80px; /* Ridotta */
-  height: 80px;
-  border-radius: 50%; /* Rende l'immagine tonda */
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
   object-fit: cover;
-  border: 2px solid white;
+  border: 3px solid transparent;
+  transition: border 0.3s;
 }
 
-/* Nome profilo */
+.profile-card:hover .profile-image {
+  border: 3px solid white;
+}
+
+/* 📌 Nome profilo */
 .profile-name {
-  color: white; /* Testo in bianco */
+  color: white;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 
-/* Bottone per aggiungere un profilo */
+/* 📌 Bottone + per aggiungere un profilo */
 .add-profile {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #6a0dad;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 24px;
+  font-size: 48px;
   border: none;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-profile:hover {
-  background: #8e44ad;
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.4);
 }
 </style>
