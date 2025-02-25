@@ -62,7 +62,7 @@ const handleLogin = async () => {
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 120px;
+  height: 90px;
   transition: transform 0.3s ease-in-out;
 }
 

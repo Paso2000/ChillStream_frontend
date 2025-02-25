@@ -50,9 +50,9 @@ const router = useRouter();
 
 // Default profile images
 const defaultImages = [
-  "/sfondo1.png",
-  "/sfondo2.png",
-  "/sfondo3.png"
+  "/profile1.png",
+  "/profile2.png",
+  "/profile3.png"
 ];
 
 // Function to handle form submission
