@@ -7,7 +7,7 @@
       <h4>Add new actor</h4>
       <div class="form-group">
         <FormInput v-model="saveName" placeholder="Name"/>
-        <FormInput v-model="saveName" placeholder="Surname"/>
+        <FormInput v-model="saveSurname" placeholder="Surname"/>
         <FormInput v-model="saveDate_of_birth" placeholder="date of birth"/>
       </div>
       <button @click="saveActor" class="form-button">Save actors</button>
@@ -27,7 +27,7 @@
     <!-- Delete actor -->
     <div class="section">
       <h4>Delete actor</h4>
-      <FormInput v-model="deleteSurname" placeholder="Actor Surname"/>
+      <FormInput v-model="deleteSurname" placeholder="Surname"/>
       <button @click="deleteActorFromDb" class="form-button">Delete</button>
     </div>
   </div>

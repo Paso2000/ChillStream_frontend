@@ -1,51 +1,66 @@
 <template>
-  <div class="p-6 bg-gray-900 text-white min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-center">Movie Library 🎬</h1>
+  <div class="homepage">
+    <!-- Navbar -->
+    <Navbar />
 
-    <h2 class="text-2xl font-semibold mb-4">Trending Movies 🔥</h2>
-    <MovieRow :movies="allMovies" />
+    <div class="content">
+      <h1 class="page-title">Movie Library 🎬</h1>
 
-    <h2 class="text-2xl font-semibold mt-8 mb-4">Viewed movies </h2>
-    <MovieRow :movies="viewedMovies" />
+      <!-- Trending Movies -->
+      <ContentRow title="Trending Movies 🔥" :contents="allMovies" />
 
-    <h2 class="text-2xl font-semibold mt-8 mb-4">Recommended </h2>
-    <MovieRow :movies="recommendedMovies" />
+      <!-- Viewed Movies -->
+      <ContentRow title="Viewed Movies 🎥" :contents="viewedMovies" />
 
-    <MultiSelectCombo
-        v-model="selectedActors"
-        :options="['Leonardo DiCaprio', 'Brad Pitt', 'Johnny Depp', 'Tom Hardy']"
-    />
+      <!-- Recommended Movies -->
+      <ContentRow title="Recommended Movies 🎯" :contents="recommendedMovies" />
+
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import MovieRow from "@/components/MovieRow.vue";
-import {getActorList, getFilm, getFilmList} from "@/service/contentApi.js";
-import {getRecommendedList, getViewList} from "@/service/interactionApi.js";
-import MultiSelectCombo from "@/components/MultiSelectCombo.vue"; // Importiamo il componente MovieRow
+import Navbar from "@/components/UserNavbar.vue";
+import ContentRow from "@/components/ContentRow.vue";
+import {getFilmList } from "@/service/contentApi.js";
+import { getRecommendedList, getViewList } from "@/service/interactionApi.js";
 
-// Liste di film (possono essere ottenute da un'API)
-const selectedActors = ref(getActorList())
 const allMovies = ref([]);
 const viewedMovies = ref([]);
 const recommendedMovies = ref([]);
 
 onMounted(async () => {
+  allMovies.value = await getFilmList();
+  console.log(allMovies.value);
 
-  // Simuliamo il caricamento dei dati (in un'app reale, useremmo un'API)
-  allMovies.value = await getFilmList()
+  const viewed = await getViewList(localStorage.getItem("user"), localStorage.getItem("profile"));
+  viewedMovies.value = viewed.map(view => view.filmDetails);
 
-  const viewed = await getViewList(localStorage.getItem("user"),localStorage.getItem("profile"))
-  viewed.forEach(view => {
-    viewedMovies.value.push(view.filmDetails)
-  })
-
-  const recommendeds = await getRecommendedList(localStorage.getItem("user"),localStorage.getItem("profile"))
-  recommendeds.forEach(recommended => {
-    recommendedMovies.value.push(recommended.filmDetails
-    )
-  })
-
+  const recommendeds = await getRecommendedList(localStorage.getItem("user"), localStorage.getItem("profile"));
+  recommendedMovies.value = recommendeds.map(recommended => recommended.filmDetails);
 });
 </script>
+
+<style scoped>
+/* 📌 Stili generali */
+.homepage {
+  background: #3d3c3c;
+  color: white;
+  min-height: 100vh;
+}
+
+/* 📌 Contenuto principale */
+.content {
+  padding: 20px 50px;
+  margin-top: 80px;
+}
+
+/* 📌 Titolo principale */
+.page-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+</style>

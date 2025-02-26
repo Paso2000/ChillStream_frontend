@@ -1,25 +1,29 @@
 <template>
-  <div class="content-management">
-    <h3>Contents Management</h3>
-
-    <!-- Add new content -->
-    <div class="section">
-      <h4>Add new content</h4>
-      <div class="form-group">
-        <FormInput v-model="addTitle" placeholder="Title"/>
-        <FormInput v-model="addRelease_year" placeholder="Release year"/>
-        <FormInput v-model="addGenre" placeholder="Genre"/>
-      </div>
-      <div class="form-group">
-        <MultiSelectCombo
-            v-model="addActors"
-            :options="allActorsName"/>
-        <FormInput v-model="addRating" placeholder="Rating"/>
-        <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
-      </div>
-      <textarea v-model="addDescription" placeholder="Description" class="form-textarea"></textarea>
-      <button @click="saveContent" class="form-button">Save content</button>
+  <!-- Add new content -->
+  <div class="section">
+    <h4>Add new content</h4>
+    <div class="form-group">
+      <FormInput v-model="addTitle" placeholder="Title"/>
+      <FormInput v-model="addRelease_year" placeholder="Release year"/>
+      <FormInput v-model="addGenre" placeholder="Genre"/>
     </div>
+    <div class="form-group">
+      <FormInput v-model="addRating" placeholder="Rating"/>
+      <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
+      <div class="dropdown">
+        <button class="dropdown-toggle" @click="toggleDropdown">
+          Select actors ⬇
+        </button>
+        <div v-if="dropdownOpen" class="dropdown-menu">
+          <label v-for="actor in allActorsName" :key="actor" class="dropdown-item">
+            <input type="checkbox" v-model="addActors" :value="actor"/>
+            {{ actor }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <textarea v-model="addDescription" placeholder="Description" class="form-textarea"></textarea>
+    <button @click="saveContent" class="form-button">Save content</button>
   </div>
 </template>
 
@@ -31,20 +35,23 @@ import {getActorList, postFilm} from "@/service/contentApi.js";
 import MultiSelectCombo from "@/components/MultiSelectCombo.vue";
 
 let allActorsName = ref([])
-// Reactive state
-const IdFilm = ref("");
+
 const addTitle = ref("");
 const addRelease_year = ref("");
 const addGenre = ref("");
 const addActors = ref([]);
 const addRating = ref("");
 const addDescription = ref("");
-const addImage_path = ref("/interstellar.jpg");
+const addImage_path = ref("/film-default.jpg");
+const dropdownOpen = ref(false);
 
 onMounted(async () => {
   const allActor = await getActorList()
-  allActor.forEach( actor => allActorsName.value.push(actor.surname))
+  allActor.forEach(actor => allActorsName.value.push(actor.surname))
 })
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
 // Methods
 const saveContent = async () => {
   try {
@@ -65,8 +72,6 @@ const saveContent = async () => {
   }
 };
 
-
-
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -77,18 +82,6 @@ const handleFileUpload = (event) => {
 </script>
 
 <style scoped>
-/* Stile Generale */
-.content-management {
-  background: #111;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-/* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
@@ -96,19 +89,61 @@ const handleFileUpload = (event) => {
   margin-bottom: 20px;
 }
 
-/* Input in riga */
 .form-group {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.form-input:focus {
-  background: #444;
-  outline: none;
+.dropdown {
+  position: relative;
+  width: 100%;
 }
 
-/* Textarea */
+.dropdown-toggle {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background: #d3d3d3;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: black;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: black;
+}
+
+.dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+
+.dropdown-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
 .form-textarea {
   font-family: "Arial", sans-serif;
   width: 100%;
@@ -117,7 +152,6 @@ const handleFileUpload = (event) => {
   border-radius: 5px;
   font-size: 16px;
   resize: none;
-
   padding: 10px;
   margin-bottom: 10px;
   background: #d3d3d3;
@@ -125,7 +159,6 @@ const handleFileUpload = (event) => {
   box-sizing: border-box;
 }
 
-/* Pulsanti */
 .form-button {
   width: 100%;
   background: linear-gradient(90deg, #a259ff, #6a0dad);
@@ -143,14 +176,13 @@ const handleFileUpload = (event) => {
   transform: scale(1.05);
 }
 
-.image-input{
+.image-input {
   font-family: "Arial", sans-serif;
   min-height: 20px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   resize: none;
-
   padding: 10px;
   margin-bottom: 10px;
   color: #444;
@@ -158,5 +190,4 @@ const handleFileUpload = (event) => {
   outline: none;
   box-sizing: border-box;
 }
-
 </style>

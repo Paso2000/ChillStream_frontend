@@ -17,6 +17,7 @@
         <div v-if="form.profileImage" class="selected-image-preview">
           <p>Selected Image:</p>
           <img :src="form.profileImage" class="w-24 h-24 rounded-full border-2 border-blue-500" />
+
         </div>
 
         <!-- Image Selection -->
@@ -46,6 +47,7 @@ import { useRouter } from "vue-router";
 import {postProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
 import FormInput from "@/components/FormInput.vue";
+import Button from "@/components/Button.vue";
 
 const form = ref({
   nickname: "",
@@ -122,7 +124,6 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-
 /* 📌 Card profilo */
 .profile-card {
   display: flex;
