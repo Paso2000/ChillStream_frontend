@@ -113,5 +113,55 @@ export const getFilmByActorId = async (actorId) => {
     }
 };
 
+export const getReviewList = async (filmId) => {
+    try {
+        const response = await contentApi.get(`/films/${filmId}/reviews`);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore getting reviews:", error);
+        throw error;
+    }
+};
+
+export const postReview = async (filmId,body) => {
+    try {
+        const response = await contentApi.post(`/films/${filmId}/reviews`,body);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore creating review:", error);
+        throw error;
+    }
+};
+
+export const getReview = async (filmId,reviewId) => {
+    try {
+        const response = await contentApi.get(`/films/${filmId}/reviews/${reviewId}`);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore getting the review:", error);
+        throw error;
+    }
+};
+
+export const putReview = async (filmId,reviewId, body) => {
+    try {
+        const response = await contentApi.put(`/films/${filmId}/reviews/${reviewId}`, body);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore changing the review:", error);
+        throw error;
+    }
+};
+
+export const deleteReview = async (filmId, reviewId) => {
+    try {
+        const response = await contentApi.delete(`/films/${filmId}/reviews/${reviewId}`);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore deleting the review:", error);
+        throw error;
+    }
+};
+
 
 export default contentApi;
