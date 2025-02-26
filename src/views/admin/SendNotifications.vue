@@ -6,6 +6,8 @@
     <div class="section">
       <h4>Add new notifications</h4>
       <div class="form-group">
+        <FormInput v-model="nickname" placeholder="your nickname"/>
+
         <FormInput v-model="text" placeholder="Notification text"/>
       </div>
       <button @click="sendNotification" class="form-button">Send</button>
@@ -14,24 +16,28 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {postFilm} from "@/service/contentApi.js";
+import {ref} from "vue";
+import {defineComponent} from "vue";
+import {getProfiles, getUsers, postUser} from "@/service/authApi.js";
+import {postNotification} from "@/service/interactionApi.js";
 
-export default {
-  components: {Button, FormInput},
-  data() {
-    return {
-      text:""
-    };
-  },
-  methods: {
-    async sendNotification() {
-      console.log("send: ", this.text);
-    },
-  },
-};
+
+
+const text = ref("")
+
+const sendNotification = async () => {
+  let userProfiles = ref([])
+ const allUser = await getUsers();
+ for (const user of allUser.value) {
+   userProfiles =  await getProfiles(user._id,);
+   for (const profile of userProfiles.value) {
+     await postNotification(user._id, profile._id, text.value);
+   }}
+}
 </script>
 
 <style scoped>
