@@ -1,19 +1,27 @@
 <template>
+  <div class="navbar">
+    <Logo/>
+    <Button class="sign-in-btn" @click="goToLogin">Sign In</Button>
+  </div>
+
   <div class="login-container">
-    <img src="/chillStream-logo.png" alt="Logo" class="logo" />
-    <div class="login-box">
-      <h2>Welcome to Chill Stream </h2>
-      <Button @click="goToLogin">Sing In</Button>
-      <Button @click="goToRegister">Sing Up</Button>
+    <!-- Contenuto centrale -->
+    <div class="content">
+      <h1>Unlimited movies, TV shows, and more</h1>
+      <p class="sub-text">Ready to watch? Enter your email to create or restart your membership.</p>
+        <Button @click="goToRegister">Get Started ➤</Button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import Button from "@/components/Button.vue";
+import Logo from "@/components/Logo.vue";
 
 const router = useRouter();
+const email = ref("");
 
 const goToLogin = () => {
   router.push("/login");
@@ -24,16 +32,18 @@ const goToRegister = () => {
 };
 </script>
 
-
 <style scoped>
+
 .login-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100vh;
-  background: url("/background.jpg");
+  background: url("/background.jpg") center/cover no-repeat;
   position: relative;
 }
+
 .login-container::before {
   content: "";
   position: absolute;
@@ -44,28 +54,42 @@ const goToRegister = () => {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.logo {
+.navbar {
   position: absolute;
   top: 20px;
-  left: 20px;
-  height: 120px;
-  transition: transform 0.3s ease-in-out;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
 }
 
-.login-box {
-  background: rgba(43, 43, 43, 0.2);
-  padding: 40px;
-  border-radius: 10px;
+.sign-in-btn {
+  max-width: 150px;
+  margin-right: 100px;
+}
+
+.content {
   text-align: center;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  width: 300px;
-  border: 2px solid #6a0dad;
-  backdrop-filter: blur(10px);
+  color: white;
+  z-index: 2;
+  max-width: 600px;
 }
 
-h2 {
-  color: white;
-  margin-bottom: 20px;
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+.sub-text {
+  font-size: 1rem;
+  margin-top: 20px;
 }
 </style>
-

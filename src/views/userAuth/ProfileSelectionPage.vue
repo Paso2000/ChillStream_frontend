@@ -1,34 +1,39 @@
 <template>
-  <div class="h-screen flex flex-col items-center justify-center bg-gray-100">
-    <h2 class="text-2xl font-bold mb-4">Choose a Profile</h2>
+  <div class="navbar">
+    <Logo/>
+  </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div
-          v-for="profile in profiles"
-          :key="profile.id"
-          class="p-4 bg-white shadow-lg rounded-lg cursor-pointer hover:bg-blue-100"
-          @click="selectProfile(profile)"
-      >
-        <img :src="profile.profileImage" class="w-20 h-20 rounded-full mx-auto" />
-        <p class="text-center mt-2">{{ profile.nickname }}</p>
-      </div>
+  <div class="selection-container">
+    <!-- Selezione profilo -->
+    <div class="content">
+      <h1>Who wants to watch ChillStream?</h1>
 
-      <!-- Pulsante per aggiungere un nuovo profilo -->
-      <div
-          class="p-4 bg-white shadow-lg rounded-lg cursor-pointer hover:bg-blue-100 flex flex-col items-center justify-center"
-          @click="addProfile"
-      >
-        <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center text-4xl font-bold text-gray-600">+</div>
-        <p class="text-center mt-2">Add Profile</p>
+      <div class="profile-container">
+        <div
+            v-for="profile in profiles"
+            :key="profile.id"
+            class="profile-card"
+            @click="selectProfile(profile)"
+        >
+          <img :src="profile.profileImage" class="profile-image"/>
+          <p class="profile-name">{{ profile.nickname }}</p>
+        </div>
+
+        <div>
+          <button class="add-profile" @click="addProfile">+</button>
+          <p class="profile-name">New Profile</p>
+        </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { getProfiles } from "@/service/authApi.js";
+import {ref, onMounted} from "vue";
+import {useRouter} from "vue-router";
+import {getProfiles} from "@/service/authApi.js";
+import Logo from "@/components/Logo.vue";
 
 const profiles = ref([]);
 const router = useRouter();
@@ -51,3 +56,104 @@ const addProfile = () => {
   router.push("/createProfile");
 };
 </script>
+
+<style scoped>
+/* 📌 Contenitore principale con sfondo */
+.selection-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #141414; /* Sfondo nero come Netflix */
+  position: relative;
+}
+
+.navbar {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
+}
+
+/* 📌 Contenuto principale */
+.content {
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* 📌 Contenitore profili */
+.profile-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📌 Card profilo */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.profile-card:hover {
+  transform: scale(1.1);
+}
+
+/* 📌 Immagine profilo */
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 3px solid transparent;
+  transition: border 0.3s;
+}
+
+.profile-card:hover .profile-image {
+  border: 3px solid white;
+}
+
+/* 📌 Nome profilo */
+.profile-name {
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* 📌 Bottone + per aggiungere un profilo */
+.add-profile {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 48px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-profile:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+</style>

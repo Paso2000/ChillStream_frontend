@@ -1,21 +1,15 @@
 <template>
-  <div class="h-screen flex flex-col items-center justify-center bg-gray-100">
-    <h2 class="text-2xl font-bold mb-4">Create Your Profile</h2>
+  <div class="navbar">
+    <Logo/>
+  </div>
+  <div class="selection-container">
+    <!-- Selezione profilo -->
+    <div class="content">
+      <h1>Create new profile</h1>
 
-    <form @submit.prevent="createProfile" class="bg-white p-6 rounded-lg shadow-lg w-96">
-      <!-- Nickname Input -->
-      <label class="block font-semibold mb-2">Nickname</label>
-      <input
-          v-model="form.nickname"
-          type="text"
-          placeholder="Enter your nickname"
-          class="w-full p-2 border rounded-md mb-4"
-          required
-      />
-
-      <!-- Profile Image Selection -->
-      <label class="block font-semibold mb-2">Choose a Profile Image</label>
-      <div class="flex justify-center gap-4">
+      <div class="profile-container">
+        <FormInput v-model="form.nickname" type="email" placeholder="Nickname" required/>
+        <p class="profile-name">Choose an image</p>
         <div
             v-for="(image, index) in defaultImages"
             :key="index"
@@ -25,22 +19,21 @@
         >
           <img :src="image" class="w-20 h-20 rounded-full"  alt=""/>
         </div>
-      </div>
+        <div>
+           <Button @click="handleLogin">Save</Button>
+        </div>
 
-      <!-- Submit Button -->
-      <button
-          type="submit"
-          class="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-      >
-        Create Profile
-      </button>
-    </form>
+      </div>
+    </div>
   </div>
 </template>
+
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {postProfile} from "@/service/authApi.js";
+import Logo from "@/components/Logo.vue";
+import FormInput from "@/components/FormInput.vue";
 
 const form = ref({
   nickname: "",
@@ -50,9 +43,9 @@ const router = useRouter();
 
 // Default profile images
 const defaultImages = [
-  "/sfondo1.png",
-  "/sfondo2.png",
-  "/sfondo3.png"
+  "/profile1.png",
+  "/profile2.png",
+  "/profile3.png"
 ];
 
 // Function to handle form submission
@@ -72,3 +65,104 @@ const createProfile = async () => {
   }
 };
 </script>
+
+<style scoped>
+/* 📌 Contenitore principale con sfondo */
+.selection-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #141414; /* Sfondo nero come Netflix */
+  position: relative;
+}
+
+.navbar {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
+}
+
+/* 📌 Contenuto principale */
+.content {
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* 📌 Contenitore profili */
+.profile-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 📌 Card profilo */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.profile-card:hover {
+  transform: scale(1.1);
+}
+
+/* 📌 Immagine profilo */
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 3px solid transparent;
+  transition: border 0.3s;
+}
+
+.profile-card:hover .profile-image {
+  border: 3px solid white;
+}
+
+/* 📌 Nome profilo */
+.profile-name {
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* 📌 Bottone + per aggiungere un profilo */
+.add-profile {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 48px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-profile:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+</style>

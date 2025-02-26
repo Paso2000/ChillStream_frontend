@@ -1,20 +1,21 @@
 <template>
+  <div class="navbar">
+    <Logo/>
+  </div>
 
   <div class="login-container">
-    <img src="/chillStream-logo.png" alt="Logo" class="logo"/>
     <div class="login-box">
-      <h2>Register new account</h2>
+      <h2>New account</h2>
       <FormInput v-model="form.name" type="name" placeholder="Name" required/>
       <FormInput v-model="form.surname" type="surname" placeholder="Surname" required/>
       <FormInput v-model="form.email" type="email" placeholder="Email" required/>
       <FormInput v-model="form.password" type="password" placeholder="Password" required/>
-      <input v-model="form.date_of_birth" type="date" class="w-full p-2 border rounded" required/>
+      <input v-model="form.date_of_birth" type="date" class="dataForm" required/>
       <div class="mb-4">
-        <label class="block text-sm font-medium">Payment Method</label>
-        <select v-model="form.paymentMethod" class="w-full p-2 border rounded">
-          <option value="carta">Carta</option>
+        <select v-model="form.paymentMethod" class="dataForm">
+          <option value="card">Card</option>
           <option value="paypal">PayPal</option>
-          <option value="bonifico">Bonifico</option>
+          <option value="transfer">Transfer</option>
         </select>
         <Button @click="registerUser">Sign Up</Button>
       </div>
@@ -27,7 +28,8 @@ import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {getUsers, postUser} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
-import Button from "@/components/Button.vue"; // Import API function
+import Button from "@/components/Button.vue";
+import Logo from "@/components/Logo.vue"; // Import API function
 
 const router = useRouter();
 
@@ -37,11 +39,10 @@ const form = ref({
   email: "",
   password: "",
   date_of_birth: "",
-  paymentMethod: "carta",
+  paymentMethod: "card",
 });
 
 const registerUser = async () => {
-  console.log("Dati inviati al server:", form.value);
   try {
     const user = await postUser(form.value);
     alert("Registration successful!");
@@ -75,12 +76,16 @@ const registerUser = async () => {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.logo {
+.navbar {
   position: absolute;
   top: 20px;
-  left: 20px;
-  height: 120px;
-  transition: transform 0.3s ease-in-out;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
 }
 
 .login-box {
@@ -97,6 +102,20 @@ const registerUser = async () => {
 h2 {
   color: white;
   margin-bottom: 20px;
+}
+
+.dataForm{
+  width: 100%;
+  font-family: "Arial", sans-serif;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 10px;
+  background: #d3d3d3;
+  outline: none;
+  box-sizing: border-box;
 }
 </style>
 
