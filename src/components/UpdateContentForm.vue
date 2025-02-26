@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="section">
     <h4>Update content</h4>
@@ -9,25 +7,31 @@
       <FormInput v-model="genre" placeholder="Genre"/>
     </div>
     <div class="form-group">
-      <MultiSelectCombo
-          v-model="addActors"
-          :options="allActorsName"/>
-     <FormInput v-model="rating" placeholder="Rating"/>
+      <FormInput v-model="rating" placeholder="Rating"/>
       <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
-
+      <div class="dropdown">
+        <button class="dropdown-toggle" @click="toggleDropdown">
+          Select actors ⬇
+        </button>
+        <div v-if="dropdownOpen" class="dropdown-menu">
+          <label v-for="actor in allActorsName" :key="actor" class="dropdown-item">
+            <input type="checkbox" v-model="addActors" :value="actor"/>
+            {{ actor }}
+          </label>
+        </div>
+      </div>
     </div>
     <textarea v-model="updateDescription" placeholder="Description" class="form-textarea"></textarea>
     <button @click="updateContent" class="form-button">Update content</button>
   </div>
-
 </template>
 
 <script setup>
-
 import FormInput from "@/components/FormInput.vue";
 import MultiSelectCombo from "@/components/MultiSelectCombo.vue";
 import {onMounted, ref} from "vue";
 import {getActorList, getFilmList, postFilm, putFilm} from "@/service/contentApi.js";
+import Button from "@/components/Button.vue";
 
 let allActorsName = ref([])
 // Reactive state
@@ -38,11 +42,16 @@ const addActors = ref([]);
 const rating = ref("");
 const image_path = ref("/interstellar.jpg");
 const updateDescription = ref("");
+const dropdownOpen = ref(false);
+
 
 onMounted(async () => {
   const allActor = await getActorList()
-  allActor.forEach( actor => allActorsName.value.push(actor.surname))
+  allActor.forEach(actor => allActorsName.value.push(actor.surname))
 })
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
 const updateContent = async () => {
   try {
     const filmData = {
@@ -57,18 +66,16 @@ const updateContent = async () => {
     const allFilms = await getFilmList();
     const filmFound = allFilms.find(
         (film) => title.value === film.title);
-    if (filmFound){
-      await putFilm(filmFound._id,filmData);
+    if (filmFound) {
+      await putFilm(filmFound._id, filmData);
       alert("Film changed successfully");
-    }
-    else {
+    } else {
       alert("Film not found")
     }
 
   } catch (error) {
     alert("Error saving film:");
   }
-
 };
 
 const handleFileUpload = (event) => {
@@ -81,18 +88,6 @@ const handleFileUpload = (event) => {
 </script>
 
 <style scoped>
-/* Stile Generale */
-.content-management {
-  background: #111;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-/* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
@@ -100,19 +95,59 @@ const handleFileUpload = (event) => {
   margin-bottom: 20px;
 }
 
-/* Input in riga */
 .form-group {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.form-input:focus {
-  background: #444;
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+.dropdown-toggle {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background: #d3d3d3;
+  border: none;
+  border-radius: 5px;
   outline: none;
+  color: black;
+  text-align: left;
+  cursor: pointer;
 }
 
-/* Textarea */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: black;
+}
+
+.dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+.dropdown-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
 .form-textarea {
   font-family: "Arial", sans-serif;
   width: 100%;
@@ -121,7 +156,6 @@ const handleFileUpload = (event) => {
   border-radius: 5px;
   font-size: 16px;
   resize: none;
-
   padding: 10px;
   margin-bottom: 10px;
   background: #d3d3d3;
@@ -129,7 +163,6 @@ const handleFileUpload = (event) => {
   box-sizing: border-box;
 }
 
-/* Pulsanti */
 .form-button {
   width: 100%;
   background: linear-gradient(90deg, #a259ff, #6a0dad);
@@ -147,14 +180,13 @@ const handleFileUpload = (event) => {
   transform: scale(1.05);
 }
 
-.image-input{
+.image-input {
   font-family: "Arial", sans-serif;
   min-height: 20px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   resize: none;
-
   padding: 10px;
   margin-bottom: 10px;
   color: #444;
@@ -162,5 +194,4 @@ const handleFileUpload = (event) => {
   outline: none;
   box-sizing: border-box;
 }
-
 </style>

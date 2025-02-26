@@ -6,9 +6,9 @@
     <div class="section">
       <h4>Add new actor</h4>
       <div class="form-group">
-        <FormInput v-model="name" placeholder="Name"/>
-        <FormInput v-model="surname" placeholder="Surname"/>
-        <FormInput v-model="date_of_birth" placeholder="date of birth"/>
+        <FormInput v-model="saveName" placeholder="Name"/>
+        <FormInput v-model="saveSurname" placeholder="Surname"/>
+        <FormInput v-model="saveDate_of_birth" placeholder="date of birth"/>
       </div>
       <button @click="saveActor" class="form-button">Save actors</button>
     </div>
@@ -17,10 +17,9 @@
     <div class="section">
       <h4>Update actor</h4>
       <div class="form-group">
-        <FormInput v-model="idActor" placeholder="Id Actor"/>
-        <FormInput v-model="name" placeholder="Name"/>
-        <FormInput v-model="surname" placeholder="Surname"/>
-        <FormInput v-model="date_of_birth" placeholder="date of birth"/>
+        <FormInput v-model="updateName" placeholder="Name"/>
+        <FormInput v-model="updateSurname" placeholder="Surname"/>
+        <FormInput v-model="updateDate_of_birth" placeholder="date of birth"/>
       </div>
       <button @click="updateActor" class="form-button">Update actor</button>
     </div>
@@ -28,38 +27,82 @@
     <!-- Delete actor -->
     <div class="section">
       <h4>Delete actor</h4>
-      <FormInput v-model="idActor" placeholder="Id Actor"/>
-      <button @click="deleteActor" class="form-button">Delete</button>
+      <FormInput v-model="deleteSurname" placeholder="Surname"/>
+      <button @click="deleteActorFromDb" class="form-button">Delete</button>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
-import {postFilm} from "@/service/contentApi.js";
+import {deleteActor, getActorList, getFilmList, postActors, putActor, putFilm} from "@/service/contentApi.js";
 
-export default {
-  components: {Button, FormInput},
-  data() {
-    return {
-      idActor: "",
-      name: "",
-      surname: "",
-      date_of_birth: ""
+// Actor data
+const saveName = ref("");
+const saveSurname = ref("");
+const saveDate_of_birth = ref("");
+const updateDate_of_birth = ref("");
+const updateSurname = ref("");
+const updateName = ref("");
+const deleteSurname = ref("");
+
+
+
+// Methods
+const saveActor = async () => {
+  try {
+    const actorData = {
+      name: saveName.value,
+      surname: saveSurname.value,
+      date_of_birth: saveDate_of_birth.value
     };
-  },
-  methods: {
-    async saveActor() {
-      console.log("Save new actor:", this.name);
-    },
-    updateActor() {
-      console.log("Updating actor:", this.idActor);
-    },
-    deleteActor() {
-      console.log("Deleting actor:", this.idActor);
-    },
-  },
+
+      await postActors(actorData);
+      alert("Actor saved successfully");
+
+  } catch (error) {
+    alert("Error saving actor:");
+  }
+};
+
+const updateActor = async () => {
+  try {
+    const actorData = {
+      name: saveName.value,
+      surname: saveSurname.value,
+      date_of_birth: saveDate_of_birth.value
+    };
+    const allActor = await getActorList();
+    const actorFound = allActor.find(
+        (actor) => updateSurname.value === actor.surname);
+    if (actorFound) {
+      await putActor(actorFound._id, actorData);
+      alert("Actor changed successfully");
+    } else {
+      alert("Actor not found")
+    }
+
+  } catch (error) {
+    alert("Error changing actor:");
+  }
+};
+
+const deleteActorFromDb = async () => {
+  try {
+    const allActor = await getActorList();
+    const actorFound = allActor.find(
+        (actor) => deleteSurname.value === actor.surname);
+    if (actorFound) {
+      await deleteActor(actorFound._id);
+      alert("Actor deleted successfully");
+    } else {
+      alert("Actor not found")
+    }
+  } catch (error) {
+    alert("Error deleting actor:");
+  }
 };
 </script>
 

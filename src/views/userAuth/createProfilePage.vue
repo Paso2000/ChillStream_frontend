@@ -1,28 +1,41 @@
 <template>
   <div class="navbar">
-    <Logo/>
+    <Logo />
   </div>
+
   <div class="selection-container">
-    <!-- Selezione profilo -->
+    <!-- Profile Selection -->
     <div class="content">
-      <h1>Create new profile</h1>
+      <h1>Create New Profile</h1>
 
       <div class="profile-container">
-        <FormInput v-model="form.nickname" type="email" placeholder="Nickname" required/>
+        <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required />
+
         <p class="profile-name">Choose an image</p>
-        <div
-            v-for="(image, index) in defaultImages"
-            :key="index"
-            class="profile-card"
-            :class="{ 'border-blue-500': form.selectedImage === image }"
-            @click="form.selectedImage = image"
-        >
-          <img :src="image" class="profile-image"  alt=""/>
-        </div>
-        <div>
-           <Button @click="handleLogin">Save</Button>
+
+        <!-- Selected Image Preview -->
+        <div v-if="form.profileImage" class="selected-image-preview">
+          <p>Selected Image:</p>
+          <img :src="form.profileImage" class="w-24 h-24 rounded-full border-2 border-blue-500" />
+
         </div>
 
+        <!-- Image Selection -->
+        <div class="grid grid-cols-3 gap-4 mt-4">
+          <div
+              v-for="(image, index) in defaultImages"
+              :key="index"
+              class="p-2 border rounded-lg cursor-pointer"
+              :class="{ 'border-blue-500': form.profileImage === image }"
+              @click="form.profileImage = image"
+          >
+            <img :src="image" class="w-20 h-20 rounded-full" alt="Profile Image" />
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <Button @click="createProfile">Save</Button>
+        </div>
       </div>
     </div>
   </div>
@@ -38,8 +51,9 @@ import Button from "@/components/Button.vue";
 
 const form = ref({
   nickname: "",
-  selectedImage: null,
+  profileImage: "",
 });
+
 const router = useRouter();
 
 // Default profile images
@@ -51,20 +65,19 @@ const defaultImages = [
 
 // Function to handle form submission
 const createProfile = async () => {
-  if (!form.selectedImage.value) {
+  if (!form.value.profileImage&&!form.value.nickname) {
     alert("Please select a profile image.");
-    return;
-  }
-
+  }else {
   try {
-    const profile = await postProfile(localStorage.getItem("user"),form)
+    const profile = await postProfile(localStorage.getItem("user"),form.value)
     localStorage.setItem("profile",profile._id)
     // Redirect to home after creating profile
-    await router.push("/home");
+    await router.push("/profiles");
+    alert("profile created ")
   } catch (error) {
     console.error("Error creating profile", error);
   }
-};
+}};
 </script>
 
 <style scoped>
