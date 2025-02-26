@@ -13,11 +13,11 @@
         <div
             v-for="(image, index) in defaultImages"
             :key="index"
-            class="p-2 border rounded-lg cursor-pointer"
+            class="profile-card"
             :class="{ 'border-blue-500': form.selectedImage === image }"
             @click="form.selectedImage = image"
         >
-          <img :src="image" class="w-20 h-20 rounded-full"  alt=""/>
+          <img :src="image" class="profile-image"  alt=""/>
         </div>
         <div>
            <Button @click="handleLogin">Save</Button>
@@ -34,6 +34,7 @@ import { useRouter } from "vue-router";
 import {postProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
 import FormInput from "@/components/FormInput.vue";
+import Button from "@/components/Button.vue";
 
 const form = ref({
   nickname: "",
@@ -110,7 +111,6 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-
 /* 📌 Card profilo */
 .profile-card {
   display: flex;

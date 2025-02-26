@@ -1,6 +1,9 @@
 <template>
+  <div class="navbar">
+    <Logo/>
+  </div>
+
   <div class="login-container">
-    <img src="/chillStream-logo.png" alt="Logo" class="logo" />
     <div class="login-box">
       <h2>Admin Sign In</h2>
       <FormInput v-model="username" type="username" placeholder="User"/>
@@ -16,6 +19,7 @@ import { useRouter } from "vue-router";
 import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
+import Logo from "@/components/Logo.vue";
 
 const username = ref("GiammaIlControllore");
 const password = ref("pastaConTonno");
@@ -43,6 +47,18 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
+.navbar {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 10;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -59,14 +75,6 @@ const handleLogin = async () => {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-}
-
-.logo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  height: 120px;
-  transition: transform 0.3s ease-in-out;
 }
 
 .login-box {
