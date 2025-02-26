@@ -1,6 +1,6 @@
 <template>
   <div class="content-card">
-    <img :src="content.image" :alt="content.title" class="content-img" />
+    <img :src="content.image_path" :alt="content.title" class="content-img" />
   </div>
 </template>
 

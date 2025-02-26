@@ -32,6 +32,7 @@ const recommendedMovies = ref([]);
 
 onMounted(async () => {
   allMovies.value = await getFilmList();
+  console.log(allMovies.value);
 
   const viewed = await getViewList(localStorage.getItem("user"), localStorage.getItem("profile"));
   viewedMovies.value = viewed.map(view => view.filmDetails);
@@ -44,7 +45,7 @@ onMounted(async () => {
 <style scoped>
 /* 📌 Stili generali */
 .homepage {
-  background: black;
+  background: #3d3c3c;
   color: white;
   min-height: 100vh;
 }
@@ -61,13 +62,5 @@ onMounted(async () => {
   font-weight: bold;
   text-align: center;
   margin-bottom: 30px;
-}
-
-/* 📌 Sezione attori */
-.actor-selection {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  text-align: center;
 }
 </style>
