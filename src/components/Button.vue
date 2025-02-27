@@ -1,11 +1,28 @@
 <template>
-  <button class="custom-button" @click="$emit('click')">
+  <button class="custom-button" @click="handleClick">
     <slot></slot>
   </button>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { ref } from "vue";
+
+const isClicked = ref(false);
+
+const handleClick = (event) => {
+  if (isClicked.value) return; // Previene il doppio click accidentale
+  isClicked.value = true;
+  setTimeout(() => {
+    isClicked.value = false; // Reset dopo un breve tempo
+  }, 300);
+
+  // Emetti l'evento click solo una volta
+  event.stopPropagation();
+  event.preventDefault();
+  emit("click");
+};
+
+const emit = defineEmits(["click"]);
 </script>
 
 <style scoped>

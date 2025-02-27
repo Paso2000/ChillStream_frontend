@@ -26,7 +26,7 @@
 <script setup>
 import {ref} from "vue";
 import {useRouter} from "vue-router";
-import {getUsers, postUser} from "@/service/authApi.js";
+import {postUser} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue"; // Import API function
@@ -44,14 +44,19 @@ const form = ref({
 
 const registerUser = async () => {
   try {
+    alert("CALLED")
     const user = await postUser(form.value);
-    alert("Registration successful!");
-    localStorage.setItem("user", user._id);
-    await router.push(`/profiles`); // Reindirizza alla selezione profili
-  } catch (error) {
-    console.error("Error registering user:", error);
-    alert("Registration failed.");
-  }
+    if (user) {
+      alert("Registration successful!");
+      localStorage.setItem("user", user._id);
+      router.push(`/profiles`);
+    }}
+   catch (error) {
+      alert("User not registered correctly")
+     console.error("Error registering user:", error);
+
+   }
+
 };
 </script>
 
