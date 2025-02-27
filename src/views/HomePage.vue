@@ -45,15 +45,15 @@ onMounted(async () => {
 <style scoped>
 /* 📌 Stili generali */
 .homepage {
-  background: #3d3c3c;
+  background: linear-gradient(135deg, #000000, #111);
+//background: url("/background2.jpg");
   color: white;
   min-height: 100vh;
 }
 
 /* 📌 Contenuto principale */
 .content {
-  padding: 20px 50px;
-  margin-top: 80px;
+  padding: 20px;
 }
 
 /* 📌 Titolo principale */

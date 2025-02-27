@@ -1,14 +1,30 @@
 <template>
-  <div class="content-card">
+  <div v-if="content" @click="goToDetails" class="content-card">
     <img :src="content.image_path" :alt="content.title" class="content-img" />
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { useRouter } from "vue-router";
+
+const props = defineProps({
   content: Object,
 });
+
+const router = useRouter();
+
+const goToDetails = () => {
+  console.log(props.content)
+  if (props.content && props.content._id) {
+    console.log("Navigating to film with ID:", props.content._id);
+    localStorage.setItem("film", props.content._id);
+    router.push(`/film`);
+  } else {
+    console.error("Film ID is missing!");
+  }
+};
 </script>
+
 
 <style scoped>
 .content-card {

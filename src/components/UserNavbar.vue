@@ -1,57 +1,109 @@
 <template>
   <nav class="navbar">
-    <div class="logo">
-      <img src="/chillStream-logo.png" alt="ChillStream Logo" />
-    </div>
-    <ul class="menu">
-      <li>Home</li>
-      <li>TV Shows</li>
-      <li>Movies</li>
-      <li>New & Popular</li>
-      <li>My List</li>
-    </ul>
-    <div class="icons">
-      <i class="fas fa-search"></i>
-      <i class="fas fa-bell"></i>
-      <img src="/profile1.png" class="profile-icon" />
+    <div class="navbar-box">
+      <!-- Logo e sezioni della navbar -->
+      <div class="left-section">
+        <div class="logo">
+          <img src="/chillStream-logo.png" alt="ChillStream Logo" />
+        </div>
+        <ul class="nav-links">
+          <li @click="$emit('changeSection', 'contents')">CONTENTS MANAGEMENT</li>
+          <li @click="$emit('changeSection', 'actors')">ACTORS MANAGEMENT</li>
+          <li @click="$emit('changeSection', 'notifications')">SEND NOTIFICATIONS</li>
+        </ul>
+      </div>
+
+      <!-- Barra di ricerca e icona profilo -->
+      <div class="right-section">
+        <input type="text" placeholder="Search..." class="search-bar" />
+        <div class="profile-icon" @click="$emit('openProfile')">
+          <img src="/profile1.png" alt="Profile" />
+        </div>
+      </div>
     </div>
   </nav>
 </template>
 
+<script>
+export default {};
+</script>
+
 <style scoped>
+/* Stile Navbar */
 .navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Arial", sans-serif;
+  width: 100%;
+}
+
+.navbar-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 50px;
-  background: rgba(0, 0, 0, 0.8);
-  position: fixed;
   width: 100%;
-  top: 0;
-  z-index: 100;
+  padding: 15px 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+}
+
+/* Sezione sinistra con logo e menu */
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logo img {
-  height: 40px;
+  height: 50px;
 }
 
-.menu {
+.nav-links {
   display: flex;
-  gap: 20px;
   list-style: none;
-  color: white;
+  gap: 20px;
 }
 
-.icons {
+.nav-links li {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-links li:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Sezione destra con barra di ricerca e profilo */
+.right-section {
   display: flex;
   align-items: center;
   gap: 15px;
-  color: white;
 }
 
-.profile-icon {
-  height: 35px;
+.search-bar {
+  padding: 5px 10px;
+  border: none;
   border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.profile-icon img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-icon img:hover {
+  transform: scale(1.1);
 }
 </style>
