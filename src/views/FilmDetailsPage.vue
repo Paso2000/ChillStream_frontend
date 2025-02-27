@@ -25,13 +25,13 @@
       <!-- Input per scrivere una recensione -->
       <div class="review-input">
         <input v-model="newReview.text" type="text" placeholder="Write a review..." />
-        <button @click="addReview">Submit</button>
+        <Button @click="addReview">Submit</Button>
       </div>
 
       <div v-if="movie.reviews.length === 0">No reviews yet.</div>
       <ul>
         <li v-for="review in fullReview" :key="review.id">
-          <strong>{{ review.profile_id }}:</strong> {{ review.text }}
+          <strong>{{ review.nickname }}:</strong> {{ review.text }}
         </li>
       </ul>
     </div>
@@ -46,9 +46,10 @@ import {onMounted, ref} from "vue";
 import {loadRouteLocation, useRoute} from "vue-router";
 import {getActor, getFilm, getReview, getReviewList, postReview} from "@/service/contentApi.js";
 import {getProfile} from "@/service/authApi.js";
-
+import Button from "@/components/Button.vue";
 const newReview = ref({
   film_id: localStorage.getItem("film"),
+  nickname: localStorage.getItem("nicknameProfile"),
   profile_id: localStorage.getItem("profile"),
   text:"",
 })
@@ -65,19 +66,15 @@ const movie = ref({
   reviews: [],
 });
 useRoute();
+    //find the movie
 onMounted(async () => {
   movie.value = await getFilm(localStorage.getItem("film"));
+  //with all the actors info
   for (const actor of movie.value.actors) {
     fullActors.value.push(await getActor(actor))
       }
-
+    //get all the review
   fullReview =  await getReviewList(localStorage.getItem("film"))
-
-  for (const fullRew of fullReview) {
-    const profile = await getProfile(localStorage.getItem("user"),localStorage.getItem("profile"))
-    fullRew._profileId = profile.nickname
-  }
-
 });
 
 const addReview = async () => {
@@ -87,7 +84,7 @@ const addReview = async () => {
   }catch (error){
     alert("Review not created")
   }
-  newReview.text = ""
+  newReview.value.text =""
 }
 </script>
 
