@@ -64,10 +64,7 @@ const movie = ref({
   actors: [],
   reviews: [],
 });
-
-
-const route = useRoute();
-
+useRoute();
 onMounted(async () => {
   movie.value = await getFilm(localStorage.getItem("film"));
   for (const actor of movie.value.actors) {
@@ -76,7 +73,7 @@ onMounted(async () => {
 
   fullReview =  await getReviewList(localStorage.getItem("film"))
 
-  for (const fullRew of movie.value.reviews) {
+  for (const fullRew of fullReview) {
     const profile = await getProfile(localStorage.getItem("user"),localStorage.getItem("profile"))
     fullRew._profileId = profile.nickname
   }
