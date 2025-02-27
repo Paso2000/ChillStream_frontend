@@ -26,7 +26,6 @@ export default {};
   display: flex;
   justify-content: center;
   align-items: center;
-  //background: url("/background.jpg") no-repeat center center/cover;
   color: white;
   font-family: "Arial", sans-serif;
   width: 100%;
