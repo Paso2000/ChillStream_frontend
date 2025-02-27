@@ -4,8 +4,6 @@
     <Navbar />
 
     <div class="content">
-      <h1 class="page-title">Movie Library 🎬</h1>
-
       <!-- Trending Movies -->
       <ContentRow title="Trending Movies 🔥" :contents="allMovies" />
 
