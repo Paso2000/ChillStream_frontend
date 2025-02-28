@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <!-- Navbar -->
-    <Navbar />
+    <UserNavbar />
 
     <div class="content">
       <!-- Trending Movies -->
@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import Navbar from "@/components/UserNavbar.vue";
+import UserNavbar from "@/components/UserNavbar.vue";
 import ContentRow from "@/components/ContentRow.vue";
 import {getFilmList } from "@/service/contentApi.js";
 import { getRecommendedList, getViewList } from "@/service/interactionApi.js";

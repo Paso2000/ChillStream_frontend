@@ -1,57 +1,55 @@
 <template>
-  <div class="movie-details">
-    <div class="movie-header">
-      <img :src="movie.image_path" alt="Movie Cover" class="movie-cover" />
-      <div class="movie-info">
-        <h1>{{ movie.title }}</h1>
-        <p><strong>Release Year:</strong> {{ movie.release_year }}</p>
-        <p><strong>Rating:</strong> ⭐ {{ movie.rating }}/10</p>
-        <p><strong>Genre:</strong> {{ movie.genre }}</p>
+  <div class="filmDetailsPage">
+    <UserNavbar/>
+    <div class="movie-container">
+      <div class="movie-banner" :style="{ backgroundImage: `url(${movie.image_path})` }">
+        <div class="movie-overlay">
+          <div class="movie-info">
+            <h1>{{ movie.title }}</h1>
+            <p class="release-year">{{ movie.release_year }} | ⭐ {{ movie.rating }}/10 | {{ movie.genre }}</p>
+            <p class="description">{{ movie.description }}</p>
+
+            <div class="movie-actions">
+              <Button @click="watchMovie">▶ Play</Button>
+              <Button @click="addToRecommended">+ My List</Button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- Bottoni per guardare il film e aggiungerlo ai consigliati -->
-    <div class="movie-actions">
-      <Button @click="watchMovie">🎬 Watch Now</Button>
-      <Button @click="addToRecommended">⭐ Add to Recommended</Button>
-    </div>
-
-    <div class="movie-cast">
-      <h2>Cast</h2>
-      <ul>
-        <li v-for="actor in fullActors" :key="actor._id">
-          {{ actor.name }} {{ actor.surname }}
-        </li>
-      </ul>
-    </div>
-
-    <div class="movie-reviews">
-      <h2>Reviews</h2>
-
-      <!-- Input per scrivere una recensione -->
-      <div class="review-input">
-        <input v-model="newReview.text" type="text" placeholder="Write a review..." />
-        <Button @click="addReview">Submit</Button>
+      <div class="movie-cast">
+        <h2>Cast</h2>
+        <ul>
+          <li v-for="actor in fullActors" :key="actor._id">
+            {{ actor.name }} {{ actor.surname }}
+          </li>
+        </ul>
       </div>
 
-      <div v-if="fullReview.length === 0">No reviews yet.</div>
-      <ul>
-        <li v-for="review in fullReview" :key="review.id">
-          <strong>{{ review.nickname }}:</strong> {{ review.text }}
-        </li>
-      </ul>
+      <div class="movie-reviews">
+        <h2>Reviews</h2>
+        <div class="review-input">
+          <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..."/>
+          <Button @click="addReview">Submit</Button>
+        </div>
+        <div v-if="fullReview.length === 0">No reviews yet.</div>
+        <ul>
+          <li v-for="review in fullReview" :key="review.id">
+            <strong>{{ review.nickname }}:</strong> {{ review.text }}
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <router-link to="/" class="back-button">Back to Home</router-link>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
-import { getActor, getFilm, getReviewList, postReview } from "@/service/contentApi.js";
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+import {getActor, getFilm, getReviewList, postReview} from "@/service/contentApi.js";
 import Button from "@/components/Button.vue";
 import {postRecommended, postView} from "@/service/interactionApi.js";
+import UserNavbar from "@/components/UserNavbar.vue";
+import FormInput from "@/components/FormInput.vue";
 
 const newReview = ref({
   film_id: localStorage.getItem("film"),
@@ -121,7 +119,7 @@ const addToRecommended = async () => {
       userId: localStorage.getItem("user"),
       profileId: localStorage.getItem("profile"),
     })
-    await postRecommended(recommended.value.userId,recommended.value.profileId,recommended.value);
+    await postRecommended(recommended.value.userId, recommended.value.profileId, recommended.value);
     alert(`${movie.value.title} added to recommended!`);
   } catch (error) {
     alert("Could not add to recommended");
@@ -130,67 +128,64 @@ const addToRecommended = async () => {
 </script>
 
 <style scoped>
-.movie-details {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+.filmDetailsPage{
+  background: linear-gradient(135deg, #000000, #111);
+  color: white;
+  min-height: 100vh;
 }
 
-.movie-header {
+.movie-container {
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.movie-banner {
+  position: relative;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
-  gap: 20px;
 }
 
-.movie-cover {
-  width: 200px;
-  border-radius: 10px;
+.movie-overlay {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+  padding: 40px;
+  width: 50%;
 }
 
 .movie-info h1 {
-  margin: 0;
-  font-size: 24px;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.release-year {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .movie-actions {
-  margin-top: 20px;
   display: flex;
   gap: 10px;
 }
 
-.movie-cast,
-.movie-reviews {
-  margin-top: 20px;
+.movie-cast, .movie-reviews {
+  padding: 20px;
 }
 
-.movie-cast ul,
-.movie-reviews ul {
-  list-style: none;
-  padding: 0;
+.review-form {
+  max-width: 700px;
 }
 
-.movie-cast li,
-.movie-reviews li {
-  padding: 5px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.back-button {
-  display: block;
-  margin-top: 20px;
-  text-align: center;
+.review-input input {
   padding: 10px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
+  width: 80%;
+  margin-right: 10px;
 }
 
-.back-button:hover {
-  background-color: #0056b3;
-}
 </style>
-0
