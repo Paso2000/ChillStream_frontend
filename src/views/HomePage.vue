@@ -5,13 +5,13 @@
 
     <div class="content">
       <!-- Trending Movies -->
-      <ContentRow title="Trending Movies 🔥" :contents="allMovies" />
+      <ContentRow title="Trending Movies" :contents="allMovies" />
 
       <!-- Viewed Movies -->
-      <ContentRow title="Viewed Movies 🎥" :contents="viewedMovies" />
+      <ContentRow title="Continue to watching" :contents="viewedMovies" />
 
       <!-- Recommended Movies -->
-      <ContentRow title="Recommended Movies 🎯" :contents="recommendedMovies" />
+      <ContentRow title="Recommended Movies" :contents="recommendedMovies" />
 
     </div>
   </div>

@@ -28,10 +28,12 @@ const goToDetails = () => {
 
 <style scoped>
 .content-card {
-  width: 200px;
-  height: 120px;
+  flex: 0 0 auto;
+  width: 250px;
+  height: 160px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
+  margin: 5px 10px;
 }
 
 .content-card:hover {
