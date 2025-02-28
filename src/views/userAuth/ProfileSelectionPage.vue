@@ -49,6 +49,7 @@ onMounted(async () => {
 
 const selectProfile = (profile) => {
   localStorage.setItem("profile", profile._id);
+  localStorage.setItem("nicknameProfile", profile.nickname)
   router.push("/home");
 };
 
