@@ -16,16 +16,38 @@
       <!-- Barra di ricerca e icona profilo -->
       <div class="right-section">
         <input type="text" placeholder="Search..." class="search-bar" />
-        <div class="profile-icon" @click="$emit('openProfile')">
-          <img src="/profile1.png" alt="Profile" />
+        <div class="profile-icon" @click="openProfile">
+          <img :src= "profile.profileImage" alt="ProfileImage" />
         </div>
       </div>
     </div>
   </nav>
 </template>
 
-<script>
-export default {};
+<script setup>
+
+import router from "@/router/index.js";
+import {getProfile} from "@/service/authApi.js";
+import {onMounted, ref} from "vue";
+
+const userId = localStorage.getItem("user")
+const profileId = localStorage.getItem("profile")
+let profile = ref({
+  nickname:"",
+  profileImage:""
+})
+onMounted(async () => {
+  try{
+    profile.value = await getProfile(userId,profileId)
+  }catch (error){
+    alert("Can't get the profile")
+  }
+});
+
+const openProfile = () => {
+  router.push("/ProfileSettings")
+}
+
 </script>
 
 <style scoped>

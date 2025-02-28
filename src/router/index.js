@@ -8,9 +8,15 @@ import HomePage from "@/views/HomePage.vue";
 import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
 import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
 import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
+import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
 
 
 const routes = [
+    {
+        path: "/ProfileSettings",
+        name: "ProfileSettings",
+        component: ProfileSettingsPage,
+    },
     {
         path: "/Film",
         name: "FilmDetailsPage",
