@@ -7,9 +7,9 @@
           <img src="/chillStream-logo.png" alt="ChillStream Logo" />
         </div>
         <ul class="nav-links">
-          <li @click="$emit('changeSection', 'contents')">CONTENTS MANAGEMENT</li>
-          <li @click="$emit('changeSection', 'actors')">ACTORS MANAGEMENT</li>
-          <li @click="$emit('changeSection', 'notifications')">SEND NOTIFICATIONS</li>
+          <li @click="$emit('changeSection', 'home')">HOME</li>
+          <li @click="$emit('changeSection', 'movies')">MOVIES</li>
+          <li @click="$emit('changeSection', 'myList')">MY LIST</li>
         </ul>
       </div>
 

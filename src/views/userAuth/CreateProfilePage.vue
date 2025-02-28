@@ -6,35 +6,26 @@
   <div class="selection-container">
     <!-- Profile Selection -->
     <div class="content">
-      <h1>Create New Profile</h1>
+      <h1 class="title">Create New Profile</h1>
 
       <div class="profile-container">
-        <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required />
-
-        <p class="profile-name">Choose an image</p>
-
-        <!-- Selected Image Preview -->
-        <div v-if="form.profileImage" class="selected-image-preview">
-          <p>Selected Image:</p>
-          <img :src="form.profileImage" class="w-24 h-24 rounded-full border-2 border-blue-500" />
-
-        </div>
+        <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required class="input-nickname" />
 
         <!-- Image Selection -->
         <div class="grid grid-cols-3 gap-4 mt-4">
           <div
               v-for="(image, index) in defaultImages"
               :key="index"
-              class="p-2 border rounded-lg cursor-pointer"
-              :class="{ 'border-blue-500': form.profileImage === image }"
+              class="profile-image-container"
+              :class="{ 'selected': form.profileImage === image }"
               @click="form.profileImage = image"
           >
-            <img :src="image" class="w-20 h-20 rounded-full" alt="Profile Image" />
+            <img :src="image" class="profile-image" alt="Profile Image" />
           </div>
         </div>
 
         <div class="mt-4">
-          <Button @click="createProfile">Save</Button>
+          <Button @click="createProfile" class="save-button">Save</Button>
         </div>
       </div>
     </div>
@@ -81,14 +72,13 @@ const createProfile = async () => {
 </script>
 
 <style scoped>
-/* 📌 Contenitore principale con sfondo */
 .selection-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #141414; /* Sfondo nero come Netflix */
+  background: #141414;
   position: relative;
 }
 
@@ -104,78 +94,59 @@ const createProfile = async () => {
   z-index: 10;
 }
 
-/* 📌 Contenuto principale */
-.content {
-  text-align: center;
-  color: white;
-  z-index: 2;
-}
-
-h1 {
+.title {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  color: white;
+  text-align: center;
 }
 
-/* 📌 Contenitore profili */
-.profile-container {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  align-items: center;
+.input-nickname {
+  margin-bottom: 40px;
+  width: 100%;
 }
-/* 📌 Card profilo */
-.profile-card {
+
+.profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s;
 }
 
-.profile-card:hover {
-  transform: scale(1.1);
-}
-
-/* 📌 Immagine profilo */
-.profile-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 3px solid transparent;
-  transition: border 0.3s;
-}
-
-.profile-card:hover .profile-image {
-  border: 3px solid white;
-}
-
-/* 📌 Nome profilo */
-.profile-name {
-  color: white;
-  margin-top: 10px;
-  font-size: 16px;
-  text-align: center;
-}
-
-/* 📌 Bottone + per aggiungere un profilo */
-.add-profile {
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 48px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
+.grid {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 15px;
 }
 
-.add-profile:hover {
-  background: rgba(255, 255, 255, 0.4);
+.profile-image-container {
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, border 0.3s;
 }
+
+.profile-image-container.selected {
+  transform: scale(1);
+  border: 3px solid #ffffff;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.save-button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
 </style>
