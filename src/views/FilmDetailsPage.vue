@@ -10,8 +10,12 @@
             <p class="description">{{ movie.description }}</p>
 
             <div class="movie-actions">
-              <Button @click="watchMovie">▶ Play</Button>
-              <Button @click="addToRecommended">+ My List</Button>
+              <Button @click="startWatching">
+                  {{ isViewed ? "⏯ Keep Watching at " + timeFilm +" minutes" : "▶ Play" }}
+              </Button>
+              <Button @click="toggleRecommended">
+                {{ isRecommended ? "✔ In My List" : "+ My List" }}
+              </Button>
             </div>
           </div>
         </div>
@@ -47,19 +51,34 @@ import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import {getActor, getFilm, getReviewList, postReview} from "@/service/contentApi.js";
 import Button from "@/components/Button.vue";
-import {postRecommended, postView} from "@/service/interactionApi.js";
+import {
+  deleteRecommended, deleteView,
+  getRecommendedList,
+  getViewList,
+  postRecommended,
+  postView
+} from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
 import FormInput from "@/components/FormInput.vue";
 
-const newReview = ref({
-  film_id: sessionStorage.getItem("film"),
-  nickname: sessionStorage.getItem("nicknameProfile"),
-  profile_id: sessionStorage.getItem("profile"),
-  text: "",
-});
+
 
 const fullActors = ref([]);
 const fullReview = ref([]);
+const isRecommended = ref(false);
+let isViewed = ref(false)
+const userId = sessionStorage.getItem("user")
+const profileId = sessionStorage.getItem("profile")
+const filmId = sessionStorage.getItem("film")
+let timeFilm = 0
+
+const newReview = ref({
+  film_id: filmId,
+  nickname: sessionStorage.getItem("nicknameProfile"),
+  profile_id: profileId,
+  text: "",
+});
+
 const movie = ref({
   title: "",
   image: "",
@@ -74,13 +93,20 @@ const route = useRoute();
 
 // Carica i dati del film
 onMounted(async () => {
-  movie.value = await getFilm(sessionStorage.getItem("film"));
+  movie.value = await getFilm(filmId);
 
   for (const actor of movie.value.actors) {
     fullActors.value.push(await getActor(actor));
   }
 
-  fullReview.value = await getReviewList(sessionStorage.getItem("film"));
+  fullReview.value = await getReviewList(filmId);
+
+
+  const recommendedList = await getRecommendedList(userId, profileId);
+  isRecommended.value = recommendedList.some((rec) => rec.filmId === filmId);
+
+  const viewedList = await getViewList(userId, profileId);
+  isViewed.value = viewedList.some((view) => view.filmId === filmId);
 });
 
 // Aggiunge una recensione e aggiorna la lista in tempo reale
@@ -95,36 +121,51 @@ const addReview = async () => {
 };
 
 // Simula la visualizzazione del film
-const watchMovie = async () => {
-  try {
-    const view = ref({
-      filmId: sessionStorage.getItem("film"),
-      userId: sessionStorage.getItem("user"),
-      profileId: sessionStorage.getItem("profile"),
-      timesOFTheFilm: 23
-    })
-    await postView(view.value.userId, view.value.profileId, view.value)
-    alert("Start watching the film the film");
-  } catch (error) {
-    alert("Could not watch the film");
+const startWatching = async () => {
+
+      try {
+        if (!isViewed.value) {
+          const view = ref({
+            filmId: filmId,
+            userId: userId,
+            profileId: profileId,
+            timesOFTheFilm: Math.floor(Math.random() * 90) + 5
+          })
+          timeFilm = view.value.timesOFTheFilm;
+        await postView(userId, profileId, view.value);
+        isViewed.value = true; // Aggiorna lo stato
+        alert("Now watching " + movie.value.title);
+  } else {
+          await deleteView(userId,profileId,filmId)
+          isViewed.value = false
+          alert("Terminate watching the film " + movie.value.title);
+  }
+} catch (error) {
+    alert("Could not start watching the film.");
   }
 };
 
 // Aggiunge il film ai consigliati
-const addToRecommended = async () => {
+const toggleRecommended = async () => {
 
-  try {
     const recommended = ref({
-      filmId: sessionStorage.getItem("film"),
-      userId: sessionStorage.getItem("user"),
-      profileId: sessionStorage.getItem("profile"),
+      filmId: filmId,
+      userId: userId,
+      profileId: profileId,
     })
-    await postRecommended(recommended.value.userId, recommended.value.profileId, recommended.value);
-    alert(`${movie.value.title} added to recommended!`);
+  try {
+    if (isRecommended.value) {
+      await deleteRecommended(userId, profileId, filmId);
+      isRecommended.value = false;
+      alert(`${movie.value.title} removed from recommended!`);
+    } else {
+      await postRecommended(userId, profileId, recommended.value);
+      isRecommended.value = true;
+      alert(`${movie.value.title} added to recommended!`);
+    }
   } catch (error) {
-    alert("Could not add to recommended");
-  }
-};
+    alert("Could not update recommended list.");
+  }}
 </script>
 
 <style scoped>
