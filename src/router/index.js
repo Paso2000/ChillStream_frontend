@@ -10,9 +10,16 @@ import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
 import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
 import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
 import LiveFilm from "@/views/LiveFilm.vue";
+import ActorDetails from "@/views/ActorDetails.vue";
 
 
 const routes = [
+    {
+        path: "/ActorDetails",
+        name: "ActorDetails",
+        component: ActorDetails,
+    },
+
     {
         path: "/ProfileSettings",
         name: "ProfileSettings",

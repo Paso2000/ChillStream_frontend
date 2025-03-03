@@ -30,7 +30,7 @@
     <div class="movie-details-content">
       <div v-if="selectedTab === 'cast'" class="movie-cast">
         <ul>
-          <li v-for="actor in fullActors" :key="actor._id">{{ actor.name }} {{ actor.surname }}</li>
+          <li v-for="actor in fullActors" :key="actor._id" @click = "goToActorDetails(actor._id)">{{ actor.name }} {{ actor.surname }}</li>
         </ul>
       </div>
 
@@ -64,6 +64,7 @@ import {
 } from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
 import FormInput from "@/components/FormInput.vue";
+import router from "@/router/index.js";
 
 
 
@@ -123,6 +124,11 @@ const addReview = async () => {
   }
 };
 
+const goToActorDetails = (actorId) =>{
+  sessionStorage.setItem("actor",actorId)
+  router.push("/ActorDetails")
+}
+
 // Simula la visualizzazione del film
 const startWatching = async () => {
 
@@ -148,7 +154,6 @@ const startWatching = async () => {
   }
 };
 
-// Aggiunge il film ai consigliati
 const toggleRecommended = async () => {
 
     const recommended = ref({
