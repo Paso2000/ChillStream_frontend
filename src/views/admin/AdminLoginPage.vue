@@ -26,22 +26,20 @@ const password = ref("pastaConTonno");
 const router = useRouter();
 
 const handleLogin = async () => {
-  let isFound = false;
 
   try {
     const admins = await getAdminList();
     const adminFound = admins.find(
         (admin) => username.value === admin.username && password.value === admin.password);
         if (adminFound) {
-          isFound=true
+          sessionStorage.setItem("admin",username.value)
           await router.push(`/admin/control-panel`);
+        }else {
+          alert("Wrong credential")
         }
-
       } catch (error) {
         alert("connection error");
       }
-  if (!isFound)
-    alert("Wrong credential")
 };
 
 </script>
