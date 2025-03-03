@@ -11,7 +11,7 @@
 
             <div class="movie-actions">
               <Button @click="startWatching">
-                  {{ isViewed ? "⏯ Keep Watching at " + timeFilm +" minutes" : "▶ Play" }}
+                {{ isViewed ? "⏯ Keep Watching at " + timeFilm + " minutes" : "▶ Play" }}
               </Button>
               <Button @click="toggleRecommended">
                 {{ isRecommended ? "✔ In My List" : "+ My List" }}
@@ -30,22 +30,14 @@
     <div class="movie-details-content">
       <div v-if="selectedTab === 'cast'" class="movie-cast">
         <ul>
-          <li v-for="actor in fullActors" :key="actor._id" @click = "goToActorDetails(actor._id)">{{ actor.name }} {{ actor.surname }}</li>
+          <li v-for="actor in fullActors" :key="actor._id" @click="goToActorDetails(actor._id)">{{ actor.name }}
+            {{ actor.surname }}
+          </li>
         </ul>
       </div>
 
-      <div v-if="selectedTab === 'reviews'" class="movie-reviews">
-        <div class="review-input">
-          <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..."/>
-          <Button @click="addReview">Submit</Button>
-        </div>
-        <div v-if="fullReview.length === 0">No reviews yet.</div>
-        <ul>
-          <li v-for="review in fullReview" :key="review.id" class="review-message">
-            <div class="review-name">{{ review.nickname }}</div>
-            <div class="review-text">{{ review.text }}</div>
-          </li>
-        </ul>
+      <div v-if="selectedTab === 'reviews'">
+        <UserReview :filmId="filmId" :reviews="fullReview" @updateReviews="fullReview = $event" />
       </div>
     </div>
   </div>
@@ -63,9 +55,8 @@ import {
   postView
 } from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
-import FormInput from "@/components/FormInput.vue";
 import router from "@/router/index.js";
-
+import UserReview from "@/components/UserReview.vue";
 
 
 const fullActors = ref([]);
@@ -113,54 +104,43 @@ onMounted(async () => {
   isViewed.value = viewedList.some((view) => view.filmId === filmId);
 });
 
-// Aggiunge una recensione e aggiorna la lista in tempo reale
-const addReview = async () => {
-  try {
-    await postReview(newReview.value.film_id, newReview.value);
-    fullReview.value = await getReviewList(newReview.value.film_id); // Aggiorna la lista
-    newReview.value.text = "";
-  } catch (error) {
-    alert("Review not created");
-  }
-};
-
-const goToActorDetails = (actorId) =>{
-  sessionStorage.setItem("actor",actorId)
+const goToActorDetails = (actorId) => {
+  sessionStorage.setItem("actor", actorId)
   router.push("/ActorDetails")
 }
 
 // Simula la visualizzazione del film
 const startWatching = async () => {
 
-      try {
-        if (!isViewed.value) {
-          const view = ref({
-            filmId: filmId,
-            userId: userId,
-            profileId: profileId,
-            timesOFTheFilm: Math.floor(Math.random() * 90) + 5
-          })
-          timeFilm = view.value.timesOFTheFilm;
-        await postView(userId, profileId, view.value);
-        isViewed.value = true; // Aggiorna lo stato
-        alert("Now watching " + movie.value.title);
-  } else {
-          await deleteView(userId,profileId,filmId)
-          isViewed.value = false
-          alert("Terminate watching the film " + movie.value.title);
-  }
-} catch (error) {
+  try {
+    if (!isViewed.value) {
+      const view = ref({
+        filmId: filmId,
+        userId: userId,
+        profileId: profileId,
+        timesOFTheFilm: Math.floor(Math.random() * 90) + 5
+      })
+      timeFilm = view.value.timesOFTheFilm;
+      await postView(userId, profileId, view.value);
+      isViewed.value = true; // Aggiorna lo stato
+      alert("Now watching " + movie.value.title);
+    } else {
+      await deleteView(userId, profileId, filmId)
+      isViewed.value = false
+      alert("Terminate watching the film " + movie.value.title);
+    }
+  } catch (error) {
     alert("Could not start watching the film.");
   }
 };
 
 const toggleRecommended = async () => {
 
-    const recommended = ref({
-      filmId: filmId,
-      userId: userId,
-      profileId: profileId,
-    })
+  const recommended = ref({
+    filmId: filmId,
+    userId: userId,
+    profileId: profileId,
+  })
   try {
     if (isRecommended.value) {
       await deleteRecommended(userId, profileId, filmId);
@@ -173,7 +153,8 @@ const toggleRecommended = async () => {
     }
   } catch (error) {
     alert("Could not update recommended list.");
-  }}
+  }
+}
 </script>
 
 <style scoped>
@@ -191,7 +172,7 @@ const toggleRecommended = async () => {
 
 .movie-banner {
   position: relative;
-  height: 400px;
+  height: 450px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -245,19 +226,6 @@ const toggleRecommended = async () => {
 .movie-details-tabs .active {
   color: white;
   border-bottom: 2px solid rgba(106, 13, 173, 0.88);
-}
-
-.review-message {
-  list-style: none;
-  background-color: #3a3a3a;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.review-name {
-  font-weight: bold;
-  color: lightgray;
 }
 
 </style>
