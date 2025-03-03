@@ -16,25 +16,30 @@
           </div>
         </div>
       </div>
-      <div class="movie-cast">
-        <h2>Cast</h2>
+    </div>
+
+    <div class="movie-details-tabs">
+      <button :class="{ active: selectedTab === 'cast' }" @click="selectedTab = 'cast'">Cast</button>
+      <button :class="{ active: selectedTab === 'reviews' }" @click="selectedTab = 'reviews'">Reviews</button>
+    </div>
+
+    <div class="movie-details-content">
+      <div v-if="selectedTab === 'cast'" class="movie-cast">
         <ul>
-          <li v-for="actor in fullActors" :key="actor._id">
-            {{ actor.name }} {{ actor.surname }}
-          </li>
+          <li v-for="actor in fullActors" :key="actor._id">{{ actor.name }} {{ actor.surname }}</li>
         </ul>
       </div>
 
-      <div class="movie-reviews">
-        <h2>Reviews</h2>
+      <div v-if="selectedTab === 'reviews'" class="movie-reviews">
         <div class="review-input">
           <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..."/>
           <Button @click="addReview">Submit</Button>
         </div>
         <div v-if="fullReview.length === 0">No reviews yet.</div>
         <ul>
-          <li v-for="review in fullReview" :key="review.id">
-            <strong>{{ review.nickname }}:</strong> {{ review.text }}
+          <li v-for="review in fullReview" :key="review.id" class="review-message">
+            <div class="review-name">{{ review.nickname }}</div>
+            <div class="review-text">{{ review.text }}</div>
           </li>
         </ul>
       </div>
@@ -44,7 +49,6 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {useRoute} from "vue-router";
 import {getActor, getFilm, getReviewList, postReview} from "@/service/contentApi.js";
 import Button from "@/components/Button.vue";
 import {postRecommended, postView} from "@/service/interactionApi.js";
@@ -69,8 +73,7 @@ const movie = ref({
   actors: [],
   reviews: [],
 });
-
-const route = useRoute();
+const selectedTab = ref('cast');
 
 // Carica i dati del film
 onMounted(async () => {
@@ -128,7 +131,8 @@ const addToRecommended = async () => {
 </script>
 
 <style scoped>
-.filmDetailsPage{
+.filmDetailsPage {
+  margin-top: 80px;
   background: linear-gradient(135deg, #000000, #111);
   color: white;
   min-height: 100vh;
@@ -174,18 +178,40 @@ const addToRecommended = async () => {
   gap: 10px;
 }
 
-.movie-cast, .movie-reviews {
+.movie-details-tabs {
+  display: flex;
+  gap: 15px;
   padding: 20px;
 }
 
-.review-form {
-  max-width: 700px;
+.movie-details-content {
+  padding: 20px;
 }
 
-.review-input input {
+.movie-details-tabs button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: rgb(128, 128, 128);
+}
+
+.movie-details-tabs .active {
+  color: white;
+  border-bottom: 2px solid rgba(106, 13, 173, 0.88);
+}
+
+.review-message {
+  list-style: none;
+  background-color: #3a3a3a;
   padding: 10px;
-  width: 80%;
-  margin-right: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.review-name {
+  font-weight: bold;
+  color: lightgray;
 }
 
 </style>
