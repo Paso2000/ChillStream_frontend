@@ -79,7 +79,7 @@ const saveProfile = async () => {
 
 <style scoped>
 .profileSettingPage {
-  margin-top: 80px;
+  margin-top: 150px;
   background: linear-gradient(135deg, #000000, #111);
 }
 
@@ -88,7 +88,7 @@ const saveProfile = async () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #000000, #111);
+  background: #000;
   position: relative;
 }
 
@@ -130,10 +130,12 @@ const saveProfile = async () => {
 }
 
 .profile-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
   object-fit: cover;
+  border: 3px solid transparent;
+  transition: border 0.3s;
 }
 
 .save-button {

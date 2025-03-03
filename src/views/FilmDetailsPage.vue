@@ -174,7 +174,7 @@ const toggleRecommended = async () => {
 <style scoped>
 .filmDetailsPage {
   margin-top: 80px;
-  background: linear-gradient(135deg, #000000, #111);
+  background: #000;
   color: white;
   min-height: 100vh;
 }

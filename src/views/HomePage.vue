@@ -42,11 +42,14 @@ onMounted(async () => {
 
 <style scoped>
 /* 📌 Stili generali */
+.body{
+ color: #7a0dad;
+}
+
 .homepage {
   margin-top: 80px;
-  background: linear-gradient(135deg, #000000, #111);
+  background: #000;
   color: white;
-  min-height: 100vh;
 }
 
 /* 📌 Contenuto principale */

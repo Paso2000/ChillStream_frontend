@@ -78,7 +78,7 @@ const createProfile = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #141414;
+  background: #000;
   position: relative;
 }
 
@@ -132,10 +132,12 @@ const createProfile = async () => {
 }
 
 .profile-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
   object-fit: cover;
+  border: 3px solid transparent;
+  transition: border 0.3s;
 }
 
 .save-button {

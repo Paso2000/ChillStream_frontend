@@ -51,7 +51,7 @@ const sendMessage = () => {
   display: flex;
   height: 100vh;
   gap: 10px;
-  background: #181818;
+  background: #000;
   color: white;
   padding: 20px;
 }

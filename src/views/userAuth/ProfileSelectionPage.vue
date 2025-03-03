@@ -66,7 +66,7 @@ const addProfile = () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #141414; /* Sfondo nero come Netflix */
+  background: #000;
   position: relative;
 }
 
