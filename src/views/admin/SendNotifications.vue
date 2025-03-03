@@ -6,11 +6,9 @@
     <div class="section">
       <h4>Add new notifications</h4>
       <div class="form-group">
-        <FormInput v-model="nickname" placeholder="your nickname"/>
-
-        <FormInput v-model="text" placeholder="Notification text"/>
+        <textarea v-model="notification.text" placeholder="Notification text"/>
       </div>
-      <button @click="sendNotification" class="form-button">Send</button>
+      <Button @click="sendNotification" class="form-button">Send</Button>
     </div>
 
   </div>
@@ -27,16 +25,26 @@ import {postNotification} from "@/service/interactionApi.js";
 
 
 
-const text = ref("")
+const notification = ref({
+  sender_id: sessionStorage.getItem("admin"),
+  text:""
+})
 
 const sendNotification = async () => {
+  try{
   let userProfiles = ref([])
  const allUser = await getUsers();
- for (const user of allUser.value) {
+ for (const user of allUser) {
    userProfiles =  await getProfiles(user._id,);
-   for (const profile of userProfiles.value) {
-     await postNotification(user._id, profile._id, text.value);
+   for (const profile of userProfiles) {
+     await postNotification(user._id, profile._id, notification.value);
    }}
+ alert("Notifications sent")
+  }
+ catch(error){
+   alert("Notification error")
+    }
+
 }
 </script>
 
