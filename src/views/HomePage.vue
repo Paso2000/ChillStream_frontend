@@ -32,10 +32,10 @@ onMounted(async () => {
   allMovies.value = await getFilmList();
   console.log(allMovies.value);
 
-  const viewed = await getViewList(localStorage.getItem("user"), localStorage.getItem("profile"));
+  const viewed = await getViewList(sessionStorage.getItem("user"), sessionStorage.getItem("profile"));
   viewedMovies.value = viewed.map(view => view.filmDetails);
 
-  const recommendeds = await getRecommendedList(localStorage.getItem("user"), localStorage.getItem("profile"));
+  const recommendeds = await getRecommendedList(sessionStorage.getItem("user"), sessionStorage.getItem("profile"));
   recommendedMovies.value = recommendeds.map(recommended => recommended.filmDetails);
 });
 </script>

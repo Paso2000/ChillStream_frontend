@@ -36,8 +36,8 @@ const handleLogin = async () => {
   users.forEach(user => {
     if (email.value === user.email && password.value === user.password) {
       isLogged = true;
-      // Salviamo l'utente in localStorage (simulazione)
-      localStorage.setItem("user", user._id);
+      // Salviamo l'utente in sessionStorage (simulazione)
+      sessionStorage.setItem("user", user._id);
       router.push(`/profiles`); // Reindirizza alla selezione profili
     }
   });

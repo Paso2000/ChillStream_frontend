@@ -40,7 +40,7 @@ const router = useRouter();
 
 onMounted(async () => {
   try {
-    const userId = localStorage.getItem("user");
+    const userId = sessionStorage.getItem("user");
     profiles.value = await getProfiles(userId);
   } catch (error) {
     console.error("Error loading profiles:", error);
@@ -48,8 +48,8 @@ onMounted(async () => {
 });
 
 const selectProfile = (profile) => {
-  localStorage.setItem("profile", profile._id);
-  localStorage.setItem("nicknameProfile", profile.nickname)
+  sessionStorage.setItem("profile", profile._id);
+  sessionStorage.setItem("nicknameProfile", profile.nickname)
   router.push("/home");
 };
 

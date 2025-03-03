@@ -48,7 +48,7 @@ const registerUser = async () => {
     const user = await postUser(form.value);
     if (user) {
       alert("Registration successful!");
-      localStorage.setItem("user", user._id);
+      sessionStorage.setItem("user", user._id);
       router.push(`/profiles`);
     }}
    catch (error) {

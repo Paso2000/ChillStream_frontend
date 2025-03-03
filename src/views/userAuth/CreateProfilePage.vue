@@ -60,8 +60,8 @@ const createProfile = async () => {
     alert("Please select a profile image.");
   }else {
   try {
-    const profile = await postProfile(localStorage.getItem("user"),form.value)
-    localStorage.setItem("profile",profile._id)
+    const profile = await postProfile(sessionStorage.getItem("user"),form.value)
+    sessionStorage.setItem("profile",profile._id)
     // Redirect to home after creating profile
     await router.push("/profiles");
     alert("profile created ")

@@ -17,7 +17,7 @@ const goToDetails = () => {
   console.log(props.content)
   if (props.content && props.content._id) {
     console.log("Navigating to film with ID:", props.content._id);
-    localStorage.setItem("film", props.content._id);
+    sessionStorage.setItem("film", props.content._id);
     router.push(`/film`);
   } else {
     console.error("Film ID is missing!");
