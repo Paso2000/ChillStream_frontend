@@ -52,9 +52,9 @@ import UserNavbar from "@/components/UserNavbar.vue";
 import FormInput from "@/components/FormInput.vue";
 
 const newReview = ref({
-  film_id: localStorage.getItem("film"),
-  nickname: localStorage.getItem("nicknameProfile"),
-  profile_id: localStorage.getItem("profile"),
+  film_id: sessionStorage.getItem("film"),
+  nickname: sessionStorage.getItem("nicknameProfile"),
+  profile_id: sessionStorage.getItem("profile"),
   text: "",
 });
 
@@ -74,13 +74,13 @@ const route = useRoute();
 
 // Carica i dati del film
 onMounted(async () => {
-  movie.value = await getFilm(localStorage.getItem("film"));
+  movie.value = await getFilm(sessionStorage.getItem("film"));
 
   for (const actor of movie.value.actors) {
     fullActors.value.push(await getActor(actor));
   }
 
-  fullReview.value = await getReviewList(localStorage.getItem("film"));
+  fullReview.value = await getReviewList(sessionStorage.getItem("film"));
 });
 
 // Aggiunge una recensione e aggiorna la lista in tempo reale
@@ -98,9 +98,9 @@ const addReview = async () => {
 const watchMovie = async () => {
   try {
     const view = ref({
-      filmId: localStorage.getItem("film"),
-      userId: localStorage.getItem("user"),
-      profileId: localStorage.getItem("profile"),
+      filmId: sessionStorage.getItem("film"),
+      userId: sessionStorage.getItem("user"),
+      profileId: sessionStorage.getItem("profile"),
       timesOFTheFilm: 23
     })
     await postView(view.value.userId, view.value.profileId, view.value)
@@ -115,9 +115,9 @@ const addToRecommended = async () => {
 
   try {
     const recommended = ref({
-      filmId: localStorage.getItem("film"),
-      userId: localStorage.getItem("user"),
-      profileId: localStorage.getItem("profile"),
+      filmId: sessionStorage.getItem("film"),
+      userId: sessionStorage.getItem("user"),
+      profileId: sessionStorage.getItem("profile"),
     })
     await postRecommended(recommended.value.userId, recommended.value.profileId, recommended.value);
     alert(`${movie.value.title} added to recommended!`);

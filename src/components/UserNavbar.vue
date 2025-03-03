@@ -30,8 +30,8 @@ import router from "@/router/index.js";
 import {getProfile} from "@/service/authApi.js";
 import {onMounted, ref} from "vue";
 
-const userId = localStorage.getItem("user")
-const profileId = localStorage.getItem("profile")
+const userId = sessionStorage.getItem("user")
+const profileId = sessionStorage.getItem("profile")
 let profile = ref({
   nickname:"",
   profileImage:""

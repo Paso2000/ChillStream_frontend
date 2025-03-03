@@ -35,8 +35,8 @@ import { putProfile, getProfile } from "@/service/authApi.js";
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 
-const userId = localStorage.getItem("user");
-const profileId = localStorage.getItem("profile");
+const userId = sessionStorage.getItem("user");
+const profileId = sessionStorage.getItem("profile");
 
 const profile = ref({
   nickname: "",
