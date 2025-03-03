@@ -43,8 +43,8 @@ onMounted(async () => {
 <style scoped>
 /* 📌 Stili generali */
 .homepage {
+  margin-top: 80px;
   background: linear-gradient(135deg, #000000, #111);
-//background: url("/background2.jpg");
   color: white;
   min-height: 100vh;
 }
@@ -54,11 +54,4 @@ onMounted(async () => {
   padding: 20px;
 }
 
-/* 📌 Titolo principale */
-.page-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 30px;
-}
 </style>

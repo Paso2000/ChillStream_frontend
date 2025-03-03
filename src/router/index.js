@@ -9,6 +9,7 @@ import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
 import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
 import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
 import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
+import LiveFilm from "@/views/LiveFilm.vue";
 
 
 const routes = [
@@ -61,6 +62,11 @@ const routes = [
         path: '/admin/control-panel',
         name: "ControlPanel",
         component: ControlPanelPage,
+    },
+    {
+        path: '/live',
+        name: "LiveFilm",
+        component: LiveFilm,
     }
 ];
 

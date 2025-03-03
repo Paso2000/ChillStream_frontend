@@ -1,39 +1,42 @@
 <template>
-  <div class="settings-profile">
-    <h1>Profile Settings</h1>
+  <div class="profileSettingPage">
+    <UserNavbar/>
+    <div class="selection-container">
+      <!-- Profile Selection -->
+      <div class="content">
+        <h1 class="title">Profile settings</h1>
 
-    <!-- Nickname Change -->
-    <div class="form-group">
-      <label for="nickname">Change Nickname</label>
-      <FormInput v-model="profile.nickname" id="nickname" type="text" :placeholder= profile.nickname />
-    </div>
+        <div class="profile-container">
+          <FormInput v-model="profile.nickname" type="text" :placeholder="profile.nickname" class="input-nickname"/>
 
-    <!-- Profile Image Selection -->
-    <div class="form-group">
-      <label>Select Profile Image</label>
-      <div class="image-selection">
-        <div
-            v-for="(image, index) in defaultImages"
-            :key="index"
-            class="profile-image"
-            :class="{ selected: profile.profileImage === image }"
-            @click="selectImage(image)"
-        >
-          <img :src="image" alt="Profile Image" />
+          <!-- Image Selection -->
+          <div class="grid grid-cols-3 gap-4 mt-4">
+            <div
+                v-for="(image, index) in defaultImages"
+                :key="index"
+                class="profile-image-container"
+                :class="{ 'selected': profile.profileImage === image }"
+                @click="selectImage(image)"
+            >
+              <img :src="image" class="profile-image" alt="Profile Image"/>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <Button @click="saveProfile" class="save-button">Save changes</Button>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Save Button -->
-    <Button @click="saveProfile">Save Changes</Button>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { putProfile, getProfile } from "@/service/authApi.js";
+import {ref, onMounted} from "vue";
+import {putProfile, getProfile} from "@/service/authApi.js";
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
+import UserNavbar from "@/components/UserNavbar.vue";
 
 const userId = sessionStorage.getItem("user");
 const profileId = sessionStorage.getItem("profile");
@@ -51,9 +54,9 @@ const defaultImages = [
 
 // Carica il profilo all'avvio
 onMounted(async () => {
-  try{
-    profile.value = await getProfile(userId,profileId)
-  }catch (error){
+  try {
+    profile.value = await getProfile(userId, profileId)
+  } catch (error) {
     alert("Can't get the profile")
   }
 });
@@ -75,61 +78,73 @@ const saveProfile = async () => {
 </script>
 
 <style scoped>
-.settings-profile {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+.profileSettingPage {
+  margin-top: 80px;
+  background: linear-gradient(135deg, #000000, #111);
+}
+
+.selection-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #000000, #111);
+  position: relative;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
   text-align: center;
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-input {
+.input-nickname {
+  margin-bottom: 40px;
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-.image-selection {
+.profile-container {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid {
+  display: flex;
   justify-content: center;
+  gap: 15px;
+}
+
+.profile-image-container {
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, border 0.3s;
+}
+
+.profile-image-container.selected {
+  transform: scale(1);
+  border: 3px solid #ffffff;
 }
 
 .profile-image {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border 0.3s ease-in-out;
-}
-
-.profile-image img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
-.selected {
-  border-color: #007bff;
+.save-button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
+
 </style>

@@ -4,20 +4,14 @@
       <!-- Logo e sezioni della navbar -->
       <div class="left-section">
         <div class="logo">
-          <img src="/chillStream-logo.png" alt="ChillStream Logo" />
+          <img src="/chillStream-logo.png" alt="ChillStream Logo"/>
         </div>
-        <ul class="nav-links">
-          <li @click="$emit('changeSection', 'home')">HOME</li>
-          <li @click="$emit('changeSection', 'movies')">MOVIES</li>
-          <li @click="$emit('changeSection', 'myList')">MY LIST</li>
-        </ul>
       </div>
 
-      <!-- Barra di ricerca e icona profilo -->
+      <!-- Icona profilo -->
       <div class="right-section">
-        <input type="text" placeholder="Search..." class="search-bar" />
         <div class="profile-icon" @click="openProfile">
-          <img :src= "profile.profileImage" alt="ProfileImage" />
+          <img :src="profile.profileImage" alt="ProfileImage"/>
         </div>
       </div>
     </div>
@@ -33,13 +27,13 @@ import {onMounted, ref} from "vue";
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
 let profile = ref({
-  nickname:"",
-  profileImage:""
+  nickname: "",
+  profileImage: ""
 })
 onMounted(async () => {
-  try{
-    profile.value = await getProfile(userId,profileId)
-  }catch (error){
+  try {
+    profile.value = await getProfile(userId, profileId)
+  } catch (error) {
     alert("Can't get the profile")
   }
 });
@@ -59,6 +53,12 @@ const openProfile = () => {
   color: white;
   font-family: "Arial", sans-serif;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
 .navbar-box {
@@ -66,55 +66,44 @@ const openProfile = () => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 15px 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #000000, #111);
   backdrop-filter: blur(15px);
 }
 
-/* Sezione sinistra con logo e menu */
+/* Sezione sinistra con logo */
 .left-section {
   display: flex;
   align-items: center;
-  gap: 20px;
 }
 
 .logo img {
   height: 50px;
 }
 
-.nav-links {
+/* Barra di ricerca centrata */
+.search-container {
+  flex: 1;
   display: flex;
-  list-style: none;
-  gap: 20px;
+  justify-content: center;
 }
 
-.nav-links li {
+.search-bar {
+  width: 60%;
+  max-width: 500px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
   font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  outline: none;
+  text-align: center;
 }
 
-.nav-links li:hover {
-  color: #fff;
-  transform: scale(1.1);
-}
-
-/* Sezione destra con barra di ricerca e profilo */
+/* Sezione destra con icona profilo */
 .right-section {
   display: flex;
   align-items: center;
   gap: 15px;
-}
-
-.search-bar {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  outline: none;
 }
 
 .profile-icon img {
