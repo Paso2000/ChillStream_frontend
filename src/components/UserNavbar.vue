@@ -8,8 +8,8 @@
         </div>
       </div>
 
-      <!-- Icona profilo -->
       <div class="right-section">
+        <NotificationDropdown />
         <div class="profile-icon" @click="openProfile">
           <img :src="profile.profileImage" alt="ProfileImage"/>
         </div>
@@ -23,6 +23,7 @@
 import router from "@/router/index.js";
 import {getProfile} from "@/service/authApi.js";
 import {onMounted, ref} from "vue";
+import NotificationDropdown from "@/components/NotificationDropdown.vue";
 
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
