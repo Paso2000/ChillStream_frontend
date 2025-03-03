@@ -3,9 +3,10 @@
     <UserNavbar />
 
     <div v-if="actor" class="actor-info">
-      <img :src="actor.image_path" :alt="actor.name" class="actor-image" />
+      <img src=/actor-default.jpg :alt="actor.name" class="actor-image" />
       <div class="actor-bio">
         <h1>{{ actor.name }} {{ actor.surname }}</h1>
+        <p>{{ actor.date_of_birth }}</p>
       </div>
     </div>
 
@@ -34,7 +35,7 @@ const actorId = sessionStorage.getItem("actor")
 const actor = ref({
   name:"",
   surname:"",
-  dateOfBirth:"",
+  date_of_birth:"",
   films:[]
 })
 
@@ -52,25 +53,24 @@ onMounted(async () => {
 const goToMovie = (filmId) => {
   sessionStorage.setItem("film", filmId)
   router.push(`/film`);
+
 };
 </script>
 
 <style scoped>
 .actor-details {
+  margin-top: 80px;
   color: white;
   padding: 20px;
-  background: linear-gradient(135deg, #000, #111);
-  min-height: 100vh;
-  text-align: center;
+  background: #000;
+  text-align: left;
 }
 
 .actor-info {
   display: flex;
-  align-items: center;
   gap: 20px;
   padding: 20px;
   max-width: 800px;
-  margin: auto;
 }
 
 .actor-image {

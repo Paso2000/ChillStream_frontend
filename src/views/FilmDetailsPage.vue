@@ -1,5 +1,5 @@
 <template>
-  <div class="filmDetailsPage">
+  <div class="film-details">
     <UserNavbar/>
     <div class="movie-container">
       <div class="movie-banner" :style="{ backgroundImage: `url(${movie.image_path})` }">
@@ -158,7 +158,7 @@ const toggleRecommended = async () => {
 </script>
 
 <style scoped>
-.filmDetailsPage {
+.film-details {
   margin-top: 80px;
   background: #000;
   color: white;

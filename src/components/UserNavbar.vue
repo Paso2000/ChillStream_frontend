@@ -108,9 +108,10 @@ const openProfile = () => {
 }
 
 .profile-icon img {
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
+  margin:0 10px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
