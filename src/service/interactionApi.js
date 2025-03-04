@@ -155,6 +155,16 @@ export const postNotification = async (userId, profileId,body) => {
     }
 };
 
+export const putNotification = async (userId, profileId, notificationsID) => {
+    try {
+        const response = await interactionApi.put(`/${userId}/profiles/${profileId}/notifications/${notificationsID}`);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore changing the notifications:", error);
+        throw error;
+    }
+};
+
 
 export const deleteNotification = async (userId, profileId, notificationsID) => {
     try {

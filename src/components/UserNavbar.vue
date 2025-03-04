@@ -9,7 +9,7 @@
       </div>
 
       <div class="right-section">
-        <NotificationDropdown />
+        <NotificationDropdown :userId="userId" :profileId="profileId" />
         <div class="profile-icon" @click="openProfile">
           <img :src="profile.profileImage" alt="ProfileImage"/>
         </div>

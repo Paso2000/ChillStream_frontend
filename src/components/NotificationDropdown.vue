@@ -1,19 +1,24 @@
 <template>
   <div class="notification-container">
-    <!-- Notification Icon -->
+    <!-- Icona Notifiche -->
     <div class="notification-icon" @click="toggleDropdown">
       <h1>Notifiche</h1>
       <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
     </div>
 
-    <!-- Notification Dropdown -->
+    <!-- Dropdown Notifiche -->
     <div v-if="isOpen" class="notification-dropdown">
       <div v-if="notifications.length === 0" class="empty-message">
         No new notifications
       </div>
       <ul>
-        <li v-for="notification in notifications" :key="notification._id">
-          {{notification.senderNickname+""+ notification.text }}
+        <li
+            v-for="notification in notifications"
+            :key="notification._id"
+            @click="markAsRead(notification)"
+            :class="{ 'read': notification.isChecked }"
+        >
+          {{ notification.senderNickname + ": " + notification.text + " - " + formatTimestamp(notification.timestamp) }}
         </li>
       </ul>
     </div>
@@ -22,46 +27,54 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getNotificationList } from "@/service/interactionApi.js";
+import {getNotificationList, putNotification} from "@/service/interactionApi.js";
 
-// Props from parent component
-defineProps({
+// Props dal componente padre
+const props = defineProps({
   userId: String,
   profileId: String
 });
 
 const isOpen = ref(false);
-const notifications = ref({
-  senderNickname: "",
-  ricever_id:"",
-  text:"",
-  isChecked:false,
-  timeStamp: "Date"
-}); // Initialize as an array
+const notifications = ref([]); // Inizializzato come array
 const unreadCount = ref(0);
 
-// Toggle dropdown visibility
+// Toggle per aprire/chiudere il menu notifiche
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
 };
 
-// Format timestamp function
+// Formatta il timestamp in modo leggibile
 const formatTimestamp = (timestamp) => {
   if (!timestamp) return "Unknown time";
   const date = new Date(timestamp);
-  return date.toLocaleString(); // Converts to a readable format
+  return date.toLocaleString();
 };
 
-// Fetch notifications on mount
+// Segna una notifica come letta
+const markAsRead = async (notification) => {
+  if (!notification.isChecked) {
+    notification.isChecked = true;  // Aggiorna lo stato localmente
+    unreadCount.value = Math.max(0, unreadCount.value - 1); // Riduci il conteggio
+
+    try {
+      await putNotification(props.userId, props.profileId, notification._id);
+    } catch (error) {
+      console.error("Errore nell'aggiornare la notifica", error);
+    }
+  }
+};
+
+// Recupera le notifiche all'avvio
 onMounted(async () => {
   try {
     const data = await getNotificationList(props.userId, props.profileId);
-    notifications.value = data || []; // Ensure it's an array
+    notifications.value = data || [];
 
-    // Calculate unread notifications
+    // Conta le notifiche non lette
     unreadCount.value = notifications.value.filter(n => !n.isChecked).length;
   } catch (error) {
-    console.error("Error loading notifications", error);
+    console.error("Errore nel caricamento delle notifiche", error);
   }
 });
 </script>
@@ -109,9 +122,20 @@ onMounted(async () => {
 }
 
 .notification-dropdown li {
+  color: #111;
   padding: 8px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #000;
   font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.notification-dropdown li.read {
+  color: gray;
+}
+
+.notification-dropdown li:hover {
+  background: #f0f0f0;
 }
 
 .notification-dropdown li:last-child {
