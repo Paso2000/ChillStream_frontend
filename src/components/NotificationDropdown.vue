@@ -36,7 +36,9 @@ const props = defineProps({
 });
 
 const isOpen = ref(false);
-const notifications = ref([]); // Inizializzato come array
+const notifications = ref({
+
+}); // Inizializzato come array
 const unreadCount = ref(0);
 
 // Toggle per aprire/chiudere il menu notifiche
@@ -58,7 +60,7 @@ const markAsRead = async (notification) => {
     unreadCount.value = Math.max(0, unreadCount.value - 1); // Riduci il conteggio
 
     try {
-      await putNotification(props.userId, props.profileId, notification._id);
+      await putNotification(props.userId, props.profileId, notification._id,notification);
     } catch (error) {
       console.error("Errore nell'aggiornare la notifica", error);
     }
