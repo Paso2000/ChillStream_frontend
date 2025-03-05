@@ -32,9 +32,14 @@ const loadYouTubePlayer = () => {
       width: "100%",
       videoId: "lJXaNYTVjrQ", // ID del video
       playerVars: {
-        autoplay: 1,
-        mute: 1,
-        start: startTime.value,
+        autoplay: 1,   // Avvia automaticamente il video
+        mute: 1,       // Muta il video
+        start: startTime.value, // Imposta il punto di inizio
+        //controls: 0,       // Nasconde i controlli del player
+        showinfo: 0,       // Nasconde informazioni sul video (obsoleto, ma a volte funziona)
+        rel: 0,            // Non mostra video correlati alla fine
+        fs: 0,             // Disabilita il pulsante fullscreen
+        iv_load_policy: 3, // Nasconde annotazioni
       },
       events: {
         onReady: () => {
