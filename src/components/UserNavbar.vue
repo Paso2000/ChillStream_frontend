@@ -82,24 +82,6 @@ const openProfile = () => {
   height: 50px;
 }
 
-/* Barra di ricerca centrata */
-.search-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.search-bar {
-  width: 60%;
-  max-width: 500px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  outline: none;
-  text-align: center;
-}
-
 /* Sezione destra con icona profilo */
 .right-section {
   display: flex;
