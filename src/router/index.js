@@ -14,68 +14,18 @@ import ActorDetails from "@/views/ActorDetails.vue";
 
 
 const routes = [
-    {
-        path: "/ActorDetails",
-        name: "ActorDetails",
-        component: ActorDetails,
-    },
-
-    {
-        path: "/ProfileSettings",
-        name: "ProfileSettings",
-        component: ProfileSettingsPage,
-    },
-    {
-        path: "/Film",
-        name: "FilmDetailsPage",
-        component: FilmDetailsPage,
-    },
-    {
-        path: "/Home",
-        name: "HomePage",
-        component: HomePage,
-    },
-    {
-        path: "/createProfile",
-        name: "createProfilePage",
-        component: createProfilePage,
-    },
-    {
-        path: "/",
-        name: "StartingPage",
-        component: StartingPage,
-    },
-    {
-        path: "/Login",
-        name: "Login",
-        component: LoginPage,
-    },
-    {
-        path: "/Register",
-        name: "Register",
-        component: RegisterPage,
-    },
-    {
-        path: `/profiles`,
-        name: "ProfileSelection",
-        component: ProfileSelectionPage,
-    },
-    {
-        path: '/admin',
-        name: "AdminLogin",
-        component: AdminLoginPage,
-    },
-    {
-        path: '/admin/control-panel',
-        name: "ControlPanel",
-        component: ControlPanelPage,
-    },
-    {
-        path: "/live",
-        name: "Live",
-        component: LiveFilm,
-        props: (route) => ({ start: parseInt(route.query.start) || 0 }) // Passa "start" come prop
-    }
+    {path: "/ActorDetails", name: "ActorDetails", component: ActorDetails,},
+    {path: "/ProfileSettings", name: "ProfileSettings", component: ProfileSettingsPage,},
+    {path: "/Film", name: "FilmDetailsPage", component: FilmDetailsPage,},
+    {path: "/Home", name: "HomePage", component: HomePage,},
+    {path: "/createProfile", name: "createProfilePage", component: createProfilePage,},
+    {path: "/", name: "StartingPage", component: StartingPage,},
+    {path: "/Login", name: "Login", component: LoginPage,},
+    {path: "/Register", name: "Register", component: RegisterPage,},
+    {path: `/profiles`, name: "ProfileSelection", component: ProfileSelectionPage,},
+    {path: '/admin', name: "AdminLogin", component: AdminLoginPage,},
+    {path: '/admin/control-panel', name: "ControlPanel", component: ControlPanelPage,},
+    {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({ start: parseInt(route.query.start) || 0 })}// Pass "start" as a  prop}
 ];
 
 const router = createRouter({

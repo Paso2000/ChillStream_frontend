@@ -98,7 +98,7 @@ const deleteContent = async () => {
   transform: scale(1.05);
 }
 
-.image-input{
+.image-input {
   font-family: "Arial", sans-serif;
   min-height: 20px;
   border: none;

@@ -2,7 +2,7 @@
   <div class="user-review">
     <!-- Form per aggiungere una recensione -->
     <div class="review-input">
-      <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..." />
+      <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..."/>
       <Button @click="addReview" class="custom-button">Submit</Button>
     </div>
 
@@ -18,10 +18,10 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import {ref, defineProps, defineEmits} from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
-import { postReview, getReviewList } from "@/service/contentApi.js";
+import {postReview, getReviewList} from "@/service/contentApi.js";
 
 // Props ricevute dal componente padre
 const props = defineProps({
