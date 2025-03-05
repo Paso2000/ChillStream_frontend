@@ -26,7 +26,8 @@ import {postNotification} from "@/service/interactionApi.js";
 
 
 const notification = ref({
-  sender_id: sessionStorage.getItem("admin"),
+  senderNickname: sessionStorage.getItem("admin"),
+  ricever_id:"",
   text:""
 })
 
@@ -37,6 +38,7 @@ const sendNotification = async () => {
  for (const user of allUser) {
    userProfiles =  await getProfiles(user._id,);
    for (const profile of userProfiles) {
+     notification.value.ricever_id = profile._id;
      await postNotification(user._id, profile._id, notification.value);
    }}
  alert("Notifications sent")

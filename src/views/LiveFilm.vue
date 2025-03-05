@@ -2,14 +2,7 @@
   <div class="stream-container">
     <!-- Sezione Video -->
     <div class="video-section">
-      <iframe
-          width="100%"
-          height="500"
-          src="https://www.youtube.com/embed/lJXaNYTVjrQ?autoplay=1&mute=1"
-          frameborder="0"
-          allow="autoplay; encrypted-media"
-          allowfullscreen
-      ></iframe>
+      <div id="player"></div> <!-- YouTube Player viene creato qui -->
     </div>
 
     <!-- Sezione Chat -->
@@ -26,12 +19,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useRoute } from "vue-router";
+import {deleteView, putView} from "@/service/interactionApi.js"; // Per salvare nel DB
+
+const route = useRoute();
+const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
+const currentTime = ref(startTime.value); // Tiene traccia del tempo attuale
+let player = null; // Variabile per il player di YouTube
 
 const messages = ref([
   { id: 1, user: "User1", text: "Ciao a tutti!" },
   { id: 2, user: "User2", text: "Wow, che bel film!" }
 ]);
+
 const newMessage = ref("");
 
 const sendMessage = () => {
@@ -44,6 +45,78 @@ const sendMessage = () => {
     newMessage.value = "";
   }
 };
+
+// **Inizializza il player di YouTube**
+const loadYouTubePlayer = () => {
+  window.onYouTubeIframeAPIReady = () => {
+    player = new YT.Player("player", {
+      height: "500",
+      width: "100%",
+      videoId: "lJXaNYTVjrQ", // ID del video
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        start: startTime.value,
+      },
+      events: {
+        onReady: () => {
+          console.log("YouTube Player Pronto!");
+        },
+        onStateChange: () => {
+          updateCurrentTime();
+        }
+      }
+    });
+  };
+
+  // Carica lo script dell'API YouTube se non è già presente
+  if (!window.YT) {
+    let tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  } else {
+    window.onYouTubeIframeAPIReady();
+  }
+};
+
+// **Funzione per aggiornare il tempo corrente**
+const updateCurrentTime = () => {
+  if (player && typeof player.getCurrentTime === "function") {
+    currentTime.value = Math.floor(player.getCurrentTime());
+  }
+};
+
+// **Salva il tempo nel DB ogni 30 secondi**
+const saveTimeInterval = setInterval(() => {
+  updateCurrentTime();
+  putView(
+      sessionStorage.getItem("user"),
+      sessionStorage.getItem("profile"),
+      sessionStorage.getItem("film"),
+      { timesOFTheFilm: currentTime.value }
+  );
+}, 30000);
+
+onMounted(() => {
+  loadYouTubePlayer();
+});
+
+onBeforeUnmount(() => {
+  clearInterval(saveTimeInterval);
+  updateCurrentTime(); // Assicura di prendere il tempo finale
+  if(currentTime.value>190)
+    deleteView(sessionStorage.getItem("user"),
+        sessionStorage.getItem("profile"),
+        sessionStorage.getItem("film"))
+  else
+  putView(
+      sessionStorage.getItem("user"),
+      sessionStorage.getItem("profile"),
+      sessionStorage.getItem("film"),
+      { timesOFTheFilm: currentTime.value }
+  );
+});
 </script>
 
 <style scoped>

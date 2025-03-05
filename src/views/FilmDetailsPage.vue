@@ -11,7 +11,7 @@
 
             <div class="movie-actions">
               <Button @click="startWatching">
-                {{ isViewed ? "⏯ Keep Watching at " + timeFilm + " minutes" : "▶ Play" }}
+                {{ isViewed ? "⏯ Keep Watching" : "▶ Play" }}
               </Button>
               <Button @click="toggleRecommended">
                 {{ isRecommended ? "✔ In My List" : "+ My List" }}
@@ -50,7 +50,7 @@ import {getActor, getFilm, getReviewList, postReview} from "@/service/contentApi
 import Button from "@/components/Button.vue";
 import {
   deleteRecommended, deleteView,
-  getRecommendedList,
+  getRecommendedList, getView,
   getViewList,
   postRecommended,
   postView
@@ -67,7 +67,6 @@ let isViewed = ref(false)
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
 const filmId = sessionStorage.getItem("film")
-let timeFilm = 0
 
 const newReview = ref({
   film_id: filmId,
@@ -103,6 +102,7 @@ onMounted(async () => {
 
   const viewedList = await getViewList(userId, profileId);
   isViewed.value = viewedList.some((view) => view.filmId === filmId);
+
 });
 
 const goToActorDetails = (actorId) => {
@@ -111,29 +111,28 @@ const goToActorDetails = (actorId) => {
 }
 
 // Simula la visualizzazione del film
-const startWatching = async () => {
+const startWatching = async () =>
+    {
+      try {
+        if (!isViewed.value) {
+          const newView = ref({
+            filmId: filmId,
+            userId: userId,
+            profileId: profileId,
+            timesOFTheFilm: 0
+          })
+          await postView(userId, profileId, newView.value);
+          router.push({ path: "/live", query: { start:  newView.value.timesOFTheFilm} });
+        } else {
+          const view = await getView(userId, profileId,filmId)
+          router.push({ path: "/live", query: { start: view.timesOFTheFilm } });
+        }
+      } catch (error) {
+        alert("Could not start watching the film.");
+      }
 
-  try {
-    if (!isViewed.value) {
-      const view = ref({
-        filmId: filmId,
-        userId: userId,
-        profileId: profileId,
-        timesOFTheFilm: Math.floor(Math.random() * 90) + 5
-      })
-      timeFilm = view.value.timesOFTheFilm;
-      await postView(userId, profileId, view.value);
-      isViewed.value = true; // Aggiorna lo stato
-      alert("Now watching " + movie.value.title);
-    } else {
-      await deleteView(userId, profileId, filmId)
-      isViewed.value = false
-      alert("Terminate watching the film " + movie.value.title);
     }
-  } catch (error) {
-    alert("Could not start watching the film.");
-  }
-};
+;
 
 const toggleRecommended = async () => {
 

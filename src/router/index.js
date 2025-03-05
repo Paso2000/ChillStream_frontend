@@ -71,9 +71,10 @@ const routes = [
         component: ControlPanelPage,
     },
     {
-        path: '/live',
-        name: "LiveFilm",
+        path: "/live",
+        name: "Live",
         component: LiveFilm,
+        props: (route) => ({ start: parseInt(route.query.start) || 0 }) // Passa "start" come prop
     }
 ];
 
