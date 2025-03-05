@@ -90,6 +90,10 @@ onMounted(async () => {
   position: relative;
   cursor: pointer;
 }
+.notification-icon img{
+  width: 40px;
+  height: 40px;
+}
 
 .badge {
   position: absolute;
