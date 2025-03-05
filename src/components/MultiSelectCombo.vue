@@ -4,7 +4,7 @@
     <div
         class="w-full px-4 py-2 border rounded-lg bg-white cursor-pointer"
     >
-      {{"Select actors" }}
+      {{ "Select actors" }}
     </div>
 
     <!-- Dropdown with Checkboxes -->
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed } from "vue";
+import {ref, defineProps, defineEmits, computed} from "vue";
 
 // Props (list of actors)
 const props = defineProps({

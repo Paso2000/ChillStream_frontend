@@ -32,7 +32,6 @@ import {onMounted, ref} from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {getActorList, postFilm} from "@/service/contentApi.js";
-import MultiSelectCombo from "@/components/MultiSelectCombo.vue";
 
 let allActorsName = ref([])
 

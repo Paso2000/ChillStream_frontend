@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { io } from "socket.io-client";
+import {ref, onMounted, onBeforeUnmount} from "vue";
+import {io} from "socket.io-client";
 import "emoji-picker-element"; // Import emoji picker
 
 const socket = io("http://localhost:8081");
@@ -30,7 +30,7 @@ const socket = io("http://localhost:8081");
 const messages = ref([]);
 const newMessage = ref("");
 const showEmojiPicker = ref(false); // Toggle emoji picker
-
+const nickname = sessionStorage.getItem("nicknameProfile")
 // Listen for messages from the server
 socket.on("receiveMessage", (message) => {
   messages.value.push(message);
@@ -40,7 +40,7 @@ socket.on("receiveMessage", (message) => {
 const sendMessage = () => {
   if (newMessage.value.trim()) {
     const messageData = {
-      user: sessionStorage.getItem("nicknameProfile"),
+      user: nickname,
       text: newMessage.value,
     };
 

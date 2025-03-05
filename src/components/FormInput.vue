@@ -1,20 +1,22 @@
 <template>
   <input
-      :type="type"
-      :placeholder="placeholder"
+      :type="props.type"
+      :placeholder="props.placeholder"
       v-model="modelValue"
       class="input-field"
       @input="$emit('update:modelValue', $event.target.value)"
   />
 </template>
 
-<script>
-export default {
-  props: {
-    type: { type: String, default: "text" },
-    placeholder: String
-  }
-};
+<script setup>
+
+const props = defineProps({
+      type: {type: String, default: "text"},
+      placeholder: String
+    }
+)
+
+
 </script>
 
 <style scoped>
