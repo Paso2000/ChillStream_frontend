@@ -4,24 +4,15 @@
     <div class="video-section">
       <div id="player"></div> <!-- YouTube Player viene creato qui -->
     </div>
-
-    <!-- Sezione Chat -->
-    <div class="chat-section">
-      <div class="chat-header">Live Chat</div>
-      <div class="chat-messages">
-        <div v-for="message in messages" :key="message.id" class="chat-message">
-          <strong>{{ message.user }}</strong>: {{ message.text }}
-        </div>
-      </div>
-      <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Scrivi un messaggio..." class="chat-input"/>
-    </div>
+    <LiveChat></LiveChat>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
-import {deleteView, putView} from "@/service/interactionApi.js"; // Per salvare nel DB
+import {deleteView, putView} from "@/service/interactionApi.js";
+import LiveChat from "@/components/LiveChat.vue"; // Per salvare nel DB
 
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
@@ -32,20 +23,7 @@ const messages = ref([
   { id: 1, user: "User1", text: "Ciao a tutti!" },
   { id: 2, user: "User2", text: "Wow, che bel film!" }
 ]);
-
-const newMessage = ref("");
-
-const sendMessage = () => {
-  if (newMessage.value.trim()) {
-    messages.value.push({
-      id: messages.value.length + 1,
-      user: "Tu",
-      text: newMessage.value
-    });
-    newMessage.value = "";
-  }
-};
-
+ref("");
 // **Inizializza il player di YouTube**
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
@@ -142,37 +120,4 @@ iframe {
   border-radius: 8px;
 }
 
-.chat-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #222;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.chat-header {
-  font-weight: bold;
-  text-align: center;
-  padding: 5px;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-.chat-message {
-  padding: 5px;
-  border-bottom: 1px solid #444;
-}
-
-.chat-input {
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  width: 100%;
-}
 </style>
