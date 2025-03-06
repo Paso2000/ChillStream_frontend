@@ -1,13 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-box">
-      <!-- Logo e sezioni della navbar -->
-      <div class="left-section">
-        <div class="logo">
-          <img src="/chillStream-logo.png" alt="ChillStream Logo"/>
-        </div>
-      </div>
-
+      <Logo/>
       <div class="right-section">
         <NotificationDropdown :userId="userId" :profileId="profileId"/>
         <div class="profile-icon" @click="openProfile">
@@ -24,6 +18,7 @@ import router from "@/router/index.js";
 import {getProfile} from "@/service/authApi.js";
 import {onMounted, ref} from "vue";
 import NotificationDropdown from "@/components/NotificationDropdown.vue";
+import Logo from "@/components/Logo.vue";
 
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
@@ -71,16 +66,6 @@ const openProfile = () => {
   backdrop-filter: blur(15px);
 }
 
-/* Sezione sinistra con logo */
-.left-section {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 50px;
-}
-
 /* Sezione destra con icona profilo */
 .right-section {
   display: flex;
@@ -92,7 +77,7 @@ const openProfile = () => {
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  margin:0 10px;
+  margin: 0 10px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
