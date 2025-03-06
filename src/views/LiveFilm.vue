@@ -17,14 +17,9 @@ import LiveChat from "@/components/LiveChat.vue"; // Per salvare nel DB
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
 const currentTime = ref(startTime.value); // Tiene traccia del tempo attuale
-let player = null; // Variabile per il player di YouTube
+let player = null;
 
-const messages = ref([
-  { id: 1, user: "User1", text: "Ciao a tutti!" },
-  { id: 2, user: "User2", text: "Wow, che bel film!" }
-]);
 ref("");
-// **Inizializza il player di YouTube**
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
@@ -32,14 +27,10 @@ const loadYouTubePlayer = () => {
       width: "100%",
       videoId: "lJXaNYTVjrQ", // ID del video
       playerVars: {
-        autoplay: 1,   // Avvia automaticamente il video
-        mute: 1,       // Muta il video
-        start: startTime.value, // Imposta il punto di inizio
-        //controls: 0,       // Nasconde i controlli del player
-        showinfo: 0,       // Nasconde informazioni sul video (obsoleto, ma a volte funziona)
-        rel: 0,            // Non mostra video correlati alla fine
-        fs: 0,             // Disabilita il pulsante fullscreen
-        iv_load_policy: 3, // Nasconde annotazioni
+        autoplay: 1,
+        mute: 1,
+        start: startTime.value,
+        rel: 0,
       },
       events: {
         onReady: () => {
@@ -52,7 +43,6 @@ const loadYouTubePlayer = () => {
     });
   };
 
-  // Carica lo script dell'API YouTube se non è già presente
   if (!window.YT) {
     let tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -63,14 +53,12 @@ const loadYouTubePlayer = () => {
   }
 };
 
-// **Funzione per aggiornare il tempo corrente**
 const updateCurrentTime = () => {
   if (player && typeof player.getCurrentTime === "function") {
     currentTime.value = Math.floor(player.getCurrentTime());
   }
 };
 
-// **Salva il tempo nel DB ogni 30 secondi**
 const saveTimeInterval = setInterval(() => {
   updateCurrentTime();
   putView(
