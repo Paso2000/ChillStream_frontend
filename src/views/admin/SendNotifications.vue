@@ -76,28 +76,6 @@ const sendNotification = async () => {
   margin-bottom: 10px;
 }
 
-.form-input:focus {
-  background: #444;
-  outline: none;
-}
-
-/* Textarea */
-.form-textarea {
-  font-family: "Arial", sans-serif;
-  width: 100%;
-  min-height: 80px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
-}
-
 /* Pulsanti */
 .form-button {
   width: 100%;

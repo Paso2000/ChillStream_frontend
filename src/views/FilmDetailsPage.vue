@@ -167,7 +167,6 @@ const toggleRecommended = async () => {
 
 .movie-container {
   color: white;
-  font-family: Arial, sans-serif;
 }
 
 .movie-banner {

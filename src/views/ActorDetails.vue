@@ -84,11 +84,6 @@ const goToMovie = (filmId) => {
   text-align: left;
 }
 
-.bio {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
 .actor-movies {
   margin-top: 30px;
 }

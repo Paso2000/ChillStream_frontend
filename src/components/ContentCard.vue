@@ -1,8 +1,6 @@
 <template>
   <div v-if="content" @click="goToDetails" class="content-card">
-    <img src="https://imgur.com/a/U9Wg4we"
-         alt="Copertina film"
-         class="content-img">
+    <img :src="content.image_path" :alt="content.title" class="content-img" />
   </div>
 </template>
 

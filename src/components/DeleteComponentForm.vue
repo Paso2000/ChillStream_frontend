@@ -5,10 +5,17 @@
     <button @click="deleteContent" class="form-button">Delete</button>
   </div>
 </template>
-<script setup>
-import FormInput from "@/components/FormInput.vue";
+
+<script>
 import {ref} from "vue";
 import {deleteFilm, getFilmList, putFilm} from "@/service/contentApi.js";
+import {defineComponent} from "vue";
+import FormInput from "@/components/FormInput.vue";
+
+export default defineComponent({
+  components: {FormInput}
+})
+
 
 const title = ref("")
 
@@ -32,52 +39,12 @@ const deleteContent = async () => {
 </script>
 
 <style scoped>
-/* Stile Generale */
-.content-management {
-  background: #111;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: auto;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
 /* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
-}
-
-/* Input in riga */
-.form-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.form-input:focus {
-  background: #444;
-  outline: none;
-}
-
-/* Textarea */
-.form-textarea {
-  font-family: "Arial", sans-serif;
-  width: 100%;
-  min-height: 80px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
 }
 
 /* Pulsanti */
@@ -97,21 +64,4 @@ const deleteContent = async () => {
   background: linear-gradient(90deg, #b06aff, #7a1edf);
   transform: scale(1.05);
 }
-
-.image-input {
-  font-family: "Arial", sans-serif;
-  min-height: 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  color: #444;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
-}
-
 </style>
