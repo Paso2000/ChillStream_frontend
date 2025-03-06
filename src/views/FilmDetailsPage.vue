@@ -66,14 +66,12 @@ let isViewed = ref(false)
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
 const filmId = sessionStorage.getItem("film")
-
-const newReview = ref({
+ref({
   film_id: filmId,
   nickname: sessionStorage.getItem("nicknameProfile"),
   profile_id: profileId,
   text: "",
 });
-
 const movie = ref({
   title: "",
   image: "",

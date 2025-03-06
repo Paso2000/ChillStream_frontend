@@ -42,9 +42,9 @@ const newReview = ref({
 const addReview = async () => {
   try {
     await postReview(newReview.value.film_id, newReview.value);
+    newReview.value.text = "";
     const updatedReviews = await getReviewList(newReview.value.film_id);
     emit("updateReviews", updatedReviews);
-    newReview.value.text = "";
     alert("Review created");
   } catch (error) {
     alert("Review not created");
