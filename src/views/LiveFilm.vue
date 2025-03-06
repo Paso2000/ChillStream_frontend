@@ -1,4 +1,5 @@
 <template>
+  <UserNavbar/>
   <div class="stream-container">
     <!-- Sezione Video -->
     <div class="video-section">
@@ -12,7 +13,8 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import {deleteView, putView} from "@/service/interactionApi.js";
-import LiveChat from "@/components/LiveChat.vue"; // Per salvare nel DB
+import LiveChat from "@/components/LiveChat.vue";
+import UserNavbar from "@/components/UserNavbar.vue"; // Per salvare nel DB
 
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
@@ -92,8 +94,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .stream-container {
+  margin-top: 80px;
   display: flex;
-  height: 100vh;
+  height: 82vh;
   gap: 10px;
   background: #000;
   color: white;

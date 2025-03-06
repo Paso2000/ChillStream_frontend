@@ -96,6 +96,7 @@ const sendNotification = async () => {
 
 .custom-text-input{
   max-width: 800px;
+  padding: 20px 5px;
   margin-bottom: 0;
 }
 

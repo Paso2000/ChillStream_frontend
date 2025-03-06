@@ -1,8 +1,5 @@
 <template>
-  <div class="navbar">
-    <Logo/>
-  </div>
-
+  <AdminNavbar/>
   <div class="login-container">
     <div class="login-box">
       <h2>Admin Sign In</h2>
@@ -20,6 +17,7 @@ import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
+import AdminNavbar from "@/components/AdminNavbar.vue";
 
 const username = ref("GiammaIlControllore");
 const password = ref("pastaConTonno");
@@ -45,19 +43,8 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-.navbar {
-  position: absolute;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px;
-  z-index: 10;
-}
-
 .login-container {
+  margin-top: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
