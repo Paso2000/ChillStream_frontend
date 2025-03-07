@@ -31,7 +31,13 @@ const messages = ref([]);
 const newMessage = ref("");
 const showEmojiPicker = ref(false); // Toggle emoji picker
 const nickname = sessionStorage.getItem("nicknameProfile")
+const filmId = sessionStorage.getItem("film")
 // Listen for messages from the server
+
+onMounted(() => {
+    socket.emit("joinRoom", filmId)}
+)
+
 socket.on("receiveMessage", (message) => {
   messages.value.push(message);
 });
@@ -42,6 +48,7 @@ const sendMessage = () => {
     const messageData = {
       user: nickname,
       text: newMessage.value,
+      filmId: filmId,
     };
 
     socket.emit("sendMessage", messageData);
