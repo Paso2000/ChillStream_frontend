@@ -12,7 +12,7 @@
 const props = defineProps({
   type: { type: String, default: "text" },
   placeholder: String,
-  modelValue: "",  // Aggiunto modelValue come prop!
+  modelValue: "",
 });
 </script>
 

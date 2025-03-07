@@ -6,15 +6,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {ref} from "vue";
 import {deleteFilm, getFilmList, putFilm} from "@/service/contentApi.js";
 import {defineComponent} from "vue";
 import FormInput from "@/components/FormInput.vue";
-
-export default defineComponent({
-  components: {FormInput}
-})
 
 
 const title = ref("")
