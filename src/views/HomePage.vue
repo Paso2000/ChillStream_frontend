@@ -10,8 +10,8 @@
       <!-- Viewed Movies -->
       <ContentRow title="Continue to watching" :contents="viewedMovies" />
 
-      <!-- Recommended Movies -->
-      <ContentRow title="Recommended Movies" :contents="recommendedMovies" />
+      <!-- MyList Movies -->
+      <ContentRow title="My List" :contents="MyListMovie" />
 
     </div>
   </div>
@@ -23,11 +23,10 @@ import UserNavbar from "@/components/UserNavbar.vue";
 import ContentRow from "@/components/ContentRow.vue";
 import {getFilmList } from "@/service/contentApi.js";
 import { getRecommendedList, getViewList } from "@/service/interactionApi.js";
-import NotificationDropdown from "@/components/NotificationDropdown.vue";
 
 const allMovies = ref([]);
 const viewedMovies = ref([]);
-const recommendedMovies = ref([]);
+const MyListMovie = ref([]);
 
 onMounted(async () => {
   allMovies.value = await getFilmList();
@@ -36,16 +35,12 @@ onMounted(async () => {
   const viewed = await getViewList(sessionStorage.getItem("user"), sessionStorage.getItem("profile"));
   viewedMovies.value = viewed.map(view => view.filmDetails);
 
-  const recommendeds = await getRecommendedList(sessionStorage.getItem("user"), sessionStorage.getItem("profile"));
-  recommendedMovies.value = recommendeds.map(recommended => recommended.filmDetails);
+  const myListMovie = await getRecommendedList(sessionStorage.getItem("user"), sessionStorage.getItem("profile"));
+  MyListMovie.value = myListMovie.map(myLyst => myLyst.filmDetails);
 });
 </script>
 
 <style scoped>
-/* 📌 Stili generali */
-.body{
- color: #7a0dad;
-}
 
 .homepage {
   margin-top: 80px;

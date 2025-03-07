@@ -133,28 +133,6 @@ const deleteActorFromDb = async () => {
   margin-bottom: 10px;
 }
 
-.form-input:focus {
-  background: #444;
-  outline: none;
-}
-
-/* Textarea */
-.form-textarea {
-  font-family: "Arial", sans-serif;
-  width: 100%;
-  min-height: 80px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
-}
-
 /* Pulsanti */
 .form-button {
   width: 100%;
@@ -171,22 +149,6 @@ const deleteActorFromDb = async () => {
 .form-button:hover {
   background: linear-gradient(90deg, #b06aff, #7a1edf);
   transform: scale(1.05);
-}
-
-.image-input{
-  font-family: "Arial", sans-serif;
-  min-height: 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  color: #444;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
 }
 
 </style>

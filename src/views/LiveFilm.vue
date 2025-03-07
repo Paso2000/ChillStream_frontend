@@ -17,9 +17,8 @@ import LiveChat from "@/components/LiveChat.vue"; // Per salvare nel DB
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
 const currentTime = ref(startTime.value); // Tiene traccia del tempo attuale
-let player = null; // Variabile per il player di YouTube
+let player = null;
 
-// **Inizializza il player di YouTube**
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
@@ -30,6 +29,7 @@ const loadYouTubePlayer = () => {
         autoplay: 1,
         mute: 1,
         start: startTime.value,
+        rel: 0,
       },
       events: {
         onReady: () => {
@@ -42,7 +42,6 @@ const loadYouTubePlayer = () => {
     });
   };
 
-  // Carica lo script dell'API YouTube se non è già presente
   if (!window.YT) {
     let tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -53,14 +52,12 @@ const loadYouTubePlayer = () => {
   }
 };
 
-// **Funzione per aggiornare il tempo corrente**
 const updateCurrentTime = () => {
   if (player && typeof player.getCurrentTime === "function") {
     currentTime.value = Math.floor(player.getCurrentTime());
   }
 };
 
-// **Salva il tempo nel DB ogni 30 secondi**
 const saveTimeInterval = setInterval(() => {
   updateCurrentTime();
   putView(

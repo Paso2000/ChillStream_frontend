@@ -6,7 +6,7 @@
     <div class="section">
       <h4>Add new notifications</h4>
       <div class="form-group">
-        <textarea v-model="notification.text" placeholder="Notification text"/>
+        <FormInput class="custom-text-input" v-model=" notification.text" placeholder="Notification text"/>
       </div>
       <Button @click="sendNotification" class="form-button">Send</Button>
     </div>
@@ -15,13 +15,12 @@
 </template>
 
 <script setup>
-import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
-import {postFilm} from "@/service/contentApi.js";
 import {ref} from "vue";
-import {defineComponent} from "vue";
 import {getProfiles, getUsers, postUser} from "@/service/authApi.js";
 import {postNotification} from "@/service/interactionApi.js";
+import DescriptionInput from "@/components/DescriptionInput.vue";
+import FormInput from "@/components/FormInput.vue";
 
 
 
@@ -77,28 +76,6 @@ const sendNotification = async () => {
   margin-bottom: 10px;
 }
 
-.form-input:focus {
-  background: #444;
-  outline: none;
-}
-
-/* Textarea */
-.form-textarea {
-  font-family: "Arial", sans-serif;
-  width: 100%;
-  min-height: 80px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
-}
-
 /* Pulsanti */
 .form-button {
   width: 100%;
@@ -117,20 +94,9 @@ const sendNotification = async () => {
   transform: scale(1.05);
 }
 
-.image-input{
-  font-family: "Arial", sans-serif;
-  min-height: 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-
-  padding: 10px;
-  margin-bottom: 10px;
-  color: #444;
-  background: #d3d3d3;
-  outline: none;
-  box-sizing: border-box;
+.custom-text-input{
+  max-width: 800px;
+  margin-bottom: 0;
 }
 
 </style>

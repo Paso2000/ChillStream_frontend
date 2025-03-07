@@ -2,7 +2,7 @@
   <div class="notification-container">
     <!-- Icona Notifiche -->
     <div class="notification-icon" @click="toggleDropdown">
-      <h1>Notifiche</h1>
+      <img src="/icon-notification.png" alt="Notifications"/>
       <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
     </div>
 
@@ -89,6 +89,10 @@ onMounted(async () => {
 .notification-icon {
   position: relative;
   cursor: pointer;
+}
+.notification-icon img{
+  width: 40px;
+  height: 40px;
 }
 
 .badge {

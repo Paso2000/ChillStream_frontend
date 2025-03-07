@@ -1,5 +1,5 @@
 <template>
-  <div class="filmDetailsPage">
+  <div class="film-details">
     <UserNavbar/>
     <div class="movie-container">
       <div class="movie-banner" :style="{ backgroundImage: `url(${movie.image_path})` }">
@@ -30,8 +30,9 @@
     <div class="movie-details-content">
       <div v-if="selectedTab === 'cast'" class="movie-cast">
         <ul>
-          <li v-for="actor in fullActors" :key="actor._id" @click="goToActorDetails(actor._id)">{{ actor.name }}
-            {{ actor.surname }}
+          <li v-for="actor in fullActors" :key="actor._id" @click="goToActorDetails(actor._id)" class="actor-item">
+            <img src="/actor-default.jpg" :alt="actor.name" class="actor-image" />
+            <span class="actor-name">{{ actor.name }} {{ actor.surname }}</span>
           </li>
         </ul>
       </div>
@@ -155,7 +156,7 @@ const toggleRecommended = async () => {
 </script>
 
 <style scoped>
-.filmDetailsPage {
+.film-details {
   margin-top: 80px;
   background: #000;
   color: white;
@@ -164,7 +165,6 @@ const toggleRecommended = async () => {
 
 .movie-container {
   color: white;
-  font-family: Arial, sans-serif;
 }
 
 .movie-banner {
@@ -225,4 +225,10 @@ const toggleRecommended = async () => {
   border-bottom: 2px solid rgba(106, 13, 173, 0.88);
 }
 
+.actor-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 </style>
