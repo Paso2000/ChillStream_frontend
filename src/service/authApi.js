@@ -26,6 +26,16 @@ export const postUser = async (body) => {
     }
 };
 
+export const canUserLogIn = async (body) => {
+    try {
+        const response = await authApi.post("/logins/",body);
+        return response.data; // Ritorna il token o i dati dell'utente
+    } catch (error) {
+        console.error("Errore logging user:", error);
+        throw error;
+    }
+};
+
 export const getUser = async (userId) => {
     try {
         const response = await authApi.get(`/users/${userId}`);

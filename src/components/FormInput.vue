@@ -9,10 +9,11 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
-  type: { type: String, default: "text" },
+  type: {type:String, default:"text"},
   placeholder: String,
-  modelValue: "",
+  modelValue: String,
 });
 </script>
 
