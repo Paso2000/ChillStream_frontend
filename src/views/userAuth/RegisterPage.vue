@@ -29,7 +29,7 @@ import {useRouter} from "vue-router";
 import {postUser} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
-import Logo from "@/components/Logo.vue"; // Import API function
+import Logo from "@/components/Logo.vue";
 
 const router = useRouter();
 
@@ -49,16 +49,14 @@ const registerUser = async () => {
       alert("Registration successful!");
       sessionStorage.setItem("user", user._id);
       router.push(`/profiles`);
-    }}
-   catch (error) {
-      alert("User not registered correctly")
-     console.error("Error registering user:", error);
-
-   }
+    }
+  } catch (error) {
+    alert("User not registered correctly")
+    console.error("Error registering user:", error);
+  }
 
 };
 </script>
-
 
 <style scoped>
 .login-container {
@@ -88,7 +86,7 @@ const registerUser = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 0;
   z-index: 10;
 }
 
@@ -108,7 +106,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-.dataForm{
+.dataForm {
   width: 100%;
   font-family: "Arial", sans-serif;
   max-width: 300px;

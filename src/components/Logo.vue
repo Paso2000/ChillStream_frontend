@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { useRouter, useRoute } from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
@@ -27,6 +27,7 @@ const goHome = () => {
 .logo {
   height: 40px;
   transition: transform 0.3s ease-in-out;
+  margin-left: 20px;
 }
 
 .clickable {
