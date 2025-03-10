@@ -4,10 +4,8 @@
   </div>
 
   <div class="selection-container">
-    <!-- Selezione profilo -->
     <div class="content">
       <h1>Who wants to watch ChillStream?</h1>
-
       <div class="profile-container">
         <div
             v-for="profile in profiles"
@@ -15,7 +13,7 @@
             class="profile-card"
             @click="selectProfile(profile)"
         >
-          <img :src="profile.profileImage" class="profile-image"/>
+          <img :src="profile.profileImage" class="profile-image" alt="profile image"/>
           <p class="profile-name">{{ profile.nickname }}</p>
         </div>
 
@@ -59,7 +57,6 @@ const addProfile = () => {
 </script>
 
 <style scoped>
-/* 📌 Contenitore principale con sfondo */
 .selection-container {
   display: flex;
   flex-direction: column;
@@ -78,11 +75,10 @@ const addProfile = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 0;
   z-index: 10;
 }
 
-/* 📌 Contenuto principale */
 .content {
   text-align: center;
   color: white;
@@ -95,15 +91,13 @@ h1 {
   margin-bottom: 30px;
 }
 
-/* 📌 Contenitore profili */
 .profile-container {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   justify-content: center;
   align-items: center;
 }
 
-/* 📌 Card profilo */
 .profile-card {
   display: flex;
   flex-direction: column;
@@ -116,7 +110,6 @@ h1 {
   transform: scale(1.1);
 }
 
-/* 📌 Immagine profilo */
 .profile-image {
   width: 120px;
   height: 120px;
@@ -130,7 +123,6 @@ h1 {
   border: 3px solid white;
 }
 
-/* 📌 Nome profilo */
 .profile-name {
   color: white;
   margin-top: 10px;
@@ -138,7 +130,6 @@ h1 {
   text-align: center;
 }
 
-/* 📌 Bottone + per aggiungere un profilo */
 .add-profile {
   width: 120px;
   height: 120px;

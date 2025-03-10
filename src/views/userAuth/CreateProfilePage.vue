@@ -4,14 +4,12 @@
   </div>
 
   <div class="selection-container">
-    <!-- Profile Selection -->
     <div class="content">
       <h1 class="title">Create New Profile</h1>
 
       <div class="profile-container">
         <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required class="input-nickname" />
 
-        <!-- Image Selection -->
         <div class="grid grid-cols-3 gap-4 mt-4">
           <div
               v-for="(image, index) in defaultImages"
@@ -47,14 +45,12 @@ const form = ref({
 
 const router = useRouter();
 
-// Default profile images
 const defaultImages = [
   "/profile1.png",
   "/profile2.png",
   "/profile3.png"
 ];
 
-// Function to handle form submission
 const createProfile = async () => {
   if (!form.value.profileImage&&!form.value.nickname) {
     alert("Please select a profile image.");
@@ -62,7 +58,6 @@ const createProfile = async () => {
   try {
     const profile = await postProfile(sessionStorage.getItem("user"),form.value)
     sessionStorage.setItem("profile",profile._id)
-    // Redirect to home after creating profile
     await router.push("/profiles");
     alert("profile created ")
   } catch (error) {
@@ -90,7 +85,7 @@ const createProfile = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 0;
   z-index: 10;
 }
 
@@ -116,11 +111,10 @@ const createProfile = async () => {
 .grid {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .profile-image-container {
-  padding: 5px;
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out, border 0.3s;
