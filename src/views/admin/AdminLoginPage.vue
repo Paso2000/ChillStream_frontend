@@ -1,5 +1,4 @@
 <template>
-  <AdminNavbar/>
   <div class="login-container">
     <div class="login-box">
       <h2>Admin Sign In</h2>
@@ -11,13 +10,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
 import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
-import Logo from "@/components/Logo.vue";
-import AdminNavbar from "@/components/AdminNavbar.vue";
 
 const username = ref("GiammaIlControllore");
 const password = ref("pastaConTonno");
@@ -29,15 +26,15 @@ const handleLogin = async () => {
     const admins = await getAdminList();
     const adminFound = admins.find(
         (admin) => username.value === admin.username && password.value === admin.password);
-        if (adminFound) {
-          sessionStorage.setItem("admin",username.value)
-          await router.push(`/admin/control-panel`);
-        }else {
-          alert("Wrong credential")
-        }
-      } catch (error) {
-        alert("connection error");
-      }
+    if (adminFound) {
+      sessionStorage.setItem("admin", username.value)
+      await router.push(`/admin/control-panel`);
+    } else {
+      alert("Wrong credential")
+    }
+  } catch (error) {
+    alert("Connection error");
+  }
 };
 
 </script>
@@ -52,6 +49,7 @@ const handleLogin = async () => {
   background: url("/background.jpg");
   position: relative;
 }
+
 .login-container::before {
   content: "";
   position: absolute;

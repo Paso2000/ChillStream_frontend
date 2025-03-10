@@ -44,7 +44,6 @@ const form = ref({
 
 const registerUser = async () => {
   try {
-    alert("CALLED")
     const user = await postUser(form.value);
     if (user) {
       alert("Registration successful!");

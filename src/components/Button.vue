@@ -5,18 +5,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {ref} from "vue";
 
 const isClicked = ref(false);
 
 const handleClick = (event) => {
-  if (isClicked.value) return; // Previene il doppio click accidentale
+  if (isClicked.value) return;
   isClicked.value = true;
   setTimeout(() => {
-    isClicked.value = false; // Reset dopo un breve tempo
+    isClicked.value = false;
   }, 300);
 
-  // Emetti l'evento click solo una volta
   event.stopPropagation();
   event.preventDefault();
   emit("click");
@@ -26,9 +25,10 @@ const emit = defineEmits(["click"]);
 </script>
 
 <style scoped>
+/* Mobile First */
 .custom-button {
   width: 100%;
-  max-width: 300px;
+  max-width: 200px;
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -47,7 +47,14 @@ const emit = defineEmits(["click"]);
 }
 
 .custom-button:active {
-transform: scale(0.98);
+  transform: scale(0.98);
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .custom-button {
+    max-width: 300px;
+  }
 }
 
 </style>
