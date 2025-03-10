@@ -10,7 +10,7 @@
 <script setup>
 import SaveContentForm from "@/components/SaveContentForm.vue";
 import UpdateContentForm from "@/components/UpdateContentForm.vue";
-import DeleteComponentForm from "@/components/DeleteComponentForm.vue";
+import DeleteComponentForm from "@/components/DeleteContentForm.vue";
 </script>
 
 <style scoped>

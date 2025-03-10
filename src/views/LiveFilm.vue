@@ -5,7 +5,7 @@
     <div class="video-section">
       <div id="player"></div> <!-- YouTube Player viene creato qui -->
     </div>
-    <LiveChat></LiveChat>
+    <LiveChat> </LiveChat>
   </div>
 </template>
 
@@ -21,7 +21,6 @@ const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
 const currentTime = ref(startTime.value); // Tiene traccia del tempo attuale
 let player = null;
 
-ref("");
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
@@ -75,20 +74,20 @@ onMounted(() => {
   loadYouTubePlayer();
 });
 
-onBeforeUnmount(() => {
+onBeforeUnmount(async () => {
   clearInterval(saveTimeInterval);
   updateCurrentTime(); // Assicura di prendere il tempo finale
-  if(currentTime.value>190)
-    deleteView(sessionStorage.getItem("user"),
+  if (currentTime.value > 190)
+    await deleteView(sessionStorage.getItem("user"),
         sessionStorage.getItem("profile"),
         sessionStorage.getItem("film"))
   else
-  putView(
-      sessionStorage.getItem("user"),
-      sessionStorage.getItem("profile"),
-      sessionStorage.getItem("film"),
-      { timesOFTheFilm: currentTime.value }
-  );
+   await putView(
+        sessionStorage.getItem("user"),
+        sessionStorage.getItem("profile"),
+        sessionStorage.getItem("film"),
+        {timesOFTheFilm: currentTime.value}
+    );
 });
 </script>
 

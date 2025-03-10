@@ -36,15 +36,15 @@ const newReview = ref({
   film_id: props.filmId,
   nickname: sessionStorage.getItem("nicknameProfile"),
   profile_id: sessionStorage.getItem("profile"),
-  text: "",
+  text: String,
 });
 
 const addReview = async () => {
   try {
     await postReview(newReview.value.film_id, newReview.value);
+    newReview.value.text = null;
     const updatedReviews = await getReviewList(newReview.value.film_id);
     emit("updateReviews", updatedReviews);
-    newReview.value.text = "";
     alert("Review created");
   } catch (error) {
     alert("Review not created");
