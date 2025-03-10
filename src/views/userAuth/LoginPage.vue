@@ -1,15 +1,13 @@
 <template>
   <div class="navbar">
-    <Logo />
+    <Logo/>
   </div>
-
   <div class="login-container">
     <div class="login-box">
       <h2>Sign In</h2>
       <FormInput v-model="email" type="email" placeholder="Email" required/>
       <FormInput v-model="password" type="password" placeholder="Password" required/>
       <Button @click="handleLogin">Sign In</Button>
-
       <p class="signup-text">
         New to Chill Stream? <span class="signup-link" @click="goToRegister">Sign up now.</span>
       </p>
@@ -18,9 +16,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { getUsers } from "@/service/authApi.js";
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {getUsers} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
@@ -36,9 +34,8 @@ const handleLogin = async () => {
   users.forEach(user => {
     if (email.value === user.email && password.value === user.password) {
       isLogged = true;
-      // Salviamo l'utente in sessionStorage (simulazione)
       sessionStorage.setItem("user", user._id);
-      router.push(`/profiles`); // Reindirizza alla selezione profili
+      router.push(`/profiles`);
     }
   });
 
@@ -63,7 +60,7 @@ const goToRegister = () => {
   position: relative;
 }
 
-/* 📌 Overlay per migliorare leggibilità */
+/* Overlay */
 .login-container::before {
   content: "";
   position: absolute;
@@ -75,7 +72,6 @@ const goToRegister = () => {
   z-index: 1;
 }
 
-/* 📌 Navbar con logo */
 .navbar {
   position: absolute;
   top: 20px;
@@ -83,11 +79,10 @@ const goToRegister = () => {
   width: 100%;
   display: flex;
   justify-content: left;
-  padding: 0 50px;
+  padding: 0;
   z-index: 10;
 }
 
-/* 📌 Stile login box */
 .login-box {
   background: rgba(43, 43, 43, 0.6);
   padding: 40px;
@@ -105,7 +100,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* 📌 Stile per il link di registrazione */
 .signup-text {
   color: white;
   margin-top: 15px;
