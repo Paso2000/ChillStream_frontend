@@ -32,8 +32,6 @@ const router = useRouter();
 const handleLogin = async () =>
     {
       try{
-        let isLogged = false;
-
         const userFound = await canUserLogIn(form.value)
         if(userFound){
           sessionStorage.setItem("user", userFound._id);
