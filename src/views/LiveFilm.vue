@@ -15,7 +15,7 @@ import { useRoute } from "vue-router";
 import {deleteView, putView} from "@/service/interactionApi.js";
 import LiveChat from "@/components/LiveChat.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
-import {getFilm} from "@/service/contentApi.js"; // Per salvare nel DB
+import {getFilm} from "@/service/contentApi.js";
 
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
@@ -35,6 +35,8 @@ const loadYouTubePlayer = () => {
     player = new YT.Player("player", {
       height: "500",
       width: "100%",
+      //decomment to debug
+      //videoId: "lJXaNYTVjrQ",
       videoId: film.value.trailer_path,
       playerVars: {
         autoplay: 1,
@@ -43,12 +45,6 @@ const loadYouTubePlayer = () => {
         rel: 0,
       },
       events: {
-        onReady: () => {
-          console.log("YouTube Player Pronto!");
-        },
-        onStateChange: () => {
-          updateCurrentTime();
-        }
       }
     });
   };
@@ -90,15 +86,27 @@ onBeforeUnmount(async () => {
 
 <style scoped>
 .stream-container {
-  margin-top: 80px;
   display: flex;
-  height: 82vh;
+  flex-direction: column; /* Mobile First ➜ colonna */
+  width: 100%;
+  height: 55vh;
   gap: 10px;
   background: #000;
   color: white;
-  padding: 20px;
 }
 
+@media (min-width: 768px) {
+  .stream-container {
+    flex-direction: row;
+    margin-top: 80px;
+    display: flex;
+    height: 82vh;
+    gap: 10px;
+    background: #000;
+    color: white;
+    padding: 20px;
+  }
+}
 .video-section {
   flex: 3;
   display: flex;

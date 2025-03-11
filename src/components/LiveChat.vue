@@ -2,10 +2,12 @@
   <div class="chat-section">
     <div class="chat-header">Live Chat</div>
 
-    <!-- Messages Display -->
     <div class="chat-messages">
       <div v-for="message in messages" :key="message.id" class="chat-message">
-        <strong>{{ message.user }}</strong>{{ (message.time) }}: {{ message.text }}
+        <div class="message-line">
+          <strong class="user-name">{{ message.user }}: </strong>{{ message.text }}
+          <div class="timestamp">{{ message.time }}</div>
+        </div>
       </div>
     </div>
 
@@ -95,6 +97,21 @@ onBeforeUnmount(() => {
   background: #222;
   padding: 10px;
   border-radius: 8px;
+  margin: 0 10px;
+  min-height: 40vh;
+}
+
+@media (min-width: 768px){
+  .chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #222;
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 83vh;
+    margin-right: 30px;
+  }
 }
 
 .chat-header {
@@ -110,8 +127,25 @@ onBeforeUnmount(() => {
 }
 
 .chat-message {
-  padding: 5px;
-  border-bottom: 1px solid #444;
+  padding: 15px;
+  border-bottom: 1px solid #8a2be2;
+  display: flex;
+  flex-direction: column; /* Per righe separate */
+}
+
+.message-line {
+  display: flex;
+  align-items: center;
+}
+
+.user-name{
+  margin-right: 15px;
+}
+
+.timestamp {
+  font-size: 0.75rem; /* più piccolo */
+  color: #aaa;
+  margin-left: 20px;
 }
 
 .input-container {
