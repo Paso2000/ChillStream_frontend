@@ -5,7 +5,7 @@
     <!-- Messages Display -->
     <div class="chat-messages">
       <div v-for="message in messages" :key="message.id" class="chat-message">
-        <strong>{{ message.user }}</strong>{{ message.time }}: {{ message.text }}
+        <strong>{{ message.user }}</strong>{{ (message.time) }}: {{ message.text }}
       </div>
     </div>
 
