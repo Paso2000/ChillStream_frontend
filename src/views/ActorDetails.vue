@@ -62,7 +62,6 @@ const goToMovie = (filmId) => {
 .actor-details {
   margin-top: 80px;
   color: white;
-  padding: 20px;
   background: #000;
   text-align: left;
 }
@@ -87,11 +86,13 @@ const goToMovie = (filmId) => {
 
 .actor-movies {
   margin-top: 30px;
+  margin-left: 10px;
 }
 
 .actor-movies h2 {
   font-size: 24px;
   margin-bottom: 15px;
+  margin-left: 10px;
 }
 
 ul {

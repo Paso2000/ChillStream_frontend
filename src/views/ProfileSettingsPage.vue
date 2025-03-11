@@ -93,8 +93,8 @@ const deleteProfil = async () => {
 
 <style scoped>
 .profileSettingPage {
-  margin-top: 150px;
-  background: linear-gradient(135deg, #000000, #111);
+  margin-top: 80px;
+  background: #000;
 }
 
 .selection-container {
