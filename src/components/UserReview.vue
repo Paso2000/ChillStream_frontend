@@ -56,15 +56,14 @@ const addReview = async () => {
 .user-review {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra tutti gli elementi orizzontalmente */
-  padding: 20px;
+  align-items: center;
   width: 100%;
 }
 
 .review-input {
   display: flex;
-  flex-direction: row; /* Mantiene gli elementi in riga */
-  justify-content: center; /* Centra gli elementi */
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
   width: 100%;
   gap: 10px;
@@ -73,37 +72,56 @@ const addReview = async () => {
 
 .review-form {
   flex-grow: 1;
-  max-width: 840px;
+  max-width: 500px; /* mobile limit */
 }
 
 .custom-button {
   margin-top: 0;
   margin-bottom: 10px;
-  max-width: 150px;
+  max-width: 120px;
 }
 
 .custom-list {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra le recensioni */
+  align-items: center;
   padding: 0;
 }
 
 .review-message {
   list-style: none;
   background-color: #d3d3d3;
-  max-width: 980px;
-  width: 100%; /* Assicura che tutte le recensioni abbiano la stessa larghezza */
+  width: 90%;           /* Mobile First: Larghezza limitata per centrare */
+  max-width: 500px;     /* Mobile First: Limite massimo per mobile */
   padding: 10px;
   border-radius: 10px;
   color: #000;
   margin-bottom: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .review-name {
   font-weight: bold;
   color: #6a0dad;
 }
+
+@media (min-width: 768px) {
+  .review-form {
+    max-width: 840px;
+  }
+
+  .review-message {
+    width: 100%;
+    max-width: 980px;
+  }
+
+  .custom-button {
+    max-width: 150px;
+  }
+}
+
 
 </style>
