@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-box">
-      <Logo/>
+      <Logo />
 
       <div class="hamburger-menu" @click="toggleMenu">
         <div :class="['bar', { open: menuOpen }]"></div>
@@ -10,19 +10,63 @@
       </div>
 
       <div class="right-section desktop-only">
-        <div class="Notification-section" @click="handleNotificationClick">
+        <div class="Notification-section" @click="handleNotificationClick" style="position: relative;">
           <p>Notification</p>
+          <div
+              v-if="unreadCount > 0"
+              class="notification-badge"
+              style="
+              position: absolute;
+              top: -3px;
+              right: -10px;
+              background-color: red;
+              color: white;
+              border-radius: 50%;
+              width: 20px;
+              height: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 12px;
+              font-weight: bold;
+            "
+          >
+            {{ unreadCount }}
+          </div>
         </div>
+
         <div class="profile-icon" @click="openProfile">
-          <img :src="profile.profileImage" alt="ProfileImage"/>
+          <img :src="profile.profileImage" alt="ProfileImage" />
         </div>
       </div>
     </div>
 
+    <!-- Mobile menu -->
     <div v-if="menuOpen" class="mobile-menu">
-      <div class="mobile-menu-item" @click="handleNotificationClick">
+      <div class="mobile-menu-item" @click="handleNotificationClick" style="position: relative;">
         <p>Notification</p>
+        <div
+            v-if="unreadCount > 0"
+            class="notification-badge"
+            style="
+            position: absolute;
+            left: 110px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+          "
+        >
+          {{ unreadCount }}
+        </div>
       </div>
+
       <div class="mobile-menu-item" @click="openProfile">
         <span>My Profile</span>
       </div>
@@ -36,8 +80,12 @@ import {ref, onMounted} from "vue";
 import router from "@/router/index.js";
 import {getProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
+import {getNotificationList} from "@/service/interactionApi.js";
 
 const menuOpen = ref(false);
+const unreadCount = ref(0);
+const notifications = ref([]);
+
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -51,13 +99,6 @@ let profile = ref({
   profileImage: "",
 });
 
-onMounted(async () => {
-  try {
-    profile.value = await getProfile(userId, profileId);
-  } catch (error) {
-    alert("Can't get the profile");
-  }
-});
 
 const openProfile = () => {
   router.push("/ProfileSettings");
@@ -67,6 +108,30 @@ const openProfile = () => {
 const handleNotificationClick = () => {
   router.push("/notification");
 }
+
+const loadNotifications = async () => {
+  try {
+    const data = await getNotificationList(userId, profileId);
+    notifications.value = data || [];
+    unreadCount.value = notifications.value.filter(n => !n.isChecked).length;
+    sessionStorage.setItem("unreadCount", unreadCount.value);
+  } catch (error) {
+    console.error("Errore caricamento notifiche:", error);
+  }
+};
+
+onMounted(async () => {
+  try {
+    profile.value = await getProfile(userId, profileId);
+  } catch (error) {
+    alert("Can't get the profile");
+  }
+  await loadNotifications();
+  window.addEventListener("storage", () => {
+    const storedCount = sessionStorage.getItem("unreadCount");
+    unreadCount.value = storedCount ? parseInt(storedCount) : 0;
+  });
+});
 
 </script>
 
@@ -101,16 +166,18 @@ const handleNotificationClick = () => {
   }
 }
 
-/* Logo sempre visibile */
 .navbar-box > *:first-child {
   flex-shrink: 0;
 }
 
-/* Desktop right section */
 .right-section {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.Notification-section{
+  cursor: pointer;
 }
 
 /* Mobile Hamburger */
@@ -129,19 +196,7 @@ const handleNotificationClick = () => {
   transition: all 0.3s ease-in-out;
 }
 
-.bar.open:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
 
-.bar.open:nth-child(2) {
-  opacity: 0;
-}
-
-.bar.open:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* Mobile Menu */
 .mobile-menu {
   display: flex;
   flex-direction: column;
@@ -171,6 +226,7 @@ const handleNotificationClick = () => {
   height: 40px;
   width: 40px;
   border-radius: 50%;
+  margin-left: 10px;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
@@ -179,30 +235,23 @@ const handleNotificationClick = () => {
   transform: scale(1.1);
 }
 
-/* Responsive Behavior */
-
-/* Desktop Only Elements */
 .desktop-only {
   display: none;
 }
 
 @media (min-width: 768px) {
-  /* Mostra la sezione desktop */
   .desktop-only {
     display: flex;
   }
 
-  /* Nascondi hamburger */
   .hamburger-menu {
     display: none;
   }
 
-  /* Nascondi il mobile menu */
   .mobile-menu {
     display: none !important;
   }
 
-  /* Profilo immagine più grande su desktop */
   .profile-icon img {
     height: 50px;
     width: 50px;
