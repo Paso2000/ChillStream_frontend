@@ -1,5 +1,6 @@
 <template>
   <UserNavbar/>
+  <BackButton/>
   <div class="stream-container">
     <!-- Sezione Video -->
     <div class="video-section">
@@ -16,6 +17,7 @@ import {deleteView, putView} from "@/service/interactionApi.js";
 import LiveChat from "@/components/LiveChat.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
 import {getFilm} from "@/service/contentApi.js";
+import BackButton from "@/components/BackButton.vue";
 
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);

@@ -1,6 +1,7 @@
 <template>
   <div class="film-details">
     <UserNavbar/>
+    <BackButton/>
     <div class="movie-container">
       <div class="movie-banner" :style="{ backgroundImage: `url(${movie.image_path})` }">
         <div class="movie-overlay">
@@ -58,6 +59,7 @@ import {
 import UserNavbar from "@/components/UserNavbar.vue";
 import router from "@/router/index.js";
 import UserReview from "@/components/UserReview.vue";
+import BackButton from "@/components/BackButton.vue";
 
 
 const fullActors = ref([]);

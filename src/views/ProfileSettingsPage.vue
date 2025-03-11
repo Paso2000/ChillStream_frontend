@@ -1,6 +1,7 @@
 <template>
   <div class="profileSettingPage">
     <UserNavbar/>
+    <BackButton/>
     <div class="selection-container">
       <!-- Profile Selection -->
       <div class="content">
@@ -39,6 +40,7 @@ import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
 import router from "@/router/index.js";
+import BackButton from "@/components/BackButton.vue";
 
 const userId = sessionStorage.getItem("user");
 const profileId = sessionStorage.getItem("profile");

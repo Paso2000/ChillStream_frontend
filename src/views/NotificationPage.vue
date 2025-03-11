@@ -1,7 +1,7 @@
 <template>
   <div class="notifications-page">
-    <UserNavbar />
-
+    <UserNavbar/>
+    <BackButton/>
     <div class="notifications-content">
       <div v-if="notifications.length === 0" class="empty-message">
         No notifications found.
@@ -31,6 +31,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getNotificationList, putNotification } from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
+import BackButton from "@/components/BackButton.vue";
 
 const router = useRouter();
 
