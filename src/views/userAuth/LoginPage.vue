@@ -5,8 +5,8 @@
   <div class="login-container">
     <div class="login-box">
       <h2>Sign In</h2>
-      <FormInput v-model="email" type="email" placeholder="Email" required/>
-      <FormInput v-model="password" type="password" placeholder="Password" required/>
+      <FormInput v-model="form.email" type="email" placeholder="Email" required/>
+      <FormInput v-model="form.password" type="password" placeholder="Password" required/>
       <Button @click="handleLogin">Sign In</Button>
       <p class="signup-text">
         New to Chill Stream? <span class="signup-link" @click="goToRegister">Sign up now.</span>
@@ -18,31 +18,32 @@
 <script setup>
 import {ref} from 'vue';
 import {useRouter} from 'vue-router';
-import {getUsers} from "@/service/authApi.js";
+import {canUserLogIn, getUsers} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
 
-const email = ref("");
-const password = ref("");
+const form = ref({
+  email:"",
+  password:""
+});
 const router = useRouter();
 
-const handleLogin = async () => {
-  const users = await getUsers();
-  let isLogged = false;
+const handleLogin = async () =>
+    {
+      try{
+        const userFound = await canUserLogIn(form.value)
+        if(userFound){
+          sessionStorage.setItem("user", userFound._id);
+          router.push(`/profiles`);
+        }
+      }catch (error){
+        alert("wrong credential")
+      }
 
-  users.forEach(user => {
-    if (email.value === user.email && password.value === user.password) {
-      isLogged = true;
-      sessionStorage.setItem("user", user._id);
-      router.push(`/profiles`);
+
     }
-  });
-
-  if (!isLogged) {
-    alert("wrong credentials!");
-  }
-};
+;
 
 const goToRegister = () => {
   router.push("/register");

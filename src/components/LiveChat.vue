@@ -5,7 +5,7 @@
     <!-- Messages Display -->
     <div class="chat-messages">
       <div v-for="message in messages" :key="message.id" class="chat-message">
-        <strong>{{ message.user }}</strong>: {{ message.text }}
+        <strong>{{ message.user }}</strong>{{ (message.time) }}: {{ message.text }}
       </div>
     </div>
 
@@ -35,26 +35,41 @@ const filmId = sessionStorage.getItem("film")
 // Listen for messages from the server
 
 onMounted(() => {
-    socket.emit("joinRoom", filmId)}
-)
+  socket.emit("joinRoom", filmId)
+  const now = new Date();
+  const formattedTime = `${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+  const joinMessage = {
+    user: "System", // Nome di sistema per i messaggi automatici
+    text: `${nickname} è entrato nella chat.`,
+    filmId: filmId,
+    time: formattedTime
+  };
 
-socket.on("receiveMessage", (message) => {
-  messages.value.push(message);
+  socket.emit("sendMessage", joinMessage);
 });
 
-// Send message function
+//message sender
 const sendMessage = () => {
   if (newMessage.value.trim()) {
+    const now = new Date();
+    const formattedTime = `${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+
     const messageData = {
       user: nickname,
       text: newMessage.value,
       filmId: filmId,
+      time: formattedTime
     };
 
     socket.emit("sendMessage", messageData);
     newMessage.value = "";
   }
 };
+
+//message reciver
+socket.on("receiveMessage", (message) => {
+  messages.value.push(message);
+});
 
 // Toggle emoji picker visibility
 const toggleEmojiPicker = () => {

@@ -14,19 +14,28 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import {deleteView, putView} from "@/service/interactionApi.js";
 import LiveChat from "@/components/LiveChat.vue";
-import UserNavbar from "@/components/UserNavbar.vue"; // Per salvare nel DB
+import UserNavbar from "@/components/UserNavbar.vue";
+import {getFilm} from "@/service/contentApi.js"; // Per salvare nel DB
 
 const route = useRoute();
 const startTime = ref(route.query.start ? parseInt(route.query.start) : 0);
 const currentTime = ref(startTime.value); // Tiene traccia del tempo attuale
 let player = null;
+const userId = sessionStorage.getItem("user")
+const profileId = sessionStorage.getItem("profile")
+const filmId = sessionStorage.getItem("film")
+const film = ref(null)
+
+onMounted(async ()=>{
+  film.value = await getFilm(filmId)
+})
 
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
     player = new YT.Player("player", {
       height: "500",
       width: "100%",
-      videoId: "lJXaNYTVjrQ", // ID del video
+      videoId: film.value.trailer_path,
       playerVars: {
         autoplay: 1,
         mute: 1,
@@ -62,12 +71,7 @@ const updateCurrentTime = () => {
 
 const saveTimeInterval = setInterval(() => {
   updateCurrentTime();
-  putView(
-      sessionStorage.getItem("user"),
-      sessionStorage.getItem("profile"),
-      sessionStorage.getItem("film"),
-      { timesOFTheFilm: currentTime.value }
-  );
+  putView(userId, profileId,filmId, { timesOFTheFilm: currentTime.value });
 }, 30000);
 
 onMounted(() => {
@@ -78,16 +82,9 @@ onBeforeUnmount(async () => {
   clearInterval(saveTimeInterval);
   updateCurrentTime(); // Assicura di prendere il tempo finale
   if (currentTime.value > 190)
-    await deleteView(sessionStorage.getItem("user"),
-        sessionStorage.getItem("profile"),
-        sessionStorage.getItem("film"))
+    await deleteView(userId, profileId, filmId)
   else
-   await putView(
-        sessionStorage.getItem("user"),
-        sessionStorage.getItem("profile"),
-        sessionStorage.getItem("film"),
-        {timesOFTheFilm: currentTime.value}
-    );
+   await putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
 });
 </script>
 

@@ -36,7 +36,7 @@ const newReview = ref({
   film_id: props.filmId,
   nickname: sessionStorage.getItem("nicknameProfile"),
   profile_id: sessionStorage.getItem("profile"),
-  text: String,
+  text: "",
 });
 
 const addReview = async () => {
