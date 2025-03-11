@@ -1,13 +1,12 @@
 <template>
   <div class="notification-container">
-    <!-- Icona Notifiche -->
-    <div class="notification-icon" @click="toggleDropdown">
-      <img src="/icon-notification.png" alt="Notifications"/>
+    <div class="notification-icon" @click="handleNotificationClick">
+      <p>Notification</p>
       <span v-if="unreadCount > 0" class="badge">{{ unreadCount }}</span>
     </div>
 
-    <!-- Dropdown Notifiche -->
-    <div v-if="isOpen" class="notification-dropdown">
+    <!-- Dropdown solo su desktop -->
+    <div v-if="isOpen && !isMobile" class="notification-dropdown">
       <div v-if="notifications.length === 0" class="empty-message">
         No new notifications
       </div>
@@ -18,140 +17,105 @@
             @click="markAsRead(notification)"
             :class="{ 'read': notification.isChecked }"
         >
-          {{ notification.senderNickname + ": " + notification.text + " - " + formatTimestamp(notification.timestamp) }}
+          {{
+            notification.senderNickname + ": " + notification.text + " - " + formatTimestamp(notification.timestamp)
+          }}
         </li>
       </ul>
     </div>
   </div>
 </template>
 
+
 <script setup>
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
+import {useRouter} from "vue-router";
 import {getNotificationList, putNotification} from "@/service/interactionApi.js";
 
-// Props dal componente padre
 const props = defineProps({
   userId: String,
   profileId: String
 });
 
-const isOpen = ref(false);
-const notifications = ref({
+const router = useRouter();
 
-}); // Inizializzato come array
+const isOpen = ref(false);
+const isMobile = ref(false); // NEW ➜ per controllare se è mobile
+const notifications = ref([]);
 const unreadCount = ref(0);
 
-// Toggle per aprire/chiudere il menu notifiche
-const toggleDropdown = () => {
-  isOpen.value = !isOpen.value;
+// Gestisce il click sull'icona della notifica
+const handleNotificationClick = () => {
+  if (isMobile.value) {
+    // Se mobile ➜ Vai nella pagina notifiche
+    router.push("/notification");
+  } else {
+    // Se desktop ➜ Apri o chiudi il dropdown
+    isOpen.value = !isOpen.value;
+  }
 };
 
-// Formatta il timestamp in modo leggibile
+// Formatta timestamp
 const formatTimestamp = (timestamp) => {
   if (!timestamp) return "Unknown time";
   const date = new Date(timestamp);
   return date.toLocaleString();
 };
 
-// Segna una notifica come letta
+// Segna come letta
 const markAsRead = async (notification) => {
   if (!notification.isChecked) {
-    notification.isChecked = true;  // Aggiorna lo stato localmente
-    unreadCount.value = Math.max(0, unreadCount.value - 1); // Riduci il conteggio
+    notification.isChecked = true;
+    unreadCount.value = Math.max(0, unreadCount.value - 1);
 
     try {
-      await putNotification(props.userId, props.profileId, notification._id,notification);
+      await putNotification(props.userId, props.profileId, notification._id, notification);
     } catch (error) {
       console.error("Errore nell'aggiornare la notifica", error);
     }
   }
 };
 
-// Recupera le notifiche all'avvio
+// Check se è mobile al caricamento
 onMounted(async () => {
+  // Logica per sapere se è mobile (puoi raffinarla)
+  isMobile.value = window.innerWidth <= 768;
+
+  // Recupera le notifiche
   try {
     const data = await getNotificationList(props.userId, props.profileId);
     notifications.value = data || [];
 
-    // Conta le notifiche non lette
     unreadCount.value = notifications.value.filter(n => !n.isChecked).length;
   } catch (error) {
     console.error("Errore nel caricamento delle notifiche", error);
   }
+
+  // Aggiorna isMobile se cambia dimensione finestra
+  window.addEventListener('resize', () => {
+    isMobile.value = window.innerWidth <= 768;
+  });
 });
+
 </script>
 
-<style scoped>
-.notification-container {
-  position: relative;
-}
 
-.notification-icon {
-  position: relative;
-  cursor: pointer;
-}
-.notification-icon img{
-  width: 40px;
-  height: 40px;
-}
+<style>
 
-.badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 12px;
-  min-width: 20px;
-  text-align: center;
-}
-
-.notification-dropdown {
-  position: absolute;
-  right: 0;
-  top: 40px;
-  width: 250px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  padding: 10px;
-}
-
-.notification-dropdown ul {
+ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
-.notification-dropdown li {
-  color: #111;
-  padding: 8px;
-  border-bottom: 1px solid #000;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.notification-dropdown li.read {
-  color: gray;
-}
-
-.notification-dropdown li:hover {
-  background: #f0f0f0;
-}
-
-.notification-dropdown li:last-child {
-  border-bottom: none;
-}
-
-.empty-message {
-  text-align: center;
-  color: rgb(128, 128, 128);
-  font-size: 14px;
+li {
   padding: 10px;
+  margin-bottom: 10px;
+  background: #222;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+li.read {
+  color: gray;
 }
 </style>

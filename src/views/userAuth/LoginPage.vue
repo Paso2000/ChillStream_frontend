@@ -50,7 +50,6 @@ const goToRegister = () => {
 </script>
 
 <style scoped>
-/* 📌 Layout generale */
 .login-container {
   display: flex;
   justify-content: center;
