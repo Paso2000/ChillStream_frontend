@@ -224,11 +224,22 @@ const toggleRecommended = async () => {
   color: white;
   border-bottom: 2px solid rgba(106, 13, 173, 0.88);
 }
+.actor-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 8px;
+}
+.actor-name {
+  font-size: 16px;
+  color: #fff;
+}
 
 .actor-image {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
   object-fit: cover;
+  border-radius: 50%;
 }
 </style>
