@@ -11,6 +11,7 @@
     <div class="form-group">
       <FormInput v-model="addRating" placeholder="Rating"/>
       <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
+      <FormInput v-model="addTrailer" placeholder="Trailer"/>
       <div class="dropdown">
         <button class="dropdown-toggle" @click="toggleDropdown">
           Select actors ⬇
@@ -46,6 +47,7 @@ const addDescription = ref("");
 const addImage_path = ref("/film-default.jpg");
 const dropdownOpen = ref(false);
 
+const addTrailer = ref("");
 const showAlert = ref(false);
 const alertMessage = ref("");
 const alertType = ref('error');
@@ -68,6 +70,7 @@ const saveContent = async () => {
       rating: addRating.value,
       description: addDescription.value,
       image_path: addImage_path.value,
+      trailer_path: addTrailer.value
     };
 
     await postFilm(filmData);
@@ -192,6 +195,7 @@ const closeAlert = () => {
 .image-input {
   font-family: "Arial", sans-serif;
   min-height: 20px;
+  width: 200px;
   border: none;
   border-radius: 5px;
   font-size: 16px;

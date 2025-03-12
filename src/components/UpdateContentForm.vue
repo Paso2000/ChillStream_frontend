@@ -10,6 +10,7 @@
     <div class="form-group">
       <FormInput v-model="rating" placeholder="Rating"/>
       <input type="file" @change="handleFileUpload" accept="image/*" class="image-input">
+      <FormInput v-model="addTrailer" placeholder="Trailer"/>
       <div class="dropdown">
         <button class="dropdown-toggle" @click="toggleDropdown">
           Select actors ⬇
@@ -45,6 +46,7 @@ const rating = ref("");
 const image_path = ref("/interstellar.jpg");
 const updateDescription = ref("");
 const dropdownOpen = ref(false);
+const addTrailer = ref("");
 
 const showAlert = ref(false);
 const alertMessage = ref("");
@@ -67,6 +69,7 @@ const updateContent = async () => {
       rating: rating.value,
       description: updateDescription.value,
       image_path: image_path.value,
+      trailer_path: addTrailer.value
     };
     const allFilms = await getFilmList();
     const filmFound = allFilms.find(
@@ -163,6 +166,7 @@ const closeAlert = () => {
 }
 
 .form-textarea {
+  font-family: "Arial", sans-serif;
   width: 100%;
   min-height: 80px;
   border: none;
@@ -196,6 +200,7 @@ const closeAlert = () => {
 .image-input {
   font-family: "Arial", sans-serif;
   min-height: 20px;
+  width: 200px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
