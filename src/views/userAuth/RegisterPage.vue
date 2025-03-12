@@ -2,7 +2,7 @@
   <div class="navbar">
     <Logo/>
   </div>
-
+  <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
   <div class="login-container">
     <div class="login-box">
       <h2>New account</h2>
@@ -30,8 +30,12 @@ import {postUser} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 const router = useRouter();
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 const form = ref({
   name: "",
@@ -46,16 +50,28 @@ const registerUser = async () => {
   try {
     const user = await postUser(form.value);
     if (user) {
-      alert("Registration successful!");
+      alertMessage.value = "Registration successful!";
+      alertType.value = "success"
+      showAlert.value = true;
+
       sessionStorage.setItem("user", user._id);
-      router.push(`/profiles`);
+
+      setTimeout(() => {
+        router.push("/profiles");
+      },1500);
+
     }
   } catch (error) {
-    alert("User not registered correctly")
-    console.error("Error registering user:", error);
+    alertMessage.value = "User not registered correctly";
+    alertType.value = "error"
+    showAlert.value = true;
   }
-
 };
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
+
 </script>
 
 <style scoped>

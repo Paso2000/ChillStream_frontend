@@ -2,6 +2,7 @@
   <div class="film-details">
     <UserNavbar/>
     <BackButton/>
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <div class="movie-container">
       <div class="movie-banner" :style="{ backgroundImage: `url(${movie.image_path})` }">
         <div class="movie-overlay">
@@ -60,6 +61,7 @@ import UserNavbar from "@/components/UserNavbar.vue";
 import router from "@/router/index.js";
 import UserReview from "@/components/UserReview.vue";
 import BackButton from "@/components/BackButton.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 
 const fullActors = ref([]);
@@ -69,12 +71,14 @@ let isViewed = ref(false)
 const userId = sessionStorage.getItem("user")
 const profileId = sessionStorage.getItem("profile")
 const filmId = sessionStorage.getItem("film")
+
 ref({
   film_id: filmId,
   nickname: sessionStorage.getItem("nicknameProfile"),
   profile_id: profileId,
   text: "",
 });
+
 const movie = ref({
   title: "",
   image: "",
@@ -84,7 +88,12 @@ const movie = ref({
   actors: [],
   reviews: [],
 });
+
 const selectedTab = ref('cast');
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
+
 
 // Carica i dati del film
 onMounted(async () => {
@@ -128,7 +137,9 @@ const startWatching = async () =>
           router.push({ path: "/live", query: { start: view.timesOFTheFilm } });
         }
       } catch (error) {
-        alert("Could not start watching the film.");
+        alertMessage.value = "Could not start watching the film.";
+        alertType.value = "error"
+        showAlert.value = true;
       }
 
     }
@@ -145,16 +156,27 @@ const toggleRecommended = async () => {
     if (isRecommended.value) {
       await deleteRecommended(userId, profileId, filmId);
       isRecommended.value = false;
-      alert(`${movie.value.title} removed from recommended!`);
+      alertMessage.value = `${movie.value.title} removed from recommended!`;
+      alertType.value = "success"
+      showAlert.value = true;
     } else {
       await postRecommended(userId, profileId, recommended.value);
       isRecommended.value = true;
-      alert(`${movie.value.title} added to recommended!`);
+      alertMessage.value = `${movie.value.title} added to recommended!`;
+      alertType.value = "success"
+      showAlert.value = true;
     }
   } catch (error) {
-    alert("Could not update recommended list.");
+    alertMessage.value = "Could not update recommended list.";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 }
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
+
 </script>
 
 <style scoped>

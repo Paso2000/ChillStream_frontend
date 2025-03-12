@@ -2,7 +2,7 @@
   <div class="navbar">
     <Logo />
   </div>
-
+  <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
   <div class="selection-container">
     <div class="content">
       <h1 class="title">Create New Profile</h1>
@@ -37,6 +37,7 @@ import {postProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 const form = ref({
   nickname: "",
@@ -44,6 +45,9 @@ const form = ref({
 });
 
 const router = useRouter();
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 const defaultImages = [
   "/profile1.png",
@@ -53,17 +57,32 @@ const defaultImages = [
 
 const createProfile = async () => {
   if (!form.value.profileImage&&!form.value.nickname) {
-    alert("Please select a profile image.");
+    alertMessage.value = "Please select an image and a Nickname";
+    alertType.value = "error"
+    showAlert.value = true;
   }else {
   try {
     const profile = await postProfile(sessionStorage.getItem("user"),form.value)
     sessionStorage.setItem("profile",profile._id)
-    await router.push("/profiles");
-    alert("profile created ")
+
+    setTimeout(() => {
+      router.push("/profiles");
+    }, 1500);
+
+    alertMessage.value = "Profile created with successfully";
+    alertType.value = "success"
+    showAlert.value = true;
+
   } catch (error) {
-    console.error("Error creating profile", error);
+    alertMessage.value = "Profile not created correctly";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 }};
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
 </script>
 
 <style scoped>

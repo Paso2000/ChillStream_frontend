@@ -2,6 +2,7 @@
   <div class="profileSettingPage">
     <UserNavbar/>
     <BackButton/>
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <div class="selection-container">
       <!-- Profile Selection -->
       <div class="content">
@@ -43,6 +44,7 @@ import FormInput from "@/components/FormInput.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
 import router from "@/router/index.js";
 import BackButton from "@/components/BackButton.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 const userId = sessionStorage.getItem("user");
 const profileId = sessionStorage.getItem("profile");
@@ -51,6 +53,10 @@ const profile = ref({
   nickname: "",
   profileImage: "",
 });
+
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 const defaultImages = [
   "/profile1.png",
@@ -73,22 +79,33 @@ const selectImage = (image) => {
 const saveProfile = async () => {
   try {
     await putProfile(userId, profileId, profile.value);
-    alert("Profile updated successfully!");
+    alertMessage.value = "Profile updated successfully!";
+    alertType.value = "success"
+    showAlert.value = true;
   } catch (error) {
-    alert("Failed to update profile.");
+    alertMessage.value = "Failed to update profile.";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
 
 const deleteProfil = async () => {
-  if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) return;
-
   try {
     await deleteProfile(userId, profileId);
-    alert("Profile deleted successfully!");
-    sessionStorage.removeItem("profile"); // Remove profile from session
-    router.push("/profiles"); // Redirect to home or login
+    alertMessage.value = "Profile deleted successfully!";
+    alertType.value = "success"
+    showAlert.value = true;
+
+    sessionStorage.removeItem("profile");
+    setTimeout(() => {
+      router.push("/profiles");
+    }, 1500);
+
   } catch (error) {
-    alert("Failed to delete profile.");
+    alertMessage.value = "Failed to delete profile.";
+    alertType.value = "error"
+    showAlert.value = true;
+
   }
 };
 
@@ -99,6 +116,11 @@ const logout = () => {
 const changeProfile = () =>{
   router.push("/profiles")
 }
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
+
 </script>
 
 <style scoped>

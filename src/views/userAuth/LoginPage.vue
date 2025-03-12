@@ -29,6 +29,7 @@ const form = ref({
   email: "",
   password: ""
 });
+
 const router = useRouter();
 const showAlert = ref(false);
 const alertMessage = ref("");
@@ -44,6 +45,7 @@ const handleLogin = async () => {
     }
   } catch (error) {
     alertMessage.value = "Wrong credentials!";
+    alertType.value = "error"
     showAlert.value = true;
   }
 };
