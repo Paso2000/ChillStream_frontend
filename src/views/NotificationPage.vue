@@ -1,123 +1,87 @@
 <template>
-  <div class="notifications-page">
+  <div class="notification-container">
     <UserNavbar/>
-    <BackButton/>
-    <div class="notifications-content">
-      <div v-if="notifications.length === 0" class="empty-message">
-        No notifications found.
-      </div>
+      <BackButton/>
 
-      <ul v-else>
-        <li
-            v-for="notification in notifications"
-            :key="notification._id"
-            :class="{ 'read': notification.isChecked }"
-            @click="markAsRead(notification)"
-        >
-          <div class="notification-text">
-            <strong>CHILLSTREAM</strong>: {{ notification.text }}
-          </div>
-          <div class="notification-timestamp">
-            {{ formatTimestamp(notification.timestamp) }}
-          </div>
-        </li>
-      </ul>
-    </div>
+        <div v-if="notifications.length === 0" class="no-notifications">
+          No new notifications
+        </div>
+
+        <ul class="notification-list">
+          <li
+              v-for="notification in notifications"
+              :key="notification.id"
+              @click="markAsRead(notification)"
+              :class="{ unread: !notification.isChecked }"
+          >
+            <strong class="user-name">{{ "CHILLSTREAM" }}: </strong> {{ notification.text }}
+          </li>
+        </ul>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { getNotificationList, putNotification } from "@/service/interactionApi.js";
+import {ref, onMounted} from "vue";
+import {getNotificationList, putNotification} from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
 import BackButton from "@/components/BackButton.vue";
 
-const router = useRouter();
-
-const userId = sessionStorage.getItem("user");
-const profileId = sessionStorage.getItem("profile");
-
 const notifications = ref([]);
+const userId = sessionStorage.getItem("user"); // Replace with actual user ID logic
+const profileId = sessionStorage.getItem("profile"); // Replace with actual profile ID logic
 
-const markAsRead = async (notification) => {
-  if (!notification.isChecked) {
-    notification.isChecked = true;
-
-    try {
-      await putNotification(userId, profileId, notification._id, notification);
-    } catch (error) {
-      console.error("Notification update error", error);
-    }
-  }
-};
-
-const formatTimestamp = (timestamp) => {
-  if (!timestamp) return "Unknown time";
-  const date = new Date(timestamp);
-  return date.toLocaleString();
-};
-
-onMounted(async () => {
+// Fetch notifications
+const loadNotifications = async () => {
   try {
     const data = await getNotificationList(userId, profileId);
     notifications.value = data || [];
   } catch (error) {
-    console.error("Notification mount error", error);
+    console.error("Error loading notifications:", error);
   }
+};
+
+// Mark notification as read
+const markAsRead = async (notification) => {
+  if (!notification.isChecked) {
+    try {
+      notification.isChecked = true; // Update UI immediately
+      await putNotification(userId, profileId, notification._id, notification); // Send update to API
+    } catch (error) {
+      console.error("Error updating notification:", error);
+    }
+  }
+};
+
+onMounted(() => {
+  loadNotifications();
 });
+
 </script>
 
 <style scoped>
-.notifications-page {
-  margin-top: 80px;
-  background: #000;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
-.notifications-content {
+.notification-container {
+  color: white;
   padding: 20px;
 }
 
-.empty-message {
+.no-notifications {
   text-align: center;
-  color: #aaa;
-  margin-top: 50px;
 }
 
-ul {
+.notification-list {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
-li {
-  background-color: #1e1e1e;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
+.notification-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
   cursor: pointer;
-  transition: background 0.3s ease;
-  border: 1px solid #333;
+  color: white; /* Testo in bianco */
 }
 
-li:hover {
-  background-color: #2a2a2a;
-}
-
-li.read {
-  opacity: 0.6;
-}
-
-.notification-text {
-  font-size: 1rem;
-}
-
-.notification-timestamp {
-  font-size: 0.8rem;
-  color: #888;
-  margin-top: 5px;
+.unread {
+  font-weight: bold;
+  color: red;
 }
 </style>
