@@ -60,12 +60,13 @@ watch(unreadCount, (newCount) => {
 .notification-section {
   cursor: pointer;
   position: relative;
+  margin: -15px 0;
 }
 
 .notification-badge {
   position: absolute;
-  top: -3px;
-  right: -10px;
+  top: 20px;
+  right: 300px;
   background-color: red;
   color: white;
   border-radius: 50%;
@@ -76,5 +77,23 @@ watch(unreadCount, (newCount) => {
   align-items: center;
   font-size: 12px;
   font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .notification-badge {
+    position: absolute;
+    top: -3px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
 }
 </style>

@@ -12,6 +12,7 @@ import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
 import LiveFilm from "@/views/LiveFilm.vue";
 import ActorDetails from "@/views/ActorDetails.vue";
 import NotificationPage from "@/views/NotificationPage.vue";
+import HelpPage from "@/views/HelpPage.vue";
 
 
 const routes = [
@@ -27,6 +28,7 @@ const routes = [
     {path: '/admin', name: "AdminLogin", component: AdminLoginPage,},
     {path: '/admin/control-panel', name: "ControlPanel", component: ControlPanelPage,},
     {path: "/notification", name: "Notification", component: NotificationPage},
+    {path: "/help", name: "Help", component: HelpPage},
     {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({start: parseInt(route.query.start) || 0})}// Pass "start" as a  prop}
 ];
 

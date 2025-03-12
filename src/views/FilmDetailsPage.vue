@@ -156,18 +156,18 @@ const toggleRecommended = async () => {
     if (isRecommended.value) {
       await deleteRecommended(userId, profileId, filmId);
       isRecommended.value = false;
-      alertMessage.value = `${movie.value.title} removed from recommended!`;
+      alertMessage.value = `${movie.value.title} removed from MyList!`;
       alertType.value = "success"
       showAlert.value = true;
     } else {
       await postRecommended(userId, profileId, recommended.value);
       isRecommended.value = true;
-      alertMessage.value = `${movie.value.title} added to recommended!`;
+      alertMessage.value = `${movie.value.title} added to MyList!`;
       alertType.value = "success"
       showAlert.value = true;
     }
   } catch (error) {
-    alertMessage.value = "Could not update recommended list.";
+    alertMessage.value = "Could not update MyList.";
     alertType.value = "error"
     showAlert.value = true;
   }
