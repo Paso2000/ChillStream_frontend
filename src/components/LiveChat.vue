@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
   padding: 10px;
   border-radius: 8px;
   margin: 0 10px;
-  min-height: 40vh;
+  min-height:30vh;
 }
 
 @media (min-width: 768px){
@@ -109,7 +109,8 @@ onBeforeUnmount(() => {
     background: #222;
     padding: 10px;
     border-radius: 8px;
-    min-height: 83vh;
+    min-height: 79vh;
+    margin-top: -20px;
     margin-right: 30px;
   }
 }

@@ -1,18 +1,20 @@
 <template>
-  <UserNavbar/>
-  <BackButton/>
-  <div class="stream-container">
-    <!-- Sezione Video -->
-    <div class="video-section">
-      <div id="player"></div> <!-- YouTube Player viene creato qui -->
+  <div class="LiveFilmPage">
+    <UserNavbar/>
+    <BackButton/>
+    <div class="stream-container">
+      <!-- Sezione Video -->
+      <div class="video-section">
+        <div id="player"></div> <!-- YouTube Player viene creato qui -->
+      </div>
+      <LiveChat></LiveChat>
     </div>
-    <LiveChat> </LiveChat>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { useRoute } from "vue-router";
+import {ref, onMounted, onBeforeUnmount} from "vue";
+import {useRoute} from "vue-router";
 import {deleteView, putView} from "@/service/interactionApi.js";
 import LiveChat from "@/components/LiveChat.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
@@ -28,7 +30,7 @@ const profileId = sessionStorage.getItem("profile")
 const filmId = sessionStorage.getItem("film")
 const film = ref(null)
 
-onMounted(async ()=>{
+onMounted(async () => {
   film.value = await getFilm(filmId)
 })
 
@@ -46,8 +48,7 @@ const loadYouTubePlayer = () => {
         start: startTime.value,
         rel: 0,
       },
-      events: {
-      }
+      events: {}
     });
   };
 
@@ -69,7 +70,7 @@ const updateCurrentTime = () => {
 
 const saveTimeInterval = setInterval(() => {
   updateCurrentTime();
-  putView(userId, profileId,filmId, { timesOFTheFilm: currentTime.value });
+  putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
 }, 30000);
 
 onMounted(() => {
@@ -82,11 +83,16 @@ onBeforeUnmount(async () => {
   if (currentTime.value > 190)
     await deleteView(userId, profileId, filmId)
   else
-   await putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
+    await putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
 });
 </script>
 
 <style scoped>
+.LiveFilmPage {
+  margin-top: 80px;
+  background: #000;
+}
+
 .stream-container {
   display: flex;
   flex-direction: column; /* Mobile First ➜ colonna */
@@ -100,15 +106,15 @@ onBeforeUnmount(async () => {
 @media (min-width: 768px) {
   .stream-container {
     flex-direction: row;
-    margin-top: 80px;
     display: flex;
-    height: 82vh;
+    height: 70vh;
     gap: 10px;
     background: #000;
     color: white;
     padding: 20px;
   }
 }
+
 .video-section {
   flex: 3;
   display: flex;
