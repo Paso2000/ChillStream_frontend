@@ -10,31 +10,7 @@
       </div>
 
       <div class="right-section desktop-only">
-        <div class="Notification-section" @click="handleNotificationClick" style="position: relative;">
-          <p>Notification</p>
-          <div
-              v-if="unreadCount > 0"
-              class="notification-badge"
-              style="
-              position: absolute;
-              top: -3px;
-              right: -10px;
-              background-color: red;
-              color: white;
-              border-radius: 50%;
-              width: 20px;
-              height: 20px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-size: 12px;
-              font-weight: bold;
-            "
-          >
-            {{ unreadCount }}
-          </div>
-        </div>
-
+        <NotificationButton @updateUnreadCount="updateUnreadCount" />
         <div class="profile-icon" @click="openProfile">
           <img :src="profile.profileImage" alt="ProfileImage" />
         </div>
@@ -43,30 +19,9 @@
 
     <!-- Mobile menu -->
     <div v-if="menuOpen" class="mobile-menu">
-      <div class="mobile-menu-item" @click="handleNotificationClick" style="position: relative;">
-        <p>Notification</p>
-        <div
-            v-if="unreadCount > 0"
-            class="notification-badge"
-            style="
-            position: absolute;
-            left: 110px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-          "
-        >
-          {{ unreadCount }}
-        </div>
+      <div class="mobile-menu-item">
+        <NotificationButton @updateUnreadCount="updateUnreadCount" />
       </div>
-
       <div class="mobile-menu-item" @click="openProfile">
         <span>My Profile</span>
       </div>
@@ -74,18 +29,15 @@
   </nav>
 </template>
 
-
 <script setup>
-import {ref, onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import router from "@/router/index.js";
-import {getProfile} from "@/service/authApi.js";
+import { getProfile } from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
-import {getNotificationList} from "@/service/interactionApi.js";
+import NotificationButton from "@/components/NotificationButton.vue"; // Import the new component
 
 const menuOpen = ref(false);
 const unreadCount = ref(0);
-const notifications = ref([]);
-
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -99,25 +51,14 @@ let profile = ref({
   profileImage: "",
 });
 
-
 const openProfile = () => {
   router.push("/ProfileSettings");
   menuOpen.value = false; // close menu after click
 };
 
-const handleNotificationClick = () => {
-  router.push("/notification");
-}
-
-const loadNotifications = async () => {
-  try {
-    const data = await getNotificationList(userId, profileId);
-    notifications.value = data || [];
-    unreadCount.value = notifications.value.filter(n => !n.isChecked).length;
-    sessionStorage.setItem("unreadCount", unreadCount.value);
-  } catch (error) {
-    console.error("Errore caricamento notifiche:", error);
-  }
+// Update unread count when emitted from NotificationButton
+const updateUnreadCount = (count) => {
+  unreadCount.value = count;
 };
 
 onMounted(async () => {
@@ -126,13 +67,7 @@ onMounted(async () => {
   } catch (error) {
     alert("Can't get the profile");
   }
-  await loadNotifications();
-  window.addEventListener("storage", () => {
-    const storedCount = sessionStorage.getItem("unreadCount");
-    unreadCount.value = storedCount ? parseInt(storedCount) : 0;
-  });
 });
-
 </script>
 
 <style scoped>
