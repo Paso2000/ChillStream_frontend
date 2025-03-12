@@ -1,17 +1,21 @@
 <template>
   <div class="profileSettingPage">
-    <UserNavbar/>
-    <BackButton/>
-    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
+    <UserNavbar />
+    <BackButton />
+    <!-- Contenitore dei bottoni in alto a destra -->
+    <div class="top-right-buttons">
+      <Button @click="logout" class="up-button">Logout</Button>
+      <Button @click="changeProfile" class="up-button">Change Profile</Button>
+    </div>
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert" />
+
     <div class="selection-container">
-      <!-- Profile Selection -->
       <div class="content">
         <h1 class="title">Profile settings</h1>
 
         <div class="profile-container">
-          <FormInput v-model="profile.nickname" type="text" :placeholder="profile.nickname" class="input-nickname"/>
+          <FormInput v-model="profile.nickname" type="text" :placeholder="profile.nickname" class="input-nickname" />
 
-          <!-- Image Selection -->
           <div class="grid grid-cols-3 gap-4 mt-4">
             <div
                 v-for="(image, index) in defaultImages"
@@ -20,21 +24,21 @@
                 :class="{ 'selected': profile.profileImage === image }"
                 @click="selectImage(image)"
             >
-              <img :src="image" class="profile-image" alt="Profile Image"/>
+              <img :src="image" class="profile-image" alt="Profile Image" />
             </div>
           </div>
 
-          <div class="button-group">
-            <Button @click="saveProfile" class="save-button">Save changes</Button>
-            <Button @click="deleteProfil" class="delete-button">Delete Profile</Button>
-            <Button @click = "logout" class="logout-button">Logout</Button>
-            <Button @click = "changeProfile" class="changeProfile-button"> Change Profile</Button>
+          <!-- Bottoni Save e Delete fianco a fianco -->
+          <div class="horizontal-buttons">
+            <Button @click="saveProfile" class="button">Save changes</Button>
+            <Button @click="deleteProfil" class="button">Delete Profile</Button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import {ref, onMounted} from "vue";
@@ -136,6 +140,7 @@ const closeAlert = () => {
   align-items: center;
   background: #000;
   position: relative;
+  margin-top: 90px;
 }
 
 .title {
@@ -184,46 +189,35 @@ const closeAlert = () => {
   transition: border 0.3s;
 }
 
-.button-group{
+.top-right-buttons {
+  position: absolute;
+  top: 90px;
+  right: 30px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
-  margin-top: 20px;
+  z-index: 20;
 }
 
-.save-button {
+.horizontal-buttons {
+  display: flex;
+  gap: 20px; /* Spazio tra i bottoni */
+  justify-content: center;
   margin-top: 40px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
-.delete-button {
-  margin-top: 40px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
+.up-button{
+  padding: 5px;
+  margin-top:40px ;
 }
 
-.logout-button {
-  margin-top: 40px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
+@media (min-width: 768px)  {
+  .up-button{
+    padding: 5px;
+  }
 }
+
+
+
+
 
 </style>
