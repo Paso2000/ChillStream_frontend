@@ -25,6 +25,8 @@
           <div class="mt-4 button-group">
             <Button @click="saveProfile" class="save-button">Save changes</Button>
             <Button @click="deleteProfil" class="delete-button">Delete Profile</Button>
+            <Button @click = "logout" class="logout-button">Logout</Button>
+            <Button @click = "changeProfile" class="changeProfile-button"> Change Profile</Button>
           </div>
         </div>
       </div>
@@ -92,6 +94,14 @@ const deleteProfil = async () => {
     alert("Failed to delete profile.");
   }
 };
+
+const logout = () => {
+  router.push("/")
+}
+
+const changeProfile = () =>{
+  router.push("/profiles")
+}
 </script>
 
 <style scoped>
@@ -156,6 +166,28 @@ const deleteProfil = async () => {
 }
 
 .save-button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delete-button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-button {
   margin-top: 40px;
   padding: 10px 20px;
   font-size: 16px;
