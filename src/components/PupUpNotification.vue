@@ -10,7 +10,6 @@
 <script setup>
 import {ref, watch, computed} from 'vue';
 
-// Props
 const props = defineProps({
   message: String,
   show: Boolean,
@@ -22,10 +21,8 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 
-// Stato visibilità locale
 const visible = ref(props.show);
 
-// Quando cambia show, aggiorna il visibile
 watch(() => props.show, (newVal) => {
   visible.value = newVal;
 
@@ -34,7 +31,6 @@ watch(() => props.show, (newVal) => {
   }
 });
 
-// Classe CSS dinamica basata su `type`
 const typeClass = computed(() => {
   return props.type === 'success' ? 'alert-success' : 'alert-error';
 });
