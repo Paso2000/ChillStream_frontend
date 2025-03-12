@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h4>Delete content</h4>
     <FormInput v-model="title" placeholder="Title"/>
     <button @click="deleteContent" class="form-button">Delete</button>
@@ -11,10 +12,14 @@ import {ref} from "vue";
 import {deleteFilm, getFilmList, putFilm} from "@/service/contentApi.js";
 import {defineComponent} from "vue";
 import FormInput from "@/components/FormInput.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 
 const title = ref("")
 
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 const deleteContent = async () => {
   try {
@@ -23,14 +28,24 @@ const deleteContent = async () => {
         (film) => title.value === film.title);
     if (filmFound) {
       await deleteFilm(filmFound._id);
-      alert("Film changed successfully");
+      alertMessage.value = "Film deleted successfully";
+      alertType.value = "success"
+      showAlert.value = true;
     } else {
-      alert("Film not found")
+      alertMessage.value = "Film not found";
+      alertType.value = "error"
+      showAlert.value = true;
     }
   } catch (error) {
-    alert("Error saving film:");
+    alertMessage.value = "Error to delete film";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 
+};
+
+const closeAlert = () => {
+  showAlert.value = false;
 };
 </script>
 

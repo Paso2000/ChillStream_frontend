@@ -1,6 +1,7 @@
 <template>
   <!-- Add new content -->
   <div class="section">
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h4>Add new content</h4>
     <div class="form-group">
       <FormInput v-model="addTitle" placeholder="Title"/>
@@ -32,6 +33,7 @@ import {onMounted, ref} from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {getActorList, postFilm} from "@/service/contentApi.js";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 let allActorsName = ref([])
 
@@ -43,6 +45,10 @@ const addRating = ref("");
 const addDescription = ref("");
 const addImage_path = ref("/film-default.jpg");
 const dropdownOpen = ref(false);
+
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 onMounted(async () => {
   const allActor = await getActorList()
@@ -65,9 +71,14 @@ const saveContent = async () => {
     };
 
     await postFilm(filmData);
-    alert("Film saved successfully");
+    alertMessage.value = "Film saved successfully";
+    alertType.value = "success"
+    showAlert.value = true;
+
   } catch (error) {
-    alert("Error saving film:");
+    alertMessage.value = "Error saving film:";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
 
@@ -75,8 +86,11 @@ const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     addImage_path.value = URL.createObjectURL(file); // Generate a temporary URL
-    console.log("Path immagine:", addImage_path.value);
   }
+};
+
+const closeAlert = () => {
+  showAlert.value = false;
 };
 </script>
 

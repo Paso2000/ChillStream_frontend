@@ -50,14 +50,13 @@ const closeAlert = () => {
 
 .alert-box {
   position: fixed;
-  top: 30px;
-  right: 30px;
+  top: 100px;
+  right: 10px;
   color: white;
   padding: 15px 25px;
   border-radius: 8px;
   font-weight: bold;
-  background: url("/background.jpg") center/cover no-repeat;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgb(61, 60, 60, 0.6);
 
   z-index: 9999;
   display: flex;

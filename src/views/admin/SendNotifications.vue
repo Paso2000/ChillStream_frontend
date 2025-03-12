@@ -1,7 +1,7 @@
 <template>
   <div class="content-management">
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h3>Notifications Management</h3>
-
     <!-- notifications new actor -->
     <div class="section">
       <h4>Add new notifications</h4>
@@ -21,32 +21,42 @@ import {getProfiles, getUsers, postUser} from "@/service/authApi.js";
 import {postNotification} from "@/service/interactionApi.js";
 import DescriptionInput from "@/components/DescriptionInput.vue";
 import FormInput from "@/components/FormInput.vue";
-
-
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 const notification = ref({
   senderNickname: sessionStorage.getItem("admin"),
-  ricever_id:"",
-  text:""
+  ricever_id: "",
+  text: ""
 })
 
-const sendNotification = async () => {
-  try{
-  let userProfiles = ref([])
- const allUser = await getUsers();
- for (const user of allUser) {
-   userProfiles =  await getProfiles(user._id,);
-   for (const profile of userProfiles) {
-     notification.value.ricever_id = profile._id;
-     await postNotification(user._id, profile._id, notification.value);
-   }}
- alert("Notifications sent")
-  }
- catch(error){
-   alert("Notification error")
-    }
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
+const sendNotification = async () => {
+  try {
+    let userProfiles = ref([])
+    const allUser = await getUsers();
+    for (const user of allUser) {
+      userProfiles = await getProfiles(user._id,);
+      for (const profile of userProfiles) {
+        notification.value.ricever_id = profile._id;
+        await postNotification(user._id, profile._id, notification.value);
+      }
+    }
+    alertMessage.value = "Notification sent";
+    alertType.value = "success"
+    showAlert.value = true;
+  } catch (error) {
+    alertMessage.value = "Notification error";
+    alertType.value = "error"
+    showAlert.value = true;
+  }
 }
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
 </script>
 
 <style scoped>
@@ -94,7 +104,7 @@ const sendNotification = async () => {
   transform: scale(1.05);
 }
 
-.custom-text-input{
+.custom-text-input {
   max-width: 800px;
   padding: 20px 5px;
   margin-bottom: 0;

@@ -1,5 +1,6 @@
 <template>
   <div class="content-management">
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h3>Actors Management</h3>
 
     <!-- Add new actor -->
@@ -38,6 +39,7 @@ import { ref } from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {deleteActor, getActorList, getFilmList, postActors, putActor, putFilm} from "@/service/contentApi.js";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 // Actor data
 const saveName = ref("");
@@ -48,7 +50,9 @@ const updateSurname = ref("");
 const updateName = ref("");
 const deleteSurname = ref("");
 
-
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 // Methods
 const saveActor = async () => {
@@ -60,10 +64,14 @@ const saveActor = async () => {
     };
 
       await postActors(actorData);
-      alert("Actor saved successfully");
+    alertMessage.value = "Actor saved successfully";
+    alertType.value = "success"
+    showAlert.value = true;
 
   } catch (error) {
-    alert("Error saving actor:");
+    alertMessage.value = "Error saving actor";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
 
@@ -79,13 +87,19 @@ const updateActor = async () => {
         (actor) => updateSurname.value === actor.surname);
     if (actorFound) {
       await putActor(actorFound._id, actorData);
-      alert("Actor changed successfully");
+      alertMessage.value = "Actor changed successfully";
+      alertType.value = "success"
+      showAlert.value = true;
     } else {
-      alert("Actor not found")
+      alertMessage.value = "Actor not found";
+      alertType.value = "error"
+      showAlert.value = true;
     }
 
   } catch (error) {
-    alert("Error changing actor:");
+    alertMessage.value = "Error changing actor";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
 
@@ -96,14 +110,25 @@ const deleteActorFromDb = async () => {
         (actor) => deleteSurname.value === actor.surname);
     if (actorFound) {
       await deleteActor(actorFound._id);
-      alert("Actor deleted successfully");
+      alertMessage.value = "Actor deleted successfully";
+      alertType.value = "success"
+      showAlert.value = true;
     } else {
-      alert("Actor not found")
+      alertMessage.value = "Actor not found";
+      alertType.value = "error"
+      showAlert.value = true;
     }
   } catch (error) {
-    alert("Error deleting actor:");
+    alertMessage.value = "Error deleting actor";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
+
 </script>
 
 <style scoped>

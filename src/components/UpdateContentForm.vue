@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h4>Update content</h4>
     <div class="form-group">
       <FormInput v-model="title" placeholder="Title"/>
@@ -32,6 +33,7 @@ import MultiSelectCombo from "@/components/MultiSelectCombo.vue";
 import {onMounted, ref} from "vue";
 import {getActorList, getFilmList, postFilm, putFilm} from "@/service/contentApi.js";
 import Button from "@/components/Button.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue";
 
 let allActorsName = ref([])
 // Reactive state
@@ -44,6 +46,9 @@ const image_path = ref("/interstellar.jpg");
 const updateDescription = ref("");
 const dropdownOpen = ref(false);
 
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 onMounted(async () => {
   const allActor = await getActorList()
@@ -68,13 +73,19 @@ const updateContent = async () => {
         (film) => title.value === film.title);
     if (filmFound) {
       await putFilm(filmFound._id, filmData);
-      alert("Film changed successfully");
+      alertMessage.value = "Film changed successfully";
+      alertType.value = "success"
+      showAlert.value = true;
     } else {
-      alert("Film not found")
+      alertMessage.value = "Film not found";
+      alertType.value = "error"
+      showAlert.value = true;
     }
 
   } catch (error) {
-    alert("Error saving film:");
+    alertMessage.value = "Error saving film:";
+    alertType.value = "success"
+    showAlert.value = true;
   }
 };
 
@@ -82,8 +93,11 @@ const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     image_path.value = URL.createObjectURL(file); // Generate a temporary URL
-    console.log("Path immagine:", image_path.value);
   }
+};
+
+const closeAlert = () => {
+  showAlert.value = false;
 };
 </script>
 
