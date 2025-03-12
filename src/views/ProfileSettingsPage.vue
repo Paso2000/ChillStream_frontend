@@ -1,6 +1,7 @@
 <template>
   <div class="profileSettingPage">
     <UserNavbar/>
+    <BackButton/>
     <div class="selection-container">
       <!-- Profile Selection -->
       <div class="content">
@@ -22,7 +23,7 @@
             </div>
           </div>
 
-          <div class="mt-4 button-group">
+          <div class="button-group">
             <Button @click="saveProfile" class="save-button">Save changes</Button>
             <Button @click="deleteProfil" class="delete-button">Delete Profile</Button>
             <Button @click = "logout" class="logout-button">Logout</Button>
@@ -41,6 +42,7 @@ import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 import UserNavbar from "@/components/UserNavbar.vue";
 import router from "@/router/index.js";
+import BackButton from "@/components/BackButton.vue";
 
 const userId = sessionStorage.getItem("user");
 const profileId = sessionStorage.getItem("profile");
@@ -56,7 +58,6 @@ const defaultImages = [
   "/profile3.png",
 ];
 
-// Carica il profilo all'avvio
 onMounted(async () => {
   try {
     profile.value = await getProfile(userId, profileId)
@@ -65,12 +66,10 @@ onMounted(async () => {
   }
 });
 
-// Metodo per selezionare un'immagine
 const selectImage = (image) => {
   profile.value.profileImage = image;
 };
 
-// Salva il profilo aggiornato
 const saveProfile = async () => {
   try {
     await putProfile(userId, profileId, profile.value);
@@ -80,8 +79,6 @@ const saveProfile = async () => {
   }
 };
 
-
-// Delete profile method
 const deleteProfil = async () => {
   if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) return;
 
@@ -106,8 +103,8 @@ const changeProfile = () =>{
 
 <style scoped>
 .profileSettingPage {
-  margin-top: 150px;
-  background: linear-gradient(135deg, #000000, #111);
+  margin-top: 80px;
+  background: #000;
 }
 
 .selection-container {
@@ -141,7 +138,7 @@ const changeProfile = () =>{
 .grid {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
 }
 
 .profile-image-container {
@@ -163,6 +160,15 @@ const changeProfile = () =>{
   object-fit: cover;
   border: 3px solid transparent;
   transition: border 0.3s;
+}
+
+.button-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .save-button {

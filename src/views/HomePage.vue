@@ -1,16 +1,10 @@
 <template>
   <div class="homepage">
-    <!-- Navbar -->
     <UserNavbar />
 
     <div class="content">
-      <!-- Trending Movies -->
       <ContentRow title="Trending Movies" :contents="allMovies" />
-
-      <!-- Viewed Movies -->
       <ContentRow title="Continue to watching" :contents="viewedMovies" />
-
-      <!-- MyList Movies -->
       <ContentRow title="My List" :contents="MyListMovie" />
 
     </div>
@@ -48,7 +42,6 @@ onMounted(async () => {
   color: white;
 }
 
-/* 📌 Contenuto principale */
 .content {
   padding: 20px;
 }

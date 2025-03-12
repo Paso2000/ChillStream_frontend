@@ -2,6 +2,7 @@
   <div class="navbar">
     <Logo/>
   </div>
+  <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
   <div class="login-container">
     <div class="login-box">
       <h2>Sign In</h2>
@@ -22,28 +23,34 @@ import {canUserLogIn, getUsers} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
+import PopUpNotification from "@/components/PupUpNotification.vue"
 
 const form = ref({
-  email:"",
-  password:""
+  email: "",
+  password: ""
 });
 const router = useRouter();
-
-const handleLogin = async () =>
-    {
-      try{
-        const userFound = await canUserLogIn(form.value)
-        if(userFound){
-          sessionStorage.setItem("user", userFound._id);
-          router.push(`/profiles`);
-        }
-      }catch (error){
-        alert("wrong credential")
-      }
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 
+const handleLogin = async () => {
+  try {
+    const userFound = await canUserLogIn(form.value)
+    if (userFound) {
+      sessionStorage.setItem("user", userFound._id);
+      router.push(`/profiles`);
     }
-;
+  } catch (error) {
+    alertMessage.value = "Wrong credentials!";
+    showAlert.value = true;
+  }
+};
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
 
 const goToRegister = () => {
   router.push("/register");
@@ -51,7 +58,6 @@ const goToRegister = () => {
 </script>
 
 <style scoped>
-/* 📌 Layout generale */
 .login-container {
   display: flex;
   justify-content: center;

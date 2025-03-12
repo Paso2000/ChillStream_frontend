@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 import LoginPage from "@/views/userAuth/LoginPage.vue";
 import ProfileSelectionPage from "@/views/userAuth/ProfileSelectionPage.vue";
 import RegisterPage from "@/views/userAuth/RegisterPage.vue";
@@ -11,6 +11,7 @@ import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
 import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
 import LiveFilm from "@/views/LiveFilm.vue";
 import ActorDetails from "@/views/ActorDetails.vue";
+import NotificationPage from "@/views/NotificationPage.vue";
 
 
 const routes = [
@@ -25,7 +26,8 @@ const routes = [
     {path: `/profiles`, name: "ProfileSelection", component: ProfileSelectionPage,},
     {path: '/admin', name: "AdminLogin", component: AdminLoginPage,},
     {path: '/admin/control-panel', name: "ControlPanel", component: ControlPanelPage,},
-    {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({ start: parseInt(route.query.start) || 0 })}// Pass "start" as a  prop}
+    {path: "/notification", name: "Notification", component: NotificationPage},
+    {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({start: parseInt(route.query.start) || 0})}// Pass "start" as a  prop}
 ];
 
 const router = createRouter({
