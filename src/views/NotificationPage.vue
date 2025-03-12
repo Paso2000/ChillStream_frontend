@@ -1,22 +1,28 @@
 <template>
-  <div class="notification-container">
+  <div class="notifications-page">
     <UserNavbar/>
-      <BackButton/>
+    <BackButton/>
+    <div class="notifications-content">
+      <div v-if="notifications.length === 0" class="empty-message">
+        No notifications found.
+      </div>
 
-        <div v-if="notifications.length === 0" class="no-notifications">
-          No new notifications
-        </div>
-
-        <ul class="notification-list">
-          <li
-              v-for="notification in notifications"
-              :key="notification.id"
-              @click="markAsRead(notification)"
-              :class="{ unread: !notification.isChecked }"
-          >
-            <strong class="user-name">{{ "CHILLSTREAM" }}: </strong> {{ notification.text }}
-          </li>
-        </ul>
+      <ul v-else>
+        <li
+            v-for="notification in notifications"
+            :key="notification._id"
+            :class="{ 'read': notification.isChecked }"
+            @click="markAsRead(notification)"
+        >
+          <div class="notification-text">
+            <strong>CHILLSTREAM</strong>: {{ notification.text }}
+          </div>
+          <div class="notification-timestamp">
+            {{ formatTimestamp(notification.timestamp) }}
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -40,6 +46,12 @@ const loadNotifications = async () => {
   }
 };
 
+const formatTimestamp = (timestamp) => {
+  if (!timestamp) return "Unknown time";
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+};
+
 // Mark notification as read
 const markAsRead = async (notification) => {
   if (!notification.isChecked) {
@@ -59,29 +71,55 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.notification-container {
-  color: white;
+.notifications-page {
+  margin-top: 80px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-content {
   padding: 20px;
 }
 
-.no-notifications {
+.empty-message {
   text-align: center;
+  color: #aaa;
+  margin-top: 50px;
 }
 
-.notification-list {
+ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.notification-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+li {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
   cursor: pointer;
-  color: white; /* Testo in bianco */
+  transition: background 0.3s ease;
+  border: 1px solid #333;
 }
 
-.unread {
-  font-weight: bold;
-  color: red;
+li:hover {
+  background-color: #2a2a2a;
+}
+
+li.read {
+  opacity: 0.6;
+}
+
+.notification-text {
+  font-size: 1rem;
+}
+
+.notification-timestamp {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 5px;
 }
 </style>
