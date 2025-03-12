@@ -1,6 +1,7 @@
 <template>
   <div class="user-review">
     <!-- Form per aggiungere una recensione -->
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <div class="review-input">
       <FormInput class="review-form" v-model="newReview.text" type="text" placeholder="Write a review..."/>
       <Button @click="addReview" class="custom-button">Submit</Button>
@@ -22,12 +23,19 @@ import {ref, defineProps, defineEmits} from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {postReview, getReviewList} from "@/service/contentApi.js";
+import PopUpNotification from "@/components/PupUpNotification.vue";
+import {useRouter} from "vue-router";
 
 // Props ricevute dal componente padre
 const props = defineProps({
   filmId: String,
   reviews: Array
 });
+
+const router = useRouter();
+const showAlert = ref(false);
+const alertMessage = ref("");
+const alertType = ref('error');
 
 // Emissione evento per aggiornare le recensioni nel componente padre
 const emit = defineEmits(["updateReviews"]);
@@ -45,11 +53,20 @@ const addReview = async () => {
     newReview.value.text = null;
     const updatedReviews = await getReviewList(newReview.value.film_id);
     emit("updateReviews", updatedReviews);
-    alert("Review created");
+    alertMessage.value = "Review created";
+    alertType.value = "success"
+    showAlert.value = true;
   } catch (error) {
-    alert("Review not created");
+    alertMessage.value = "Review not created";
+    alertType.value = "error"
+    showAlert.value = true;
   }
 };
+
+const closeAlert = () => {
+  showAlert.value = false;
+};
+
 </script>
 
 <style scoped>
