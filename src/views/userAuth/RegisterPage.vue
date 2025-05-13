@@ -31,6 +31,7 @@ import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
 import PopUpNotification from "@/components/PupUpNotification.vue";
+import BackButton from "@/components/BackButton.vue";
 
 const router = useRouter();
 const showAlert = ref(false);
@@ -58,7 +59,7 @@ const registerUser = async () => {
 
       setTimeout(() => {
         router.push("/profiles");
-      },1500);
+      }, 1500);
 
     }
   } catch (error) {
