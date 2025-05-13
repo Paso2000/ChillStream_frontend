@@ -31,6 +31,7 @@ import {ref, onMounted} from "vue";
 import {getNotificationList, putNotification} from "@/service/interactionApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
 import BackButton from "@/components/BackButton.vue";
+import {eventBus} from "@/util/eventBus.js";
 
 const notifications = ref([]);
 const userId = sessionStorage.getItem("user"); // Replace with actual user ID logic
@@ -58,6 +59,8 @@ const markAsRead = async (notification) => {
     try {
       notification.isChecked = true; // Update UI immediately
       await putNotification(userId, profileId, notification._id, notification); // Send update to API
+      const unread = notifications.value.filter(n => !n.isChecked).length;
+      eventBus.emit("unread-updated", unread);
     } catch (error) {
       console.error("Error updating notification:", error);
     }
