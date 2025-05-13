@@ -34,11 +34,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import {ref, onMounted, onUnmounted} from "vue";
 import router from "@/router/index.js";
 import { getProfile } from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
-import NotificationButton from "@/components/NotificationButton.vue"; // Import the new component
+import NotificationButton from "@/components/NotificationButton.vue";
+import {eventBus} from "@/util/eventBus.js"; // Import the new component
 
 const menuOpen = ref(false);
 const unreadCount = ref(0);
@@ -71,10 +72,15 @@ const updateUnreadCount = (count) => {
 
 onMounted(async () => {
   try {
+    eventBus.on("unread-updated", updateUnreadCount);
     profile.value = await getProfile(userId, profileId);
   } catch (error) {
     alert("Can't get the profile");
   }
+});
+
+onUnmounted(() => {
+  eventBus.off("unread-updated", updateUnreadCount);
 });
 </script>
 
