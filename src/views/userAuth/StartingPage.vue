@@ -76,11 +76,12 @@ const goToRegister = () => {
 @media (min-width: 769px) {
   .navbar {
     justify-content: space-between;
-    padding: 0 50px;
+    margin-top: -5px;
   }
 
   .logo-container {
     display: block;
+
   }
 
   .sign-in-btn {
