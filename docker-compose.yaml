@@ -8,3 +8,9 @@ services:
     ports:
       - "5173:80"
     restart: unless-stopped
+    networks:
+      - shared_network
+
+networks:
+      shared_network:
+        external: true
