@@ -52,7 +52,7 @@ margin: 0 auto;
 
 .search-bar {
 width: 100%;
-padding: 10px;
+padding: 10px 1px;
 margin-bottom: 30px;
 border-radius: 5px;
 border: none;

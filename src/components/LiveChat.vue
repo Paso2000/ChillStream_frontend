@@ -98,10 +98,10 @@ onBeforeUnmount(() => {
   padding: 10px;
   border-radius: 8px;
   margin: 0 10px;
-  min-height:30vh;
+  min-height:25vh;
 }
 
-@media (min-width: 768px){
+@media (min-width: 769px){
   .chat-section {
     flex: 1;
     display: flex;

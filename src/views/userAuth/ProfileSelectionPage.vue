@@ -2,7 +2,9 @@
   <div class="navbar">
     <Logo/>
   </div>
-
+  <div class="back-button-container">
+    <BackButton/>
+  </div>
   <div class="selection-container">
     <div class="content">
       <h1>Who wants to watch ChillStream?</h1>
@@ -32,6 +34,7 @@ import {ref, onMounted} from "vue";
 import {useRouter} from "vue-router";
 import {getProfiles} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
+import BackButton from "@/components/BackButton.vue";
 
 const profiles = ref([]);
 const router = useRouter();
@@ -77,6 +80,13 @@ const addProfile = () => {
   align-items: center;
   padding: 0;
   z-index: 10;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  z-index: 11; /* sopra tutto */
 }
 
 .content {

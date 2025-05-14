@@ -1,6 +1,9 @@
 <template>
   <div class="navbar">
-    <Logo />
+    <Logo/>
+  </div>
+  <div class="back-button-container">
+    <BackButton/>
   </div>
   <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
   <div class="selection-container">
@@ -8,7 +11,7 @@
       <h1 class="title">Create New Profile</h1>
 
       <div class="profile-container">
-        <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required class="input-nickname" />
+        <FormInput v-model="form.nickname" type="text" placeholder="Nickname" required class="input-nickname"/>
 
         <div class="grid grid-cols-3 gap-4 mt-4">
           <div
@@ -18,7 +21,7 @@
               :class="{ 'selected': form.profileImage === image }"
               @click="form.profileImage = image"
           >
-            <img :src="image" class="profile-image" alt="Profile Image" />
+            <img :src="image" class="profile-image" alt="Profile Image"/>
           </div>
         </div>
 
@@ -31,13 +34,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
 import {postProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import PopUpNotification from "@/components/PupUpNotification.vue";
+import BackButton from "@/components/BackButton.vue";
 
 const form = ref({
   nickname: "",
@@ -56,29 +60,30 @@ const defaultImages = [
 ];
 
 const createProfile = async () => {
-  if (!form.value.profileImage&&!form.value.nickname) {
+  if (!form.value.profileImage && !form.value.nickname) {
     alertMessage.value = "Please select an image and a Nickname";
     alertType.value = "error"
     showAlert.value = true;
-  }else {
-  try {
-    const profile = await postProfile(sessionStorage.getItem("user"),form.value)
-    sessionStorage.setItem("profile",profile._id)
+  } else {
+    try {
+      const profile = await postProfile(sessionStorage.getItem("user"), form.value)
+      sessionStorage.setItem("profile", profile._id)
 
-    setTimeout(() => {
-      router.push("/profiles");
-    }, 1500);
+      setTimeout(() => {
+        router.push("/profiles");
+      }, 1500);
 
-    alertMessage.value = "Profile created with successfully";
-    alertType.value = "success"
-    showAlert.value = true;
+      alertMessage.value = "Profile created with successfully";
+      alertType.value = "success"
+      showAlert.value = true;
 
-  } catch (error) {
-    alertMessage.value = "Profile not created correctly";
-    alertType.value = "error"
-    showAlert.value = true;
+    } catch (error) {
+      alertMessage.value = "Profile not created correctly";
+      alertType.value = "error"
+      showAlert.value = true;
+    }
   }
-}};
+};
 
 const closeAlert = () => {
   showAlert.value = false;
@@ -106,6 +111,13 @@ const closeAlert = () => {
   align-items: center;
   padding: 0;
   z-index: 10;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  z-index: 11; /* sopra tutto */
 }
 
 .title {

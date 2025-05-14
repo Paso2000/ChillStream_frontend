@@ -103,7 +103,7 @@ onBeforeUnmount(async () => {
   color: white;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .stream-container {
     flex-direction: row;
     display: flex;
