@@ -1,5 +1,4 @@
 <template>
-  <!-- Add new content -->
   <div class="section">
     <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
     <h4>Add new content</h4>
@@ -64,7 +63,6 @@ onMounted(async () => {
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
-// Methods
 const saveContent = async () => {
   try {
     const filmData = {

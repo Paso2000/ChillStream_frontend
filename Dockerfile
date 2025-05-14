@@ -1,4 +1,3 @@
-# FASE 1: Build dell'app
 FROM node:18 AS builder
 
 WORKDIR /app
@@ -9,10 +8,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# FASE 2: Serve con NGINX
 FROM nginx:alpine
 
-# Copia i file buildati nella cartella di NGINX
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

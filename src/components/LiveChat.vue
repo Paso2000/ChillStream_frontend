@@ -25,13 +25,13 @@
 <script setup>
 import {ref, onMounted, onBeforeUnmount} from "vue";
 import {io} from "socket.io-client";
-import "emoji-picker-element"; // Import emoji picker
+import "emoji-picker-element";
 
 const socket = io("http://localhost:8081");
 
 const messages = ref([]);
 const newMessage = ref("");
-const showEmojiPicker = ref(false); // Toggle emoji picker
+const showEmojiPicker = ref(false);
 const nickname = sessionStorage.getItem("nicknameProfile")
 const filmId = sessionStorage.getItem("film")
 // Listen for messages from the server
@@ -41,7 +41,7 @@ onMounted(() => {
   const now = new Date();
   const formattedTime = `${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
   const joinMessage = {
-    user: "System", // Nome di sistema per i messaggi automatici
+    user: "System",
     text: `${nickname} è entrato nella chat.`,
     filmId: filmId,
     time: formattedTime
@@ -50,7 +50,6 @@ onMounted(() => {
   socket.emit("sendMessage", joinMessage);
 });
 
-//message sender
 const sendMessage = () => {
   if (newMessage.value.trim()) {
     const now = new Date();
@@ -73,17 +72,14 @@ socket.on("receiveMessage", (message) => {
   messages.value.push(message);
 });
 
-// Toggle emoji picker visibility
 const toggleEmojiPicker = () => {
   showEmojiPicker.value = !showEmojiPicker.value;
 };
-
 // Add selected emoji to message input
 const addEmoji = (event) => {
   newMessage.value += event.detail.unicode; // Get emoji from picker
 };
 
-// Cleanup on unmount
 onBeforeUnmount(() => {
   socket.disconnect();
 });
@@ -98,10 +94,10 @@ onBeforeUnmount(() => {
   padding: 10px;
   border-radius: 8px;
   margin: 0 10px;
-  min-height:25vh;
+  min-height: 25vh;
 }
 
-@media (min-width: 769px){
+@media (min-width: 769px) {
   .chat-section {
     flex: 1;
     display: flex;
@@ -139,7 +135,7 @@ onBeforeUnmount(() => {
   align-items: center;
 }
 
-.user-name{
+.user-name {
   margin-right: 15px;
 }
 

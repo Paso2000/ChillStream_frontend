@@ -2,12 +2,11 @@
   <nav class="navbar">
     <div class="navbar-box">
       <Logo/>
-        <!-- Sezioni della navbar -->
-        <ul class="nav-links">
-          <li @click="$emit('changeSection', 'contents')">CONTENTS MANAGEMENT</li>
-          <li @click="$emit('changeSection', 'actors')">ACTORS MANAGEMENT</li>
-          <li @click="$emit('changeSection', 'notifications')">SEND NOTIFICATIONS</li>
-        </ul>
+      <ul class="nav-links">
+        <li @click="$emit('changeSection', 'contents')">CONTENTS MANAGEMENT</li>
+        <li @click="$emit('changeSection', 'actors')">ACTORS MANAGEMENT</li>
+        <li @click="$emit('changeSection', 'notifications')">SEND NOTIFICATIONS</li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -18,7 +17,6 @@ import Logo from "@/components/Logo.vue";
 </script>
 
 <style scoped>
-/* Stile Navbar */
 .navbar {
   display: flex;
   justify-content: center;
@@ -33,7 +31,6 @@ import Logo from "@/components/Logo.vue";
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Box della navbar con sfondo traslucido */
 .navbar-box {
   display: flex;
   justify-content: space-between;
@@ -44,7 +41,6 @@ import Logo from "@/components/Logo.vue";
   backdrop-filter: blur(15px);
 }
 
-/* Stile menu della navbar */
 .nav-links {
   display: flex;
   list-style: none;
@@ -52,7 +48,7 @@ import Logo from "@/components/Logo.vue";
 }
 
 .nav-links li {
-  font-size: 16px; /* Testo più grande */
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
   color: #fff;

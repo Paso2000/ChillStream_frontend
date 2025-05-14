@@ -25,7 +25,7 @@ const emit = defineEmits(["click"]);
 </script>
 
 <style scoped>
-/* Mobile First */
+
 .custom-button {
   width: 100%;
   max-width: 200px;

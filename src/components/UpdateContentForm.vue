@@ -47,7 +47,6 @@ const image_path = ref("/interstellar.jpg");
 const updateDescription = ref("");
 const dropdownOpen = ref(false);
 const addTrailer = ref("");
-
 const showAlert = ref(false);
 const alertMessage = ref("");
 const alertType = ref('error');
@@ -122,6 +121,7 @@ const closeAlert = () => {
   position: relative;
   width: 100%;
 }
+
 .dropdown-toggle {
   width: 100%;
   padding: 10px;

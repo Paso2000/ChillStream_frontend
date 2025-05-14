@@ -24,7 +24,6 @@ import {postReview, getReviewList} from "@/service/contentApi.js";
 import PopUpNotification from "@/components/PupUpNotification.vue";
 import {useRouter} from "vue-router";
 
-// Props ricevute dal componente padre
 const props = defineProps({
   filmId: String,
   reviews: Array
@@ -34,8 +33,6 @@ const router = useRouter();
 const showAlert = ref(false);
 const alertMessage = ref("");
 const alertType = ref('error');
-
-// Emissione evento per aggiornare le recensioni nel componente padre
 const emit = defineEmits(["updateReviews"]);
 
 const newReview = ref({
@@ -107,8 +104,8 @@ const closeAlert = () => {
 .review-message {
   list-style: none;
   background-color: #d3d3d3;
-  width: 90%;           /* Mobile First: Larghezza limitata per centrare */
-  max-width: 500px;     /* Mobile First: Limite massimo per mobile */
+  width: 90%; /* Mobile First: Larghezza limitata per centrare */
+  max-width: 500px; /* Mobile First: Limite massimo per mobile */
   padding: 10px;
   border-radius: 10px;
   color: #000;
@@ -137,6 +134,4 @@ const closeAlert = () => {
     max-width: 150px;
   }
 }
-
-
 </style>

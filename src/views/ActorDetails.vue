@@ -1,20 +1,19 @@
 <template>
   <div class="actor-details">
-    <UserNavbar />
-    <BackButton />
+    <UserNavbar/>
+    <BackButton/>
     <div v-if="actor" class="actor-info">
-      <img src=/actor-default.jpg :alt="actor.name" class="actor-image" />
+      <img src=/actor-default.jpg :alt="actor.name" class="actor-image"/>
       <div class="actor-bio">
         <h1>{{ actor.name }} {{ actor.surname }}</h1>
         <p>{{ actor.date_of_birth }}</p>
       </div>
     </div>
-
     <div class="actor-movies">
       <h2>Filmography</h2>
       <ul v-if="movies.length > 0">
         <li v-for="movie in movies" :key="movie._id" @click="goToMovie(movie._id)">
-          <img :src="movie.image_path" :alt="movie.title" class="movie-thumbnail" />
+          <img :src="movie.image_path" :alt="movie.title" class="movie-thumbnail"/>
           <span>{{ movie.title }} ({{ movie.release_year }})</span>
         </li>
       </ul>
@@ -24,9 +23,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { getActor, getFilm } from "@/service/contentApi.js";
+import {ref, onMounted} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {getActor, getFilm} from "@/service/contentApi.js";
 import UserNavbar from "@/components/UserNavbar.vue";
 import BackButton from "@/components/BackButton.vue";
 
@@ -34,10 +33,10 @@ const router = useRouter();
 const movies = ref([]);
 const actorId = sessionStorage.getItem("actor")
 const actor = ref({
-  name:"",
-  surname:"",
-  date_of_birth:"",
-  films:[]
+  name: "",
+  surname: "",
+  date_of_birth: "",
+  films: []
 })
 
 onMounted(async () => {

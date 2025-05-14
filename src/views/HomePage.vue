@@ -1,22 +1,22 @@
 <template>
   <div class="homepage">
-    <UserNavbar />
+    <UserNavbar/>
 
     <div class="content">
-      <ContentRow title="Trending Movies" :contents="allMovies" />
-      <ContentRow title="Continue to watching" :contents="viewedMovies" />
-      <ContentRow title="My List" :contents="MyListMovie" />
+      <ContentRow title="Trending Movies" :contents="allMovies"/>
+      <ContentRow title="Continue to watching" :contents="viewedMovies"/>
+      <ContentRow title="My List" :contents="MyListMovie"/>
 
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import UserNavbar from "@/components/UserNavbar.vue";
 import ContentRow from "@/components/ContentRow.vue";
-import {getFilmList } from "@/service/contentApi.js";
-import { getRecommendedList, getViewList } from "@/service/interactionApi.js";
+import {getFilmList} from "@/service/contentApi.js";
+import {getRecommendedList, getViewList} from "@/service/interactionApi.js";
 
 const allMovies = ref([]);
 const viewedMovies = ref([]);

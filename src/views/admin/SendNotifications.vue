@@ -60,7 +60,6 @@ const closeAlert = () => {
 </script>
 
 <style scoped>
-/* Stile Generale */
 .content-management {
   background: #111;
   padding: 20px;
@@ -71,7 +70,6 @@ const closeAlert = () => {
   color: white;
 }
 
-/* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
@@ -79,14 +77,12 @@ const closeAlert = () => {
   margin-bottom: 20px;
 }
 
-/* Input in riga */
 .form-group {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-/* Pulsanti */
 .form-button {
   width: 100%;
   background: linear-gradient(90deg, #a259ff, #6a0dad);
@@ -109,5 +105,4 @@ const closeAlert = () => {
   padding: 20px 5px;
   margin-bottom: 0;
 }
-
 </style>

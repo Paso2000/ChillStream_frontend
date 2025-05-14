@@ -32,7 +32,6 @@
 <script setup>
 import {ref, defineProps, defineEmits, computed} from "vue";
 
-// Props (list of actors)
 const props = defineProps({
   options: {
     type: Array,
@@ -40,11 +39,10 @@ const props = defineProps({
   },
   modelValue: {
     type: Array,
-    default: () => [] // Ensures it's always an array
+    default: () => []
   }
 });
 
-// Emits for two-way binding
 const emit = defineEmits(["update:modelValue"]);
 
 // Dropdown state
@@ -67,6 +65,6 @@ const toggleSelection = (actor) => {
     currentSelection.splice(index, 1);
   }
 
-  selectedActors.value = currentSelection; // Update value
+  selectedActors.value = currentSelection;
 };
 </script>

@@ -14,7 +14,6 @@ import ActorDetails from "@/views/ActorDetails.vue";
 import NotificationPage from "@/views/NotificationPage.vue";
 import HelpPage from "@/views/HelpPage.vue";
 
-
 const routes = [
     {path: "/ActorDetails", name: "ActorDetails", component: ActorDetails,},
     {path: "/ProfileSettings", name: "ProfileSettings", component: ProfileSettingsPage,},

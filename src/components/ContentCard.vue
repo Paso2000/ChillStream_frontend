@@ -1,11 +1,11 @@
 <template>
   <div v-if="content" @click="goToDetails" class="content-card">
-    <img :src="content.image_path" :alt="content.title" class="content-img" />
+    <img :src="content.image_path" :alt="content.title" class="content-img"/>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 
 const props = defineProps({
   content: Object,

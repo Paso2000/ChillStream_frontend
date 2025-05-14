@@ -1,25 +1,23 @@
 <template>
   <div>
-    <input v-model="props.localDescription" class="input" @input="updateDescription" placeholder="Description" >
+    <input v-model="props.localDescription" class="input" @input="updateDescription" placeholder="Description">
   </div>
 </template>
 
 <script setup>
 
-const props = defineProps( {
-    description: String // Riceve il valore iniziale della descrizione dal padre
-  })
+const props = defineProps({
+  description: String // Riceve il valore iniziale della descrizione dal padre
+})
 
-
-const  updateDescription = () => {
-      this.$emit("update:description", this.localDescription);
+const updateDescription = () => {
+  this.$emit("update:description", this.localDescription);
 }
-
 </script>
 
 <style scoped>
 
-.input{
+.input {
   width: 100%;
   min-height: 80px;
   border: none;

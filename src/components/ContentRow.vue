@@ -4,7 +4,7 @@
     <div class="carousel-container">
       <button @click="scrollLeft" class="carousel-btn left-btn">‹</button>
       <div ref="carousel" class="content-list">
-        <ContentCard v-for="content in contents" :key="content.id" :content="content" />
+        <ContentCard v-for="content in contents" :key="content.id" :content="content"/>
       </div>
       <button @click="scrollRight" class="carousel-btn right-btn">›</button>
     </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {ref} from "vue";
 import ContentCard from "./ContentCard.vue";
 
 defineProps({
@@ -24,13 +24,13 @@ const carousel = ref(null);
 
 const scrollLeft = () => {
   if (carousel.value) {
-    carousel.value.scrollBy({ left: -2000, behavior: "smooth" });
+    carousel.value.scrollBy({left: -2000, behavior: "smooth"});
   }
 };
 
 const scrollRight = () => {
   if (carousel.value) {
-    carousel.value.scrollBy({ left: 2000, behavior: "smooth" });
+    carousel.value.scrollBy({left: 2000, behavior: "smooth"});
   }
 };
 </script>

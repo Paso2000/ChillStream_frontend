@@ -82,5 +82,4 @@ const closeAlert = () => {
   cursor: pointer;
   margin-left: 20px;
 }
-
 </style>

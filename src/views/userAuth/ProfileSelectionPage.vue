@@ -86,7 +86,7 @@ const addProfile = () => {
   position: absolute;
   top: 60px;
   left: 20px;
-  z-index: 11; /* sopra tutto */
+  z-index: 11;
 }
 
 .content {

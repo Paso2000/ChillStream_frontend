@@ -33,14 +33,14 @@
       <div v-if="selectedTab === 'cast'" class="movie-cast">
         <ul>
           <li v-for="actor in fullActors" :key="actor._id" @click="goToActorDetails(actor._id)" class="actor-item">
-            <img src="/actor-default.jpg" :alt="actor.name" class="actor-image" />
+            <img src="/actor-default.jpg" :alt="actor.name" class="actor-image"/>
             <span class="actor-name">{{ actor.name }} {{ actor.surname }}</span>
           </li>
         </ul>
       </div>
 
       <div v-if="selectedTab === 'reviews'">
-        <UserReview :filmId="filmId" :reviews="fullReview" @updateReviews="fullReview = $event" />
+        <UserReview :filmId="filmId" :reviews="fullReview" @updateReviews="fullReview = $event"/>
       </div>
     </div>
   </div>
@@ -62,7 +62,6 @@ import router from "@/router/index.js";
 import UserReview from "@/components/UserReview.vue";
 import BackButton from "@/components/BackButton.vue";
 import PopUpNotification from "@/components/PupUpNotification.vue";
-
 
 const fullActors = ref([]);
 const fullReview = ref([]);
@@ -119,9 +118,7 @@ const goToActorDetails = (actorId) => {
   router.push("/ActorDetails")
 }
 
-// Simula la visualizzazione del film
-const startWatching = async () =>
-    {
+const startWatching = async () => {
       try {
         if (!isViewed.value) {
           const newView = ref({
@@ -131,10 +128,10 @@ const startWatching = async () =>
             timesOFTheFilm: 0
           })
           await postView(userId, profileId, newView.value);
-          router.push({ path: "/live", query: { start:  newView.value.timesOFTheFilm} });
+          router.push({path: "/live", query: {start: newView.value.timesOFTheFilm}});
         } else {
-          const view = await getView(userId, profileId,filmId)
-          router.push({ path: "/live", query: { start: view.timesOFTheFilm } });
+          const view = await getView(userId, profileId, filmId)
+          router.push({path: "/live", query: {start: view.timesOFTheFilm}});
         }
       } catch (error) {
         alertMessage.value = "Could not start watching the film.";
@@ -249,7 +246,7 @@ const closeAlert = () => {
   border-bottom: 2px solid rgba(106, 13, 173, 0.88);
 }
 
-.actor-item{
+.actor-item {
   display: flex;
   align-items: center;
   gap: 12px;

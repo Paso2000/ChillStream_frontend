@@ -1,20 +1,20 @@
 <template>
   <div class="profileSettingPage">
-    <UserNavbar />
-    <BackButton />
+    <UserNavbar/>
+    <BackButton/>
     <!-- Contenitore dei bottoni in alto a destra -->
     <div class="top-right-buttons">
       <Button @click="logout" class="up-button">Logout</Button>
       <Button @click="changeProfile" class="up-button">Change Profile</Button>
     </div>
-    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert" />
+    <PopUpNotification :message="alertMessage" :show="showAlert" :type="alertType" @close="closeAlert"/>
 
     <div class="selection-container">
       <div class="content">
         <h1 class="title">Profile settings</h1>
 
         <div class="profile-container">
-          <FormInput v-model="profile.nickname" type="text" :placeholder="profile.nickname" class="input-nickname" />
+          <FormInput v-model="profile.nickname" type="text" :placeholder="profile.nickname" class="input-nickname"/>
 
           <div class="grid grid-cols-3 gap-4 mt-4">
             <div
@@ -24,7 +24,7 @@
                 :class="{ 'selected': profile.profileImage === image }"
                 @click="selectImage(image)"
             >
-              <img :src="image" class="profile-image" alt="Profile Image" />
+              <img :src="image" class="profile-image" alt="Profile Image"/>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ const logout = () => {
   router.push("/")
 }
 
-const changeProfile = () =>{
+const changeProfile = () => {
   router.push("/profiles")
 }
 
@@ -205,19 +205,14 @@ const closeAlert = () => {
   margin-top: 40px;
 }
 
-.up-button{
+.up-button {
   padding: 5px;
-  margin-top:40px ;
+  margin-top: 40px;
 }
 
-@media (min-width: 768px)  {
-  .up-button{
+@media (min-width: 768px) {
+  .up-button {
     padding: 5px;
   }
 }
-
-
-
-
-
 </style>

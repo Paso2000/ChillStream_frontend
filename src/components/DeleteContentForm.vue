@@ -43,14 +43,12 @@ const deleteContent = async () => {
   }
 
 };
-
 const closeAlert = () => {
   showAlert.value = false;
 };
 </script>
 
 <style scoped>
-/* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
@@ -58,7 +56,6 @@ const closeAlert = () => {
   margin-bottom: 20px;
 }
 
-/* Pulsanti */
 .form-button {
   width: 100%;
   background: linear-gradient(90deg, #a259ff, #6a0dad);

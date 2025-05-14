@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-box">
-      <Logo />
+      <Logo/>
 
       <div class="hamburger-menu" @click="toggleMenu">
         <div :class="['bar', { open: menuOpen }]"></div>
@@ -10,19 +10,19 @@
       </div>
 
       <div class="right-section desktop-only">
-        <NotificationButton @updateUnreadCount="updateUnreadCount" />
+        <NotificationButton @updateUnreadCount="updateUnreadCount"/>
         <div class="help-section" @click="goToHelpPage">
           <p>Help</p>
         </div>
         <div class="profile-icon" @click="openProfile">
-          <img :src="profile.profileImage" alt="ProfileImage" />
+          <img :src="profile.profileImage" alt="ProfileImage"/>
         </div>
       </div>
     </div>
 
     <!-- Mobile menu -->
     <div v-if="menuOpen" class="mobile-menu">
-      <NotificationButton class="mobile-menu-item" @updateUnreadCount="updateUnreadCount" />
+      <NotificationButton class="mobile-menu-item" @updateUnreadCount="updateUnreadCount"/>
       <div class="mobile-menu-item" @click="goToHelpPage">
         <span>Help</span>
       </div>
@@ -36,22 +36,19 @@
 <script setup>
 import {ref, onMounted, onUnmounted} from "vue";
 import router from "@/router/index.js";
-import { getProfile } from "@/service/authApi.js";
+import {getProfile} from "@/service/authApi.js";
 import Logo from "@/components/Logo.vue";
 import NotificationButton from "@/components/NotificationButton.vue";
 import {eventBus} from "@/util/eventBus.js"; // Import the new component
 
 const menuOpen = ref(false);
 const unreadCount = ref(0);
-
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
-
 const goToHelpPage = () => {
   router.push("/help")
 }
-
 const userId = sessionStorage.getItem("user");
 const profileId = sessionStorage.getItem("profile");
 
@@ -124,7 +121,6 @@ onUnmounted(() => {
   align-items: center;
   gap: 25px;
 }
-
 
 /* Mobile Hamburger */
 .hamburger-menu {
@@ -203,8 +199,8 @@ onUnmounted(() => {
     width: 50px;
   }
 
-  .help-section{
-   cursor: pointer;
+  .help-section {
+    cursor: pointer;
   }
 }
 

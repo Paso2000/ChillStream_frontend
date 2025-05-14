@@ -175,5 +175,4 @@ const closeAlert = () => {
   cursor: pointer;
   transition: background 0.3s;
 }
-
 </style>

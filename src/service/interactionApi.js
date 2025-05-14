@@ -13,9 +13,9 @@ export const getViewList = async (userId, profileId) => {
     }
 };
 
-export const postView = async (userId, profileId,body) => {
+export const postView = async (userId, profileId, body) => {
     try {
-        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/views`,body);
+        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/views`, body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore creating film:", error);
@@ -64,9 +64,9 @@ export const getRecommendedList = async (userId, profileId) => {
     }
 };
 
-export const postRecommended = async (userId, profileId,body) => {
+export const postRecommended = async (userId, profileId, body) => {
     try {
-        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/recommendeds`,body);
+        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/recommendeds`, body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore creating Recommended:", error);
@@ -74,7 +74,7 @@ export const postRecommended = async (userId, profileId,body) => {
     }
 };
 
-export const getRecommended = async (userId, profileId, recommendedId ) => {
+export const getRecommended = async (userId, profileId, recommendedId) => {
     try {
         const response = await interactionApi.get(`/${userId}/profiles/${profileId}/recommendeds/${recommendedId}`);
         return response.data; // Ritorna il token o i dati dell'utente
@@ -114,9 +114,9 @@ export const getReactionList = async (userId, profileId) => {
     }
 };
 
-export const postReaction = async (userId, profileId,body) => {
+export const postReaction = async (userId, profileId, body) => {
     try {
-        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/reactions`,body);
+        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/reactions`, body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore creating reactions:", error);
@@ -145,9 +145,9 @@ export const getNotificationList = async (userId, profileId) => {
     }
 };
 
-export const postNotification = async (userId, profileId,body) => {
+export const postNotification = async (userId, profileId, body) => {
     try {
-        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/notifications`,body);
+        const response = await interactionApi.post(`/${userId}/profiles/${profileId}/notifications`, body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore creating notifications:", error);
@@ -155,16 +155,15 @@ export const postNotification = async (userId, profileId,body) => {
     }
 };
 
-export const putNotification = async (userId, profileId, notificationsID,body) => {
+export const putNotification = async (userId, profileId, notificationsID, body) => {
     try {
-        const response = await interactionApi.put(`/${userId}/profiles/${profileId}/notifications/${notificationsID}`,body);
+        const response = await interactionApi.put(`/${userId}/profiles/${profileId}/notifications/${notificationsID}`, body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore changing the notifications:", error);
         throw error;
     }
 };
-
 
 export const deleteNotification = async (userId, profileId, notificationsID) => {
     try {

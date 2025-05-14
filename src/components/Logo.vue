@@ -13,7 +13,6 @@ import {useRouter, useRoute} from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-
 const isAdmin = route.path.startsWith("/admin");
 
 const goHome = () => {

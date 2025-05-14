@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {ref} from "vue";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {deleteActor, getActorList, getFilmList, postActors, putActor, putFilm} from "@/service/contentApi.js";
@@ -49,12 +49,10 @@ const updateDate_of_birth = ref("");
 const updateSurname = ref("");
 const updateName = ref("");
 const deleteSurname = ref("");
-
 const showAlert = ref(false);
 const alertMessage = ref("");
 const alertType = ref('error');
 
-// Methods
 const saveActor = async () => {
   try {
     const actorData = {
@@ -63,7 +61,7 @@ const saveActor = async () => {
       date_of_birth: saveDate_of_birth.value
     };
 
-      await postActors([actorData]);
+    await postActors([actorData]);
     alertMessage.value = "Actor saved successfully";
     alertType.value = "success"
     showAlert.value = true;
@@ -132,7 +130,6 @@ const closeAlert = () => {
 </script>
 
 <style scoped>
-/* Stile Generale */
 .content-management {
   background: #111;
   padding: 20px;
@@ -143,7 +140,6 @@ const closeAlert = () => {
   color: white;
 }
 
-/* Sezione */
 .section {
   background: rgba(255, 255, 255, 0.05);
   padding: 15px;
@@ -151,14 +147,12 @@ const closeAlert = () => {
   margin-bottom: 20px;
 }
 
-/* Input in riga */
 .form-group {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-/* Pulsanti */
 .form-button {
   width: 100%;
   background: linear-gradient(90deg, #a259ff, #6a0dad);
@@ -175,5 +169,4 @@ const closeAlert = () => {
   background: linear-gradient(90deg, #b06aff, #7a1edf);
   transform: scale(1.05);
 }
-
 </style>

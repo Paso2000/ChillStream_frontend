@@ -5,7 +5,6 @@
     </div>
     <Button class="sign-in-btn" @click="goToLogin">Sign In</Button>
   </div>
-
   <div class="login-container">
     <div class="content">
       <h1>Unlimited movies, TV shows, and more</h1>

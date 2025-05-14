@@ -5,7 +5,6 @@ const authApi = axios.create({
     baseURL: "http://localhost:8081/",
 });
 
-// Funzione per fare login
 export const getUsers = async () => {
     try {
         const response = await authApi.get("/users/");
@@ -18,7 +17,7 @@ export const getUsers = async () => {
 
 export const postUser = async (body) => {
     try {
-        const response = await authApi.post("/users/",body);
+        const response = await authApi.post("/users/", body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore creting user:", error);
@@ -28,7 +27,7 @@ export const postUser = async (body) => {
 
 export const canUserLogIn = async (body) => {
     try {
-        const response = await authApi.post("/logins/",body);
+        const response = await authApi.post("/logins/", body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
         console.error("Errore logging user:", error);
@@ -67,7 +66,6 @@ export const deleteUser = async (userId) => {
 };
 
 
-// Funzione per ottenere tutti i profili di un utente
 export const getProfiles = async (userId) => {
     try {
         const response = await authApi.get(`/users/${userId}/profiles`);
@@ -78,8 +76,7 @@ export const getProfiles = async (userId) => {
     }
 };
 
-// Funzione per selezionare un profilo
-export const getProfile = async (userId,profileId) => {
+export const getProfile = async (userId, profileId) => {
     try {
         const response = await authApi.get(`/users/${userId}/profiles/${profileId}`);
         return response.data;
@@ -99,7 +96,7 @@ export const postProfile = async (userId, body) => {
     }
 };
 
-export const putProfile = async (userId,profileId, body) => {
+export const putProfile = async (userId, profileId, body) => {
     try {
         const response = await authApi.put(`/users/${userId}/profiles/${profileId}`, body);
         return response.data;
@@ -109,7 +106,7 @@ export const putProfile = async (userId,profileId, body) => {
     }
 };
 
-export const deleteProfile = async (userId,profileId) => {
+export const deleteProfile = async (userId, profileId) => {
     try {
         const response = await authApi.delete(`/users/${userId}/profiles/${profileId}`);
         return response.data;
@@ -131,10 +128,10 @@ export const getAdminList = async () => {
 
 export const postAdmin = async (body) => {
     try {
-        const response = await authApi.post("/admins/",body);
+        const response = await authApi.post("/admins/", body);
         return response.data; // Ritorna il token o i dati dell'utente
     } catch (error) {
-        console.error("Errore creting user:", error);
+        console.error("Errore creating user:", error);
         throw error;
     }
 };
@@ -168,9 +165,6 @@ export const deleteAdmin = async (adminId) => {
         throw error;
     }
 };
-
-
-
 
 
 export default authApi;

@@ -9,8 +9,8 @@
 
 <script setup>
 import {ref, onMounted, watch, onUnmounted} from "vue";
-import { getNotificationList } from "@/service/interactionApi.js";
-import { useRouter } from "vue-router";
+import {getNotificationList} from "@/service/interactionApi.js";
+import {useRouter} from "vue-router";
 import {eventBus} from "@/util/eventBus.js";
 
 const emit = defineEmits(["updateUnreadCount"]);
@@ -34,12 +34,10 @@ const loadNotifications = async () => {
   }
 };
 
-// Mark notifications as read when visiting the notification page
 const handleNotificationClick = () => {
   router.push("/notification");
 };
 
-// Sync with session storage updates
 onMounted(() => {
   loadNotifications();
   eventBus.on("unread-updated", setUnread);
@@ -51,7 +49,7 @@ onUnmounted(() => {
 
 const setUnread = (count) => {
   unreadCount.value = count;
-  emit("updateUnreadCount", count); // se vuoi ancora notificare il parent
+  emit("updateUnreadCount", count);
 };
 
 watch(unreadCount, (newCount) => {
