@@ -64,7 +64,7 @@ const updateContent = async () => {
     const filmData = {
       title: title.value,
       actors: addActors.value.slice(),
-      release_year: title.value,
+      release_year: release_year.value,
       genre: genre.value,
       rating: rating.value,
       description: updateDescription.value,
