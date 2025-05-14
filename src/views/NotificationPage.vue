@@ -41,7 +41,7 @@ const profileId = sessionStorage.getItem("profile"); // Replace with actual prof
 const loadNotifications = async () => {
   try {
     const data = await getNotificationList(userId, profileId);
-    notifications.value = data || [];
+    notifications.value = (data || []).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   } catch (error) {
     console.error("Error loading notifications:", error);
   }
