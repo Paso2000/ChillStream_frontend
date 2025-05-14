@@ -63,7 +63,7 @@ const saveActor = async () => {
       date_of_birth: saveDate_of_birth.value
     };
 
-      await postActors(actorData);
+      await postActors([actorData]);
     alertMessage.value = "Actor saved successfully";
     alertType.value = "success"
     showAlert.value = true;
@@ -78,9 +78,9 @@ const saveActor = async () => {
 const updateActor = async () => {
   try {
     const actorData = {
-      name: saveName.value,
-      surname: saveSurname.value,
-      date_of_birth: saveDate_of_birth.value
+      name: updateName.value,
+      surname: updateSurname.value,
+      date_of_birth: updateDate_of_birth.value
     };
     const allActor = await getActorList();
     const actorFound = allActor.find(
