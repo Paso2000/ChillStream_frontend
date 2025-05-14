@@ -6,7 +6,7 @@ import StartingPage from "@/views/userAuth/StartingPage.vue";
 import createProfilePage from "@/views/userAuth/CreateProfilePage.vue";
 import HomePage from "@/views/HomePage.vue";
 import AdminLoginPage from "@/views/admin/AdminLoginPage.vue";
-import ControlPanelPage from "@/views/admin/controlPanelPage.vue";
+import ControlPanelPage from "@/views/admin/ControlPanelPage.vue";
 import FilmDetailsPage from "@/views/FilmDetailsPage.vue";
 import ProfileSettingsPage from "@/views/ProfileSettingsPage.vue";
 import LiveFilm from "@/views/LiveFilm.vue";
