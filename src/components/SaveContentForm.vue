@@ -35,9 +35,15 @@ import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 import {getActorList, postFilm} from "@/service/contentApi.js";
 import PopUpNotification from "@/components/PupUpNotification.vue";
+import {getProfiles, getUsers} from "@/service/authApi.js";
+import {postNotification} from "@/service/interactionApi.js";
 
+const notification = ref({
+  senderNickname: sessionStorage.getItem("admin"),
+  ricever_id: "",
+  text: ""
+})
 let allActorsName = ref([])
-
 const addTitle = ref("");
 const addRelease_year = ref("");
 const addGenre = ref("");
@@ -46,7 +52,6 @@ const addRating = ref("");
 const addDescription = ref("");
 const addImage_path = ref("/film-default.jpg");
 const dropdownOpen = ref(false);
-
 const addTrailer = ref("");
 const showAlert = ref(false);
 const alertMessage = ref("");
@@ -71,13 +76,21 @@ const saveContent = async () => {
       description: addDescription.value,
       image_path: addImage_path.value,
       trailer_path: addTrailer.value
-    };
-
-    await postFilm(filmData);
+    }
+    await postFilm([filmData]);
+    notification.value.text = `${filmData.title} has been released, go watch it!!`
+    let userProfiles = ref([])
+    const allUser = await getUsers();
+    for (const user of allUser) {
+      userProfiles = await getProfiles(user._id,);
+      for (const profile of userProfiles) {
+        notification.value.ricever_id = profile._id;
+        await postNotification(user._id, profile._id, notification.value);
+      }
+    }
     alertMessage.value = "Film saved successfully";
     alertType.value = "success"
     showAlert.value = true;
-
   } catch (error) {
     alertMessage.value = "Error saving film:";
     alertType.value = "error"

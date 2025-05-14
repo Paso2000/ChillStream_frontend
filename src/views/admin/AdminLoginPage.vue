@@ -16,8 +16,8 @@ import {getAdminList} from "@/service/authApi.js";
 import FormInput from "@/components/FormInput.vue";
 import Button from "@/components/Button.vue";
 
-const username = ref("GiammaIlControllore");
-const password = ref("pastaConTonno");
+const username = ref("admin");
+const password = ref("admin");
 const router = useRouter();
 
 const handleLogin = async () => {
