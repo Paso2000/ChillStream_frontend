@@ -31,8 +31,9 @@ const filmId = sessionStorage.getItem("film")
 const film = ref(null)
 
 onMounted(async () => {
-  film.value = await getFilm(filmId)
-})
+  film.value = await getFilm(filmId);
+  loadYouTubePlayer(); // ← Spostato qui, così trailer_path è pronto
+});
 
 const loadYouTubePlayer = () => {
   window.onYouTubeIframeAPIReady = () => {
@@ -73,14 +74,10 @@ const saveTimeInterval = setInterval(() => {
   putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
 }, 30000);
 
-onMounted(() => {
-  loadYouTubePlayer();
-});
-
 onBeforeUnmount(async () => {
   clearInterval(saveTimeInterval);
   updateCurrentTime(); // Assicura di prendere il tempo finale
-  if (currentTime.value > 190)
+  if (currentTime.value > 120)
     await deleteView(userId, profileId, filmId)
   else
     await putView(userId, profileId, filmId, {timesOFTheFilm: currentTime.value});
