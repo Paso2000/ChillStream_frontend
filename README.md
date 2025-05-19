@@ -8,6 +8,9 @@ La sua funzionalità principale è la **riproduzione condivisa** dei film presen
 
 Oltre alla riproduzione dei contenuti e alla chat interattiva, Chillstream offre agli utenti registrati la possibilità di **personalizzare la propria esperienza** mediante la creazione di più profili, ciascuno identificato da un *nickname* e un’immagine del profilo.
 
+
+## Documentation
+Da [questo](https://github.com/Paso2000/ChillStream_frontend/blob/main/docs/Chillstream_ASW_project.pdf) link puoi accedere direttamente alla documentazione, che comunque si trova nella directory docs di questo repository
 ## Deployment
 ### **Step 1: Clonare i progetti**
 
