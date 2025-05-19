@@ -1,5 +1,14 @@
-# Deployment
+# Chillstream
 
+**Chillstream** nasce dall’esigenza di un cinema che desidera ampliare la propria offerta, sviluppando una web app che permetta agli utenti di registrarsi, guardare film e interagire tra loro in tempo reale, condividendo pensieri ed emozioni.
+
+Chillstream è un'applicazione web che consente di accedere a un'ampia libreria di contenuti multimediali, selezionare un film e guardarlo in compagnia di altri utenti online.
+
+La sua funzionalità principale è la **riproduzione condivisa** dei film presenti sulla piattaforma, ma l'app offre anche diverse funzionalità aggiuntive, come la **chat in tempo reale** con gli altri spettatori dello stesso film.
+
+Oltre alla riproduzione dei contenuti e alla chat interattiva, Chillstream offre agli utenti registrati la possibilità di **personalizzare la propria esperienza** mediante la creazione di più profili, ciascuno identificato da un *nickname* e un’immagine del profilo.
+
+## Deployment
 ### **Step 1: Clonare i progetti**
 
 Copiare l'indirizzo HTTPS dei seguenti repository e incollarlo dopo il comando `git clone`:
