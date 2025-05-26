@@ -13,6 +13,7 @@ import LiveFilm from "@/views/LiveFilm.vue";
 import ActorDetails from "@/views/ActorDetails.vue";
 import NotificationPage from "@/views/NotificationPage.vue";
 import HelpPage from "@/views/HelpPage.vue";
+import NotFoundPage from "@/views/NotFoundPage.vue";
 
 const routes = [
     {path: "/ActorDetails", name: "ActorDetails", component: ActorDetails,},
@@ -28,7 +29,8 @@ const routes = [
     {path: '/admin/control-panel', name: "ControlPanel", component: ControlPanelPage,},
     {path: "/notification", name: "Notification", component: NotificationPage},
     {path: "/help", name: "Help", component: HelpPage},
-    {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({start: parseInt(route.query.start) || 0})}// Pass "start" as a  prop}
+    {path: "/live", name: "Live", component: LiveFilm, props: (route) => ({start: parseInt(route.query.start) || 0})},
+    {path: "/:pathMatch(.*)*", name: "NotFound", component: NotFoundPage}
 ];
 
 const router = createRouter({
